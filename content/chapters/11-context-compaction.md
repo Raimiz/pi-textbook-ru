@@ -8,7 +8,7 @@ title: History 是事实，Context 是投影
 summary: 从追加式会话树派生有预算的模型视图，并用追加摘要而非删除历史完成压缩。
 minutes: 120
 difficulty: 核心
-artifact: workshop/src/context.ts
+artifact: packages/pi-course/src/context.ts
 prerequisites: 03,10
 terms: history, context projection, token budget, safe cut point, compaction
 upstream: packages/coding-agent/src/core/compaction/compaction.ts
@@ -27,6 +27,28 @@ upstream: packages/coding-agent/src/core/compaction/compaction.ts
 > History 记录发生过什么；context 只回答本次模型需要看到什么。Compaction 改变投影，不改写过去。
 
 先运行 `git status --short`，把第 10 章验收状态提交为自己的 checkpoint。要回到本章起点，用该提交恢复 `workshop/src/context.ts`、`workshop/src/session.ts` 与对应测试；不要用本章结束状态覆盖第 10 章的会话实现。
+
+:::rebuild title="Checkpoint 11 · 先保持一个 interaction 不被切开"
+**模式：** 重建。从 10 的 target 开始，history 保持不变，只派生 context。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/context.ts`
+
+**第一步：** 先不看 target diff，先实现 `groupInteractions`，用 `toolCallId` 把 assistant call 与可能逆序完成的 results 组成不可分割组；分组通过后再加入预算和 compaction。
+
+**聚焦测试：** `packages/pi-course/test/11-context-compaction.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 11`
+
+**练习目录：** `npm run practice -w @pi/course -- 11`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/11-*.test.js`
+
+**通过证据：** safe cut、单组超限、结果逆序、摘要追加与 context 重建测试通过；history 条目数只增不减。
+
+第一次尝试禁止查看完整答案；若预算算法卡住，先让陪练只检查分组是否正确，暂时不要讨论 token 估算。
+:::
 
 ## 先建立全景
 

@@ -8,7 +8,7 @@ title: Tool 是类型化的环境动作
 summary: 建立模型提议动作、程序验证并执行、结果重新进入对话的可信边界。
 minutes: 110
 difficulty: 核心
-artifact: workshop/src/tool.ts
+artifact: packages/pi-course/src/tool.ts
 prerequisites: 03,04
 terms: tool contract, runtime validation, registry, tool result, call id
 upstream: packages/agent/src/types.ts, packages/agent/src/agent-loop.ts
@@ -23,6 +23,28 @@ upstream: packages/agent/src/types.ts, packages/agent/src/agent-loop.ts
 不能破坏的不变量是：**每个已经完成的 tool call，都必须得到一个带相同 `toolCallId` 的 tool result；失败改变的是 `isError`，不能让配对消失。**
 
 若要恢复到本章起点，只需撤销 `workshop/src/tool.ts` 与本章测试中的改动；03～05 章产生的消息、事件流和模型文件不需要回退。开始前先保存一次 `git diff -- workshop/`，恢复后用相同命令确认只剩前章内容。
+
+:::rebuild title="Checkpoint 06 · 先把一个不可信 call 关进契约"
+**模式：** 重建。从 05 的 target 开始，先建立 schema 与 registry，再执行副作用。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/tool.ts`
+
+**第一步：** 先不看 target diff，从测试的 `echo` 工具开始，实现 `objectSchema`、`stringValue` 和 `ToolRegistry` 的最小成功路径；随后让所有失败也返回同 id 的 `toolResult`。
+
+**聚焦测试：** `packages/pi-course/test/06-tool-contract.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 06`
+
+**练习目录：** `npm run practice -w @pi/course -- 06`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/06-*.test.js`
+
+**通过证据：** 成功、未知工具、参数错误和执行异常都通过；你能解释失败为何改变 `isError` 而不能破坏 call/result 配对。
+
+第一次尝试禁止查看完整答案；一次只闭合一种失败，不要同时实现 registry、schema 和 executor 的所有边界。
+:::
 
 ## 先建立全景
 

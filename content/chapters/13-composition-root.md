@@ -8,7 +8,7 @@ title: 一个核心，多种产品入口
 summary: 在唯一组装边界连接模型、工具、会话与资源，让交互、文本和 JSON 模式共享同一套 Agent 语义。
 minutes: 120
 difficulty: 进阶
-artifact: workshop/src/composition.ts
+artifact: packages/pi-course/src/composition.ts
 prerequisites: 09,10,11,12
 terms: composition root, runtime, mode adapter, wire event, stdout, stderr
 upstream: packages/coding-agent/src/core/agent-session-runtime.ts,packages/coding-agent/src/main.ts
@@ -27,6 +27,28 @@ upstream: packages/coding-agent/src/core/agent-session-runtime.ts,packages/codin
 > Mode 可以改变输入输出形式，不能改变 Agent 如何思考、调用工具、终止和落盘。
 
 先保存第 12 章 checkpoint。要恢复本章起点，只恢复 `workshop/src/composition.ts` 及 mode 黑盒测试；核心的 `agent-loop.ts`、`session.ts` 和 `context.ts` 不应该出现模式专用分支。
+
+:::rebuild title="Checkpoint 13 · 先让依赖只相遇一次"
+**模式：** 重建。从 12 的 target 开始，先组合一个 runtime，再投影多种 mode。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/composition.ts`
+
+**第一步：** 先不看 target diff，实现 `createRuntime(deps)`，只连接 model、tools、session、resources 与 Agent；用同一 fixture 证明核心 transcript 后，再写 `runPrint`、`runJson` 和 interactive adapter。
+
+**聚焦测试：** `packages/pi-course/test/13-composition-root.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 13`
+
+**练习目录：** `npm run practice -w @pi/course -- 13`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/13-*.test.js`
+
+**通过证据：** 三种 mode 的 canonical transcript 一致，差异只在 stdout/JSON/交互呈现；核心文件没有 mode 分支。
+
+第一次尝试禁止查看完整答案；若接口太多，先让陪练列出必须注入的依赖，不允许引入全局单例。
+:::
 
 ## 先建立全景
 

@@ -8,7 +8,7 @@ title: Agent Loop 是可证明的状态机
 summary: 把模型响应与工具结果闭合为可终止、可重放、顺序明确的最小 Agent Loop。
 minutes: 120
 difficulty: 核心
-artifact: workshop/src/agent-loop.ts
+artifact: packages/pi-course/src/agent-loop.ts
 prerequisites: 04,06
 terms: agent loop, state machine, stop reason, transcript order, terminal state
 upstream: packages/agent/src/agent-loop.ts
@@ -23,6 +23,28 @@ upstream: packages/agent/src/agent-loop.ts
 本章不变量是：**下一次模型调用前，已有 assistant 中的每个 tool call 必须在 transcript 中拥有且仅拥有一个配对 result。** `length`、异常和并发都不能破坏它。
 
 恢复起点时，只撤销 `workshop/src/agent-loop.ts` 及本章测试；保留第 06 章的工具执行器。先保存 `git diff -- workshop/src/agent-loop.ts workshop/test`，恢复后运行 `npm run workshop:test -- tool-contract`，应仍通过。
+
+:::rebuild title="Checkpoint 07 · 先闭合一个无工具回合"
+**模式：** 重建。从 06 的 target 开始，只增加循环控制，不重写 model 或 tool。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/agent-loop.ts`
+
+**第一步：** 先不看 target diff，先让 `runAgentLoop` 完成“请求模型 → 追加 assistant → stop”的无工具路径；测试变绿后，再加入 toolUse 分支和下一轮。
+
+**聚焦测试：** `packages/pi-course/test/07-agent-loop.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 07`
+
+**练习目录：** `npm run practice -w @pi/course -- 07`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/07-*.test.js`
+
+**通过证据：** 无工具、工具往返、并发完成、异常、length 和 abort 路径通过；transcript 写入顺序不受工具完成顺序影响。
+
+第一次尝试禁止查看完整答案；卡住时让陪练指出当前状态和唯一合法的下一状态，不要先给 `while` 实现。
+:::
 
 ## 先建立全景
 

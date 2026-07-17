@@ -8,7 +8,7 @@ title: Read、Write、Edit 与 Bash
 summary: 让 Agent 获得可截断、可取消、可诊断的文件和进程能力，同时说清真正的安全边界。
 minutes: 135
 difficulty: 核心
-artifact: workshop/src/coding-tools.ts
+artifact: packages/pi-course/src/coding-tools.ts
 prerequisites: 06,07
 terms: execution environment, exact edit, mutation queue, output truncation, containment
 upstream: packages/coding-agent/src/core/tools/read.ts, packages/coding-agent/src/core/tools/write.ts, packages/coding-agent/src/core/tools/edit.ts, packages/coding-agent/src/core/tools/bash.ts
@@ -23,6 +23,28 @@ upstream: packages/coding-agent/src/core/tools/read.ts, packages/coding-agent/sr
 不变量是：**失败动作不得留下“看似成功”的半完成状态**。尤其 edit 必须先验证全部替换，再一次写回；同一文件的 mutation 必须串行。
 
 恢复本章起点时，删除临时 fixture，撤销 `workshop/src/coding-tools.ts` 与本章测试即可；不要回退 tool contract 或 loop。先用 `git diff -- workshop/` 保存本章 patch，绝不拿 `pi/`、`practice/` 或教材仓库自身做破坏性练习。
+
+:::rebuild title="Checkpoint 08 · 先让 read 成为有界观察"
+**模式：** 重建。从 07 的 target 开始，把工具契约接到临时文件系统和子进程。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/coding-tools.ts`
+
+**第一步：** 先不看 target diff，只实现 `createCodingTools` 中的 read：规范化 cwd 内路径、返回行号与截断信息；read 通过后再做原子 write、批量 edit 和受限 bash。
+
+**聚焦测试：** `packages/pi-course/test/08-coding-tools.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 08`
+
+**练习目录：** `npm run practice -w @pi/course -- 08`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/08-*.test.js`
+
+**通过证据：** 续读、edit 回滚、symlink 逃逸、timeout、abort 与输出上限测试通过；失败不留下半完成 mutation。
+
+第一次尝试禁止查看完整答案；所有破坏实验只在测试创建的临时目录，禁止拿真实项目当 fixture。
+:::
 
 ## 先建立全景
 

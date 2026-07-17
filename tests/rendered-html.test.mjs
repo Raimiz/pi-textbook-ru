@@ -58,6 +58,9 @@ test("章节页暴露真实 commit、parent、测试与陪学协议", async () =
   assert.match(html, /8479bd84/);
   assert.match(html, /00-prologue\.test\.ts/);
   assert.match(html, /npm run checkpoint -w @pi\/course -- 00/);
+  assert.match(html, /npm run practice -w @pi\/course -- 00/);
+  assert.match(html, /本章重建入口/);
+  assert.match(html, /parent 是本章开始时的起点快照/);
   assert.match(html, /可选迁移练习/);
 });
 
@@ -71,6 +74,7 @@ test("学习方法明确 commit + Agent 引导优先，迁移为可选", async (
   assert.match(html, /定位文件/);
   assert.match(html, /可选迁移/);
   assert.match(html, /parent/);
+  assert.match(html, /practice/);
 });
 
 test("社交图已接入绝对请求 host，旧 preview 资产已移除", async () => {

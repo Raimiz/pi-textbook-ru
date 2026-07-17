@@ -8,7 +8,7 @@ title: EventStream、AsyncIterable 与取消
 summary: 把过程事件、最终结果和协作式取消统一进一个不会悬挂的异步流契约。
 minutes: 95
 difficulty: 进阶
-artifact: workshop/src/event-stream.ts
+artifact: packages/pi-course/src/event-stream.ts
 prerequisites: 01
 terms: AsyncIterable, EventStream, backpressure, terminal event, AbortSignal
 upstream: packages/ai/src/utils/event-stream.ts
@@ -25,6 +25,28 @@ upstream: packages/ai/src/utils/event-stream.ts
 > 每条流必须以一个可识别的终态结束；迭代器和 `result()` 必须从同一个终态得到一致结论，不能有一方永远等待。
 
 要恢复起点，撤销 `workshop/src/event-stream.ts` 和对应测试中本章故障实验的改动，再运行聚焦测试。不要用 `setTimeout` 延长测试来掩盖悬挂。
+
+:::rebuild title="Checkpoint 02 · 先闭合一次 push 与 next"
+**模式：** 重建。从 01 的 target 开始，只引入时间与等待关系。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/event-stream.ts`
+
+**第一步：** 先不看 target diff，从聚焦测试画出两种时序：先 `push` 后 `next`、先 `next` 后 `push`；先实现一个 queue 与一个 pending iterator 的最小闭环，再处理终态。
+
+**聚焦测试：** `packages/pi-course/test/02-event-stream.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 02`
+
+**练习目录：** `npm run practice -w @pi/course -- 02`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/02-*.test.js`
+
+**通过证据：** 聚焦测试通过且无悬挂；你能说明 `for await` 与 `result()` 为什么必须由同一个终态完成。
+
+第一次尝试禁止查看完整答案；若卡住，先让陪练只指出 queue、waiter、terminal 三类状态。
+:::
 
 ## 先建立全景
 

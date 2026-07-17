@@ -8,7 +8,7 @@ title: 用故障矩阵证明你造出了 Pi
 summary: 用确定性黑盒评测、跨层故障归因和无 starter 终局任务证明系统在失败时仍守住不变量。
 minutes: 180
 difficulty: 综合
-artifact: workshop/src/eval.ts
+artifact: packages/pi-course/src/eval.ts
 prerequisites: 04,07,08,10,11,12,13
 terms: deterministic eval, fault injection, first divergence, protocol violation, capstone
 upstream: packages/agent/test/agent-loop.test.ts,packages/coding-agent/test/agent-session-compaction.test.ts
@@ -27,6 +27,28 @@ upstream: packages/agent/test/agent-loop.test.ts,packages/coding-agent/test/agen
 > 每个失败必须归属到首次偏离契约的那一层；评测不能用一个 `agent_failed` 抹平 provider、protocol、tool、session、context 与 product 的差异。
 
 先保存第 13 章 checkpoint。恢复本章起点时，恢复 `workshop/src/eval.ts` 与 eval fixtures 即可；被评系统不应为了让评测通过而获得测试专用分支。
+
+:::rebuild title="Checkpoint 14 · 先让一个失败能被归因"
+**模式：** 重建。从 13 的 target 开始，评测系统，不给被评系统加捷径。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/eval.ts`
+
+**第一步：** 先不看 target diff，实现单个 `runEvalCase`：建立隔离 fixture、运行 runtime、收集结构化 assertion 与首次失败层；单 case 可重复后再做 suite 和 capstone。
+
+**聚焦测试：** `packages/pi-course/test/14-eval-capstone.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 14`
+
+**练习目录：** `npm run practice -w @pi/course -- 14`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/14-*.test.js`
+
+**通过证据：** 正常任务与 provider、protocol、tool、session、context、product 故障都能稳定归因；全量 51 个教学测试通过。
+
+第一次尝试禁止查看完整答案；capstone 允许查看接口与测试，不允许复制 `workshop/` 或 target 完整实现。
+:::
 
 ## 先建立全景
 

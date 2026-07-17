@@ -8,7 +8,7 @@ title: 为 Agent 建立统一消息语言
 summary: 用 provider-neutral 的消息与内容块保存语义，让界面、会话和模型共享同一事实源。
 minutes: 100
 difficulty: 核心
-artifact: workshop/src/types.ts
+artifact: packages/pi-course/src/types.ts
 prerequisites: 02
 terms: canonical IR, content block, AgentContext, StopReason, projection
 upstream: packages/ai/src/types.ts
@@ -25,6 +25,28 @@ upstream: packages/ai/src/types.ts
 > Provider payload、终端字符串和 canonical message 是三个层次；只有 canonical message 可以成为 Agent 的长期事实。
 
 恢复本章起点时，撤销 `workshop/src/types.ts` 与 `workshop/test/foundations-labs.test.ts` 的实验改动；不要通过修改 adapter fixture 来迎合错误消息形状。
+
+:::rebuild title="Checkpoint 03 · 先定义不会随 provider 改变的事实"
+**模式：** 重建。从 02 的 target 开始，先定义 canonical message，再把流具体化。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/types.ts`
+
+**第一步：** 先不看 target diff，按聚焦测试依次实现 `text`、`assistantMessage` 与 `textOf`；先证明文本投影不会改写原始 content，再扩展 stop reason 与消息事件。
+
+**聚焦测试：** `packages/pi-course/test/03-message-ir.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 03`
+
+**练习目录：** `npm run practice -w @pi/course -- 03`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/03-*.test.js`
+
+**通过证据：** 聚焦测试通过；你能指出 canonical content、文本投影和 provider payload 的边界，并解释 error 为何仍是可 resolve 的协议终态。
+
+第一次尝试禁止查看完整答案；让陪练先定位最小 helper，不要一次展开整个消息联合。
+:::
 
 ## 先建立全景
 

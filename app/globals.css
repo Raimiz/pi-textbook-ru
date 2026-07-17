@@ -1154,6 +1154,25 @@ a {
   background: #0c1513;
 }
 
+.commit-command-group {
+  display: grid;
+  gap: 8px;
+}
+
+.commit-command-group > small {
+  margin-top: 4px;
+  color: #92aaa4;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.commit-command-group > small:not(:first-child) {
+  margin-top: 6px;
+}
+
 .commit-command code {
   overflow-x: auto;
   color: #9ed4ce;
@@ -1373,6 +1392,12 @@ a {
 .learning-block--transfer {
   --block-color: var(--green);
   --block-soft: var(--green-soft);
+}
+
+.learning-block--rebuild {
+  --block-color: #256b72;
+  --block-soft: #e2f2f1;
+  box-shadow: 0 12px 30px rgba(24, 93, 101, 0.08);
 }
 
 .learning-block--pi {

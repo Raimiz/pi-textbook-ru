@@ -7,6 +7,7 @@
   },
   "scripts": {
     "content:build": "node scripts/build-content.mjs",
+    "learning:verify": "node scripts/validate-learning-contract.mjs && node --test tests/learning-contract.test.mjs tests/practice-sandbox.test.mjs",
     "history:verify": "npm run content:build && node --experimental-strip-types scripts/verify-course-history.mjs",
     "predev": "npm run content:build",
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext dev",
@@ -17,7 +18,7 @@
     "workshop:build": "tsc -p workshop/tsconfig.json",
     "workshop:test": "node scripts/run-workshop-tests.mjs",
     "workshop:verify": "node scripts/run-workshop-tests.mjs",
-    "test": "npm run workshop:verify && npm run build && node --test tests/rendered-html.test.mjs",
+    "test": "npm run learning:verify && npm run workshop:verify && npm run build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern workshop/.dist",
     "db:generate": "drizzle-kit generate"
   },

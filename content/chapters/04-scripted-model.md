@@ -8,7 +8,7 @@ title: ScriptedModel：把模型变成可执行规格
 summary: 用按轮消费的确定性脚本生成模型事件，稳定证明请求、流、终态与失败契约。
 minutes: 100
 difficulty: 核心
-artifact: workshop/src/scripted-model.ts
+artifact: packages/pi-course/src/scripted-model.ts
 prerequisites: 02,03
 terms: test double, executable specification, deterministic trace, recorded request
 upstream: packages/ai/src/providers/faux.ts
@@ -25,6 +25,28 @@ upstream: packages/ai/src/providers/faux.ts
 > ScriptedModel 与真实 adapter 必须满足同一个 `Model.stream()` 契约；调用者不应根据“是不是 fake”改变消费代码。
 
 完成后修改 `workshop/src/types.ts`、`workshop/src/scripted-model.ts` 及测试。恢复起点时重新使用测试中的原始 turns，撤销故意插入的失败回合；不需要删除缓存或配置 API key。
+
+:::rebuild title="Checkpoint 04 · 先让一个脚本回合满足真实边界"
+**模式：** 重建。从 03 的 target 开始，只加入确定性事件生产者。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/scripted-model.ts`
+
+**第一步：** 先不看 target diff，读取测试里第一条 scripted turn；先实现 `requests` 记录与“取出一个 turn”，再把该消息投影为 `start → delta → done` 事件。
+
+**聚焦测试：** `packages/pi-course/test/04-scripted-model.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 04`
+
+**练习目录：** `npm run practice -w @pi/course -- 04`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/04-*.test.js`
+
+**通过证据：** 成功、脚本耗尽和预取消测试都通过；调用者消费 scripted 与真实 model 时不需要分支。
+
+第一次尝试禁止查看完整答案；若事件顺序不清楚，让陪练只给本轮应发出的下一个事件。
+:::
 
 ## 先建立全景
 

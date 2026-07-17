@@ -254,8 +254,11 @@ export function ReaderShell({
               <code>{chapter.commit.slice(0, 8)}</code>
             </header>
             <p>
-              这是 Pi 仓库中的真实可检出提交，不是页面占位符。让陪学 Agent
-              同时阅读教材、目标 commit 与它的 parent，再按提示阶梯带你重建。
+              这是 Pi 仓库中的真实可检出提交，不是页面占位符。parent
+              是本章开始时的干净起点；target 是聚焦测试已经通过的终点。
+              {chapter.id === "00"
+                ? " 本章会导出 target 供观察，但不会附带另一份答案或 Git 历史。"
+                : " 先定位两者，再从 parent 创建一个只有聚焦测试、没有 target 实现和 Git 历史的隔离练习目录。"}
             </p>
             <dl>
               <div>
@@ -271,20 +274,36 @@ export function ReaderShell({
                 <dd><code>{chapter.checkpointTest}</code></dd>
               </div>
             </dl>
-            <div className="commit-command">
-              <code>
-                npm run checkpoint -w @pi/course -- {chapter.id}
-              </code>
-              <button
-                type="button"
-                data-copy-text={`npm run checkpoint -w @pi/course -- ${chapter.id}`}
-              >
-                复制命令
-              </button>
+            <div className="commit-command-group">
+              <small>1 · 定位本章</small>
+              <div className="commit-command">
+                <code>
+                  npm run checkpoint -w @pi/course -- {chapter.id}
+                </code>
+                <button
+                  type="button"
+                  data-copy-text={`npm run checkpoint -w @pi/course -- ${chapter.id}`}
+                >
+                  复制
+                </button>
+              </div>
+              <small>2 · 创建无答案练习目录</small>
+              <div className="commit-command">
+                <code>
+                  npm run practice -w @pi/course -- {chapter.id}
+                </code>
+                <button
+                  type="button"
+                  data-copy-text={`npm run practice -w @pi/course -- ${chapter.id}`}
+                >
+                  复制
+                </button>
+              </div>
             </div>
             <blockquote>
               不要直接给完整答案。先问我对下一次测试输出的预测，然后一次只给一个动作；
-              我卡住时按“定位文件 → 指出签名 → 伪代码 → 局部代码”逐级提示。
+              再阅读练习目录里的 LEARNING.md。我卡住时按“定位文件 → 指出签名 →
+              伪代码 → 局部代码”逐级提示。
             </blockquote>
           </section>
           <div

@@ -31,6 +31,7 @@ export default function AboutPage() {
           <li><strong>预测</strong><span>在看到 trace 前先写判断，让错误形成可比较的信号。</span></li>
           <li><strong>完整范例</strong><span>先沿一条因果链建立 schema，不让新手同时搜索目标和代码形状。</span></li>
           <li><strong>对照提交</strong><span>每章对应教学分支上的真实 commit，先看 parent，再看这一章只增加了什么。</span></li>
+          <li><strong>隔离重建</strong><span>从 parent 生成无 Git 历史的目录，只注入本章聚焦测试；第 00 章例外，只观察 target。</span></li>
           <li><strong>Agent 陪练</strong><span>旁边的 Agent 一次只给一个动作；卡住时按“定位文件 → 指出签名 → 伪代码 → 局部代码”逐级提示。</span></li>
           <li><strong>故障注入</strong><span>主动破坏一个边界，寻找首次偏差而不是盯最后一句输出。</span></li>
           <li><strong>可选迁移</strong><span>第一次学习不以独立写出 sibling case 为门槛；熟练后再减少提示、延迟重做。</span></li>
@@ -43,12 +44,17 @@ export default function AboutPage() {
           diff 就是这一步真实增加的复杂性。陪学 Agent 因而能基于你的当前位置提示，而不是
           从最终答案倒着猜一条虚假的捷径。
         </p>
-        <pre><code>{`请阅读 course/build-your-own-pi 上本章 commit 与它的 parent，
-再结合当前教材。不要直接给完整答案：先问我对下一次测试结果的预测，
-然后一次只给一个动作；我卡住时再逐级增加提示。`}</code></pre>
+        <pre><code>{`npm run checkpoint -w @pi/course -- 05
+npm run practice -w @pi/course -- 05 ../pi-practice-05
+
+请阅读 target commit 与 parent 的 diff，但不要把答案展示或复制给我。
+结合当前教材和练习目录里的 LEARNING.md 指导我：先问我对下一次测试
+结果的预测，然后一次只给一个动作；我卡住时再逐级增加提示。`}</code></pre>
         <p>
-          每个 commit 都可单独检出并运行测试。`迁移练习` 保留为可选挑战：
-          它适合在你已经完成一次引导重建后检验迁移，不适合拿来判断第一次学习是否合格。
+          `checkpoint` 负责定位状态转换；`practice` 才把它变成可动手的练习目录。
+          01～14 从 parent 开始，只带 target 的聚焦测试，因此学生不会意外看到实现。
+          `迁移练习` 保留为可选挑战：它适合在你已经完成一次引导重建后检验迁移，
+          不适合拿来判断第一次学习是否合格。
         </p>
 
         <h2>什么来自 D2L，什么是本书新增</h2>

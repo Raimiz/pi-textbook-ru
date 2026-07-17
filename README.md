@@ -9,8 +9,8 @@ context compaction、资源扩展、产品入口与确定性 eval。
 
 ## 目录边界
 
-本项目只写入新建的 `pi-textbook/`。原有 `curriculum/`、`practice/` 和 `pi/`
-工作目录内容均未修改。
+教材、教学历史和可用性迭代都位于新建 worktree；原有 `curriculum/`、
+`practice/` 和 `pi/` 工作目录内容均未修改。
 
 Pi 仓库中的教学历史使用独立 worktree：
 
@@ -39,6 +39,7 @@ npm run dev
 
 ```bash
 npm run content:build
+npm run learning:verify
 npm run typecheck
 npm run workshop:verify
 npm run build
@@ -57,11 +58,14 @@ npm run history:verify
 cd ../pi-course-history
 npm install
 npm run checkpoint -w @pi/course -- 05
+npm run practice -w @pi/course -- 05 ../pi-practice-05
 ```
 
-把输出、本章网页与
+`checkpoint` 只定位 parent、target 和聚焦测试；`practice` 从 parent 创建
+无 Git 历史的动手目录，并只注入 target 的聚焦测试（00 章导出 target 供观察）。
+把输出、本章网页、练习目录中的 `LEARNING.md` 与
 `packages/pi-course/LEARN_WITH_AGENT.md` 一起交给旁边的 Agent。Agent 应先
-比较目标 commit 与 parent，再一次只给一个动作；提示按
+比较目标 commit 与 parent，但不展示答案；然后一次只给一个动作。提示按
 “定位文件 → 指出签名 → 伪代码 → 局部代码”逐级增加。
 
 迁移练习是完成一次引导重建后的可选挑战，不是第一次学习的放行条件。
@@ -75,6 +79,7 @@ npm run checkpoint -w @pi/course -- 05
 - `workshop/`：网站正文所对应的最终参考实现
 - `docs/research/`：D2L 组织研究与第一性原理分析
 - `docs/plans/`：实现计划
+- `docs/usability/`：学生—陪练模拟协议、缺陷账本与逐章回归记录
 
 正文与示例代码独立编写；上游源码对照固定在明确 commit，并区分相同行为、
 教学简化和课程主动强化。

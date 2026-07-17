@@ -8,7 +8,7 @@ title: Resources、Skills 与 Extensions
 summary: 用渐进式披露加载知识资源，并把可执行扩展放在明确的信任边界之后。
 minutes: 110
 difficulty: 进阶
-artifact: workshop/src/resources.ts
+artifact: packages/pi-course/src/resources.ts
 prerequisites: 06,11
 terms: resource, prompt template, skill, extension, progressive disclosure, trust boundary
 upstream: packages/coding-agent/src/core/resource-loader.ts
@@ -27,6 +27,28 @@ upstream: packages/coding-agent/src/core/resource-loader.ts
 > Skill 是被读取并进入 context 的资源；Extension 是会执行的宿主代码。文件名相似不能抹平两者的权限差异。
 
 在第 11 章 checkpoint 上保存当前改动。恢复本章起点时，只恢复 `workshop/src/resources.ts` 和资源测试；Agent loop、context 与 session 不应因卸载资源而改变。
+
+:::rebuild title="Checkpoint 12 · 先发现元数据，不执行代码"
+**模式：** 重建。从 11 的 target 开始，先把资源发现和执行权限分开。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/resources.ts`
+
+**第一步：** 先不看 target diff，只实现 `discoverResources` 的确定性 metadata 列表与冲突诊断；确认没有读取 skill 正文、没有 import extension 后，再做 activation 与 trust gate。
+
+**聚焦测试：** `packages/pi-course/test/12-resources-extensions.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 12`
+
+**练习目录：** `npm run practice -w @pi/course -- 12`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/12-*.test.js`
+
+**通过证据：** precedence、按需激活、路径逃逸、信任拒绝、hook timeout 与配对错误结果测试通过；skill 与 extension 权限没有混淆。
+
+第一次尝试禁止查看完整答案；每加一层权限先写出它可以读取或执行什么，不能用一个万能 loader 合并。
+:::
 
 ## 先建立全景
 

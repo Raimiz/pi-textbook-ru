@@ -162,6 +162,7 @@ const requiredHeadings = [
 ];
 
 const directiveMinimums = {
+  rebuild: 1,
   predict: 1,
   lab: 2,
   failure: 1,
@@ -171,6 +172,7 @@ const directiveMinimums = {
 };
 
 const directiveLabels = {
+  rebuild: ["本章重建入口", "先跨过从理解到动手的第一步"],
   predict: ["先预测", "先写判断，再看推理"],
   lab: ["动手实现", "在真实文件中建立能力"],
   mechanism: ["关键机制", "把现象连接到不变量"],
@@ -252,7 +254,7 @@ function extractDirectives(markdown, file) {
 
   for (let index = 0; index < lines.length; index += 1) {
     const start = lines[index].match(
-      /^:::(predict|lab|mechanism|failure|checkpoint|pi|transfer|note)(?:\s+title="([^"]+)")?\s*$/,
+      /^:::(rebuild|predict|lab|mechanism|failure|checkpoint|pi|transfer|note)(?:\s+title="([^"]+)")?\s*$/,
     );
     if (!start) {
       output.push(lines[index]);

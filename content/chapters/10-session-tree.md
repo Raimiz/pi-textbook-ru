@@ -8,7 +8,7 @@ title: 会话是追加式事件树
 summary: 用 JSONL 中的 parent pointer 保存不可改写的历史，并从任意叶子重建一条活动路径。
 minutes: 125
 difficulty: 核心
-artifact: workshop/src/session.ts
+artifact: packages/pi-course/src/session.ts
 prerequisites: 03,09
 terms: append-only log, JSONL, parent pointer, active path, branch, resume
 upstream: packages/coding-agent/src/core/session-manager.ts, packages/coding-agent/docs/session-format.md
@@ -23,6 +23,28 @@ upstream: packages/coding-agent/src/core/session-manager.ts, packages/coding-age
 不变量是：**已有 SessionEntry 永不原地修改或删除；分支通过在旧 entry 下追加新孩子表达。**
 
 恢复本章起点时，只撤销 `workshop/src/session.ts` 与本章测试，并删除测试生成的临时 `.jsonl`。不要清空 Agent transcript 来“修复”store。恢复后 `npm run workshop:test -- stateful-agent` 应仍通过。
+
+:::rebuild title="Checkpoint 10 · 先用 parent pointer 重建一条路径"
+**模式：** 重建。从 09 的 target 开始，先做纯函数树路径，再接 JSONL。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/session.ts`
+
+**第一步：** 先不看 target diff，定义最小 `SessionEntry`，实现 `pathTo(entries, leafId)`；先让左右两个 leaf 各自还原，再处理重复、缺 parent 和环。
+
+**聚焦测试：** `packages/pi-course/test/10-session-tree.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 10`
+
+**练习目录：** `npm run practice -w @pi/course -- 10`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/10-*.test.js`
+
+**通过证据：** 分支路径、结构诊断、追加顺序、尾部损坏恢复测试通过；任何已有 entry 都没有被原地改写。
+
+第一次尝试禁止查看完整答案；不要先写 store class，先用内存数组证明树的不变量。
+:::
 
 ## 先建立全景
 

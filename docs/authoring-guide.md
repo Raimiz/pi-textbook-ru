@@ -37,7 +37,7 @@ title: Agent Loop 是可证明的状态机
 summary: 一句话说明本章建立的能力。
 minutes: 100
 difficulty: 核心
-artifact: src/agent-loop.ts
+artifact: packages/pi-course/src/agent-loop.ts
 prerequisites: 04,06
 terms: agent loop, transcript, tool result, stop reason
 upstream: packages/agent/src/agent-loop.ts
@@ -58,12 +58,13 @@ upstream: packages/agent/src/agent-loop.ts
 正文必须依次包含下列二级标题：
 
 1. `## 你将得到什么`
-2. `## 先建立全景`
-3. 至少两个解释与实现小节
-4. `## 故意把它弄坏`
-5. `## 本章验收`
-6. `## 可选迁移练习`
-7. `## 小结`
+2. 一个 `:::rebuild` 本章重建入口
+3. `## 先建立全景`
+4. 至少两个解释与实现小节
+5. `## 故意把它弄坏`
+6. `## 本章验收`
+7. `## 可选迁移练习`
+8. `## 小结`
 
 每章要明确：
 
@@ -79,6 +80,31 @@ upstream: packages/agent/src/agent-loop.ts
 指令不可嵌套，以单独一行的 `:::` 结束：
 
 ```md
+:::rebuild title="第 07 章 · 从红测试闭合一次工具往返"
+**模式：** 重建
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/agent-loop.ts`
+
+**第一步：** 先读聚焦测试，只创建它首次引用且 parent 中不存在的符号。
+
+**聚焦测试：** `packages/pi-course/test/07-agent-loop.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 07`
+
+**练习目录：** `npm run practice -w @pi/course -- 07`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后运行
+`node --test packages/pi-course/dist/test/07-*.test.js`
+
+**通过证据：** 聚焦测试全绿，并能解释第一次偏差。
+
+先自己预测并尝试；只有卡住时才让陪练按提示阶梯增加信息。
+:::
+```
+
+```md
 :::predict title="运行前先判断"
 先写下你的判断。
 ---answer
@@ -90,7 +116,7 @@ upstream: packages/agent/src/agent-loop.ts
 :::lab title="实践 7.2 · 闭合一次工具往返"
 **目标：** ...
 
-**文件：** `workshop/src/agent-loop.ts`
+**文件：** `packages/pi-course/src/agent-loop.ts`
 
 **动作：**
 1. ...
@@ -103,6 +129,7 @@ upstream: packages/agent/src/agent-loop.ts
 
 其他合法类型：
 
+- `:::rebuild`：本章模式、起终点、教学文件、第一动作和可执行测试入口；
 - `:::mechanism`：关键机制；
 - `:::failure`：预期失败与首次偏差；
 - `:::checkpoint`：验收、恢复和下一状态；
@@ -110,15 +137,17 @@ upstream: packages/agent/src/agent-loop.ts
 - `:::transfer`：完成 commit 引导重建后，再减少脚手架的可选 sibling task；
 - `:::note`：必要但非主线的说明。
 
-每章至少包含一个 `predict`、两个 `lab`、一个 `failure`、一个 `checkpoint`、
-一个 `pi` 和一个 `transfer`。
+每章必须且只能包含一个 `rebuild`，并至少包含一个 `predict`、两个 `lab`、
+一个 `failure`、一个 `checkpoint`、一个 `pi` 和一个 `transfer`。
 
 ## 写作标准
 
 - 先说当前缺口，再引入抽象；不要从定义列表开始。
 - 解释应落到数据流、所有权、顺序、资源或失败语义。
 - 每个代码块只证明一个主张；紧随可观察输出和解释。
-- 代码必须和 `workshop/` 的公共接口一致，不发明无法运行的伪 API。
+- 重建动作只写入该 checkpoint 的 `packages/pi-course/` 教学文件；`workshop/`
+  是整本书的最终参考实现，不是学生逐章修改的目录。
+- 代码必须和该 checkpoint 的课程接口一致，不发明无法运行的伪 API。
 - 输出写成稳定模式，不依赖随机 ID、绝对路径、耗时或真实模型措辞。
 - 不把第一次 “测试通过” 写成最终掌握，也不让无提示迁移堵住第一次学习；
   先完成 commit 引导重建，再在后续逐渐减少提示并迁移到新情境。

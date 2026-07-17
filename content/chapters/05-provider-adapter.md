@@ -8,7 +8,7 @@ title: 把真实流式协议挡在边界外
 summary: 用纯转换、离线 chunk fixture 和薄 transport 把 OpenAI-compatible 流归一为统一模型协议。
 minutes: 120
 difficulty: 核心
-artifact: workshop/src/provider-adapter.ts
+artifact: packages/pi-course/src/provider-adapter.ts
 prerequisites: 03,04
 terms: provider adapter, transport, fixture, incremental JSON, finish reason
 upstream: packages/ai/src/api/openai-completions.ts
@@ -25,6 +25,28 @@ ScriptedModel 已证明上层契约，但真实服务不会发送 `ModelEvent`�
 > Provider 原始类型只能存在于 adapter 边界；adapter 之外只出现 canonical message、ModelEvent 与 EventStream。
 
 恢复本章起点时，撤销 adapter 和 fixture 测试中的故障改动，删除本地 `.env` 中不再使用的临时值即可；不要删除 `.env.example`，也不要改 ScriptedModel 来适配真实服务。
+
+:::rebuild title="Checkpoint 05 · 先完成无网络的双向翻译"
+**模式：** 重建。从 04 的 target 开始，把外部 wire protocol 挡在 adapter 内。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/provider-adapter.ts`
+
+**第一步：** 先不看 target diff，先实现 `toProviderMessages` 的纯投影并用 fixture 验证；出站形状稳定后，再处理 SSE 分帧和增量 tool arguments。
+
+**聚焦测试：** `packages/pi-course/test/05-provider-adapter.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 05`
+
+**练习目录：** `npm run practice -w @pi/course -- 05`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/05-*.test.js`
+
+**通过证据：** 离线 fixture、分裂 chunk、finish reason、usage、取消与 transport 错误测试通过；API key 不进入错误文本。
+
+第一次尝试禁止查看完整答案，也不要配置真实 API；若卡住，让陪练先判断问题在出站翻译、SSE framing 还是 canonical event。
+:::
 
 ## 先建立全景
 

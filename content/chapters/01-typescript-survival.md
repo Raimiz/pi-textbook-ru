@@ -8,7 +8,7 @@ title: TypeScript、测试与 ESM 生存集
 summary: 只学习构造 Agent 所需的 TypeScript 子集，并建立类型检查与行为测试两条证据链。
 minutes: 75
 difficulty: 入门
-artifact: workshop/src/survival/events.ts
+artifact: packages/pi-course/src/survival/events.ts
 prerequisites: 00
 terms: tagged union, narrowing, never, ESM, node:test
 upstream: packages/agent/src/types.ts
@@ -25,6 +25,28 @@ upstream: packages/agent/src/types.ts
 > 来自系统边界的数据先是 `unknown`；只有经过验证和穷尽分支后，才能进入 Agent 的强类型核心。
 
 恢复起点时，先用 `git diff -- workshop/src/survival` 看清实验改动，再手动撤销故意加入的分支；不要重建项目或修改 `package-lock.json`。
+
+:::rebuild title="Checkpoint 01 · 先让编译器暴露缺口"
+**模式：** 重建。从 00 的 target 开始，只补本章的 TypeScript 生存集。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/survival/events.ts`
+
+**第一步：** 先不看 target diff，阅读聚焦测试的 import 与四种事件 fixture，先写 `DemoEvent` tagged union；让 `formatEvent` 的穷尽分支成为第一个编译证据。
+
+**聚焦测试：** `packages/pi-course/test/01-typescript-survival.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 01`
+
+**练习目录：** `npm run practice -w @pi/course -- 01`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/01-*.test.js`
+
+**通过证据：** 聚焦测试通过；你能解释为什么 `readDelta` 必须先验证 `unknown`，以及漏掉 `aborted` 时编译器和运行时测试分别暴露什么。
+
+第一次尝试禁止查看完整答案；卡住时只让陪练定位文件，再逐级增加到签名或伪代码。
+:::
 
 ## 先建立全景
 

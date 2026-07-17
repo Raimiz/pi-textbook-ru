@@ -8,7 +8,7 @@ title: 从纯循环到可中断的 Stateful Agent
 summary: 用一个薄的有状态 facade 管理 transcript、生命周期、取消与两种用户消息时序。
 minutes: 120
 difficulty: 核心
-artifact: workshop/src/agent.ts
+artifact: packages/pi-course/src/agent.ts
 prerequisites: 07,08
 terms: stateful agent, lifecycle, abort, steering, follow-up, reentrancy
 upstream: packages/agent/src/agent.ts
@@ -23,6 +23,28 @@ upstream: packages/agent/src/agent.ts
 不变量是：**有状态 Agent 只能编排既有 loop，不能复制另一套 model/tool 状态机；任何时刻至多有一个 active run 改写同一 transcript。**
 
 恢复本章起点时，撤销 `workshop/src/agent.ts` 与本章测试；`agent-loop.ts` 和 coding tools 不动。恢复后直接运行 `npm run workshop:test -- agent-loop`，应仍能独立完成所有状态迁移。
+
+:::rebuild title="Checkpoint 09 · 先证明 busy guard 总能释放"
+**模式：** 重建。从 08 的 target 开始，用对象拥有跨运行状态，但复用既有 loop。
+
+**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+
+**教学文件：** `packages/pi-course/src/agent.ts`
+
+**第一步：** 先不看 target diff，先实现 `Agent.prompt()` 的单运行路径与 `try/finally` busy guard；故意让 subscriber 抛错，确认状态仍回到 idle，再加入队列与取消。
+
+**聚焦测试：** `packages/pi-course/test/09-stateful-agent.test.ts`
+
+**定位命令：** `npm run checkpoint -w @pi/course -- 09`
+
+**练习目录：** `npm run practice -w @pi/course -- 09`
+
+**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/09-*.test.js`
+
+**通过证据：** 重入拒绝、坏 listener、abort、steer 与 follow-up 测试通过；同一 transcript 同时最多一个 active run。
+
+第一次尝试禁止查看完整答案；若状态混乱，让陪练只画 `idle → running → idle` 和 finally 所有权。
+:::
 
 ## 先建立全景
 

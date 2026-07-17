@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "regressions": [
+    {
+      "id": "L00-PATH-MODE",
+      "chapter": "00",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "学生把 workshop 当成教学文件且无法确定是否应重写；陪练确认 parent 中不存在整个课程包。",
+      "firstPrinciple": "观察章不能同时要求从空 parent 重建，工作对象必须唯一。",
+      "fix": [
+        "content/chapters/00-prologue.md",
+        "content/chapters/01-typescript-survival.md",
+        "scripts/build-content.mjs",
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "独立区分 checkpoint 与 practice，确认 00 导出 target 观察，无需提示完成 2/2。",
+        "coach": "观察模式、路径、命令与隔离边界均通过独立审计。",
+        "evidence": "fresh sandbox ch00-retest4; install 0, build 0, focused tests 2/2"
+      }
+    },
+    {
+      "id": "L00-OWNER-SEMANTICS",
+      "chapter": "00",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "学生无法判断 model_start 和 tool_start 的 owner 是发起者、执行者还是记录者。",
+      "firstPrinciple": "一个字段只能承载一种语义；责任归属必须与因果触发分开。",
+      "fix": ["content/chapters/00-prologue.md"],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "能解释 owner 是事件事实归属，运行轨迹事件不是 AgentMessage。",
+        "coach": "owner、发起者、动作执行者及持久化消息边界均无歧义。",
+        "evidence": "student explanation plus coach line audit; no hint above L0"
+      }
+    },
+    {
+      "id": "L00-LAB-TEST-DRIFT",
+      "chapter": "00",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "实践 0.2 声称测试含乱序数组，真实测试只删除 tool_result 并重新编号。",
+      "firstPrinciple": "教材承诺的可观察失败必须与实际 oracle 相同。",
+      "fix": [
+        "content/chapters/00-prologue.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "受控破坏与真实 oracle 一致，聚焦测试恰好 2/2。",
+        "coach": "实践 0.2 已对应删除 result 并重新编号；提前 result 只做纸面预测。",
+        "evidence": "00-prologue.test.ts focused run passed 2/2"
+      }
+    },
+    {
+      "id": "L00-FIXTURE-HUSKY",
+      "chapter": "00",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "隔离目录没有 Git 历史，npm install 却运行 Husky prepare 并打印 .git can't be found。",
+      "firstPrinciple": "练习夹具不应制造与学习目标无关、会被新手误判为失败的噪声。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "npm install 退出码 0 且 Husky 与 .git 警告均消失，后续 2/2 保持。",
+        "coach": "确认导出根 package.json 不含 prepare，完整流程无回退。",
+        "evidence": "fresh sandbox ch00-retest4; quiet install, build 0, focused tests 2/2"
+      }
+    }
+  ]
+}
