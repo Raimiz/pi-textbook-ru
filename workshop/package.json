@@ -1,0 +1,7 @@
+{
+  "name": "build-your-own-pi-workshop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "教材中所有代码片段对应的可执行 TypeScript 参考实现"
+}
