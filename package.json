@@ -7,8 +7,9 @@
   },
   "scripts": {
     "content:build": "node scripts/build-content.mjs",
-    "learning:verify": "node scripts/validate-learning-contract.mjs && node --test tests/learning-contract.test.mjs tests/practice-sandbox.test.mjs",
-    "history:verify": "npm run content:build && node --experimental-strip-types scripts/verify-course-history.mjs",
+    "learning:verify": "node scripts/validate-learning-contract.mjs && node --test tests/learning-contract.test.mjs tests/practice-sandbox.test.mjs tests/chinese-prose.test.mjs",
+    "history:sync": "node scripts/sync-checkpoint-history.mjs",
+    "history:verify": "node --test tests/checkpoint-manifest.test.mjs && npm run content:build && node --experimental-strip-types scripts/verify-course-history.mjs",
     "predev": "npm run content:build",
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext dev",
     "prebuild": "npm run content:build",

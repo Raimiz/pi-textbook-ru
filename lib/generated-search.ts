@@ -346,161 +346,144 @@ export const searchIndex: SearchEntry[] = [
     "id": "02",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
-    "title": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
+    "title": "EventStream：让过程和结果走同一条流",
     "href": "/learn/event-stream",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 把过程事件、最终结果和协作式取消统一进一个不会悬挂的异步流契约。 第一部 · 建立可执行语言 AsyncIterable, EventStream, backpressure, terminal event, AbortSignal 你将得到什么 先建立全景 一条流需要队列、等待者与终态 取消必须沿调用链协作 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "EventStream：让过程和结果走同一条流 实现一个既能逐项读取事件、又能等待最终结果的异步流，并把终态写成唯一结束信号。 第一部 · 建立可执行语言 AsyncIterable, EventStream, queue, waiter, terminal event 你将得到什么 先建立全景 一条流需要队列、等待者与终态 故意把它弄坏 本章验收 可选迁移练习 小结"
   },
   {
     "id": "02-你将得到什么",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
     "title": "你将得到什么",
     "href": "/learn/event-stream#你将得到什么",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 你将得到什么 AsyncIterable EventStream backpressure terminal event AbortSignal"
+    "searchText": "EventStream：让过程和结果走同一条流 你将得到什么 AsyncIterable EventStream queue waiter terminal event"
   },
   {
     "id": "02-先建立全景",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
     "title": "先建立全景",
     "href": "/learn/event-stream#先建立全景",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 先建立全景 AsyncIterable EventStream backpressure terminal event AbortSignal"
+    "searchText": "EventStream：让过程和结果走同一条流 先建立全景 AsyncIterable EventStream queue waiter terminal event"
   },
   {
     "id": "02-一条流需要队列等待者与终态",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
     "title": "一条流需要队列、等待者与终态",
     "href": "/learn/event-stream#一条流需要队列等待者与终态",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 一条流需要队列、等待者与终态 AsyncIterable EventStream backpressure terminal event AbortSignal"
-  },
-  {
-    "id": "02-取消必须沿调用链协作",
-    "chapterId": "02",
-    "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
-    "title": "取消必须沿调用链协作",
-    "href": "/learn/event-stream#取消必须沿调用链协作",
-    "partTitle": "第一部 · 建立可执行语言",
-    "terms": [
-      "AsyncIterable",
-      "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
-    ],
-    "searchText": "EventStream、AsyncIterable 与取消 取消必须沿调用链协作 AsyncIterable EventStream backpressure terminal event AbortSignal"
+    "searchText": "EventStream：让过程和结果走同一条流 一条流需要队列、等待者与终态 AsyncIterable EventStream queue waiter terminal event"
   },
   {
     "id": "02-故意把它弄坏",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
     "title": "故意把它弄坏",
     "href": "/learn/event-stream#故意把它弄坏",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 故意把它弄坏 AsyncIterable EventStream backpressure terminal event AbortSignal"
+    "searchText": "EventStream：让过程和结果走同一条流 故意把它弄坏 AsyncIterable EventStream queue waiter terminal event"
   },
   {
     "id": "02-本章验收",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
     "title": "本章验收",
     "href": "/learn/event-stream#本章验收",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 本章验收 AsyncIterable EventStream backpressure terminal event AbortSignal"
+    "searchText": "EventStream：让过程和结果走同一条流 本章验收 AsyncIterable EventStream queue waiter terminal event"
   },
   {
     "id": "02-可选迁移练习",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
     "title": "可选迁移练习",
     "href": "/learn/event-stream#可选迁移练习",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 可选迁移练习 AsyncIterable EventStream backpressure terminal event AbortSignal"
+    "searchText": "EventStream：让过程和结果走同一条流 可选迁移练习 AsyncIterable EventStream queue waiter terminal event"
   },
   {
     "id": "02-小结",
     "chapterId": "02",
     "chapterSlug": "event-stream",
-    "chapterTitle": "EventStream、AsyncIterable 与取消",
+    "chapterTitle": "EventStream：让过程和结果走同一条流",
     "title": "小结",
     "href": "/learn/event-stream#小结",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "AsyncIterable",
       "EventStream",
-      "backpressure",
-      "terminal event",
-      "AbortSignal"
+      "queue",
+      "waiter",
+      "terminal event"
     ],
-    "searchText": "EventStream、AsyncIterable 与取消 小结 AsyncIterable EventStream backpressure terminal event AbortSignal"
+    "searchText": "EventStream：让过程和结果走同一条流 小结 AsyncIterable EventStream queue waiter terminal event"
   },
   {
     "id": "03",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
-    "title": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
+    "title": "给 Agent 一套自己的消息格式",
     "href": "/learn/message-ir",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
@@ -510,13 +493,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 用 provider-neutral 的消息与内容块保存语义，让界面、会话和模型共享同一事实源。 第一部 · 建立可执行语言 canonical IR, content block, AgentContext, StopReason, projection 你将得到什么 先建立全景 Content block 保存有顺序的语义 三种消息承担不同所有权 Context 是本次请求的输入视图 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "给 Agent 一套自己的消息格式 用稳定的消息和内容块保存语义，不让界面格式或某家模型接口渗进核心。 第一部 · 建立可执行语言 canonical IR, content block, AgentContext, StopReason, projection 你将得到什么 先建立全景 Content block 保存有顺序的语义 三种消息承担不同所有权 Context 是本次请求的输入视图 故意把它弄坏 本章验收 可选迁移练习 小结"
   },
   {
     "id": "03-你将得到什么",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "你将得到什么",
     "href": "/learn/message-ir#你将得到什么",
     "partTitle": "第一部 · 建立可执行语言",
@@ -527,13 +510,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 你将得到什么 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 你将得到什么 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-先建立全景",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "先建立全景",
     "href": "/learn/message-ir#先建立全景",
     "partTitle": "第一部 · 建立可执行语言",
@@ -544,13 +527,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 先建立全景 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 先建立全景 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-content-block-保存有顺序的语义",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "Content block 保存有顺序的语义",
     "href": "/learn/message-ir#content-block-保存有顺序的语义",
     "partTitle": "第一部 · 建立可执行语言",
@@ -561,13 +544,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 Content block 保存有顺序的语义 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 Content block 保存有顺序的语义 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-三种消息承担不同所有权",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "三种消息承担不同所有权",
     "href": "/learn/message-ir#三种消息承担不同所有权",
     "partTitle": "第一部 · 建立可执行语言",
@@ -578,13 +561,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 三种消息承担不同所有权 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 三种消息承担不同所有权 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-context-是本次请求的输入视图",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "Context 是本次请求的输入视图",
     "href": "/learn/message-ir#context-是本次请求的输入视图",
     "partTitle": "第一部 · 建立可执行语言",
@@ -595,13 +578,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 Context 是本次请求的输入视图 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 Context 是本次请求的输入视图 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-故意把它弄坏",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "故意把它弄坏",
     "href": "/learn/message-ir#故意把它弄坏",
     "partTitle": "第一部 · 建立可执行语言",
@@ -612,13 +595,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 故意把它弄坏 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 故意把它弄坏 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-本章验收",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "本章验收",
     "href": "/learn/message-ir#本章验收",
     "partTitle": "第一部 · 建立可执行语言",
@@ -629,13 +612,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 本章验收 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 本章验收 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-可选迁移练习",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "可选迁移练习",
     "href": "/learn/message-ir#可选迁移练习",
     "partTitle": "第一部 · 建立可执行语言",
@@ -646,13 +629,13 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 可选迁移练习 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 可选迁移练习 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "03-小结",
     "chapterId": "03",
     "chapterSlug": "message-ir",
-    "chapterTitle": "为 Agent 建立统一消息语言",
+    "chapterTitle": "给 Agent 一套自己的消息格式",
     "title": "小结",
     "href": "/learn/message-ir#小结",
     "partTitle": "第一部 · 建立可执行语言",
@@ -663,14 +646,14 @@ export const searchIndex: SearchEntry[] = [
       "StopReason",
       "projection"
     ],
-    "searchText": "为 Agent 建立统一消息语言 小结 canonical IR content block AgentContext StopReason projection"
+    "searchText": "给 Agent 一套自己的消息格式 小结 canonical IR content block AgentContext StopReason projection"
   },
   {
     "id": "04",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
-    "title": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
+    "title": "ScriptedModel：把模型行为写成可执行规格",
     "href": "/learn/scripted-model",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
@@ -679,13 +662,13 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 用按轮消费的确定性脚本生成模型事件，稳定证明请求、流、终态与失败契约。 第一部 · 建立可执行语言 test double, executable specification, deterministic trace, recorded request 你将得到什么 先建立全景 先固定 Model 的唯一入口 按轮消费并保存请求快照 错误和取消也是脚本能力 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 用按轮消费的确定性脚本生成模型事件，稳定验证请求快照、事件顺序、终态和失败。 第一部 · 建立可执行语言 test double, executable specification, deterministic trace, recorded request 你将得到什么 先建立全景 先固定 Model 的唯一入口 播放一个成功回合 按轮消费，并把失败放回流里 故意把它弄坏 本章验收 可选迁移练习 小结"
   },
   {
     "id": "04-你将得到什么",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
     "title": "你将得到什么",
     "href": "/learn/scripted-model#你将得到什么",
     "partTitle": "第一部 · 建立可执行语言",
@@ -695,13 +678,13 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 你将得到什么 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 你将得到什么 test double executable specification deterministic trace recorded request"
   },
   {
     "id": "04-先建立全景",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
     "title": "先建立全景",
     "href": "/learn/scripted-model#先建立全景",
     "partTitle": "第一部 · 建立可执行语言",
@@ -711,13 +694,13 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 先建立全景 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 先建立全景 test double executable specification deterministic trace recorded request"
   },
   {
     "id": "04-先固定-model-的唯一入口",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
     "title": "先固定 Model 的唯一入口",
     "href": "/learn/scripted-model#先固定-model-的唯一入口",
     "partTitle": "第一部 · 建立可执行语言",
@@ -727,15 +710,15 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 先固定 Model 的唯一入口 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 先固定 Model 的唯一入口 test double executable specification deterministic trace recorded request"
   },
   {
-    "id": "04-按轮消费并保存请求快照",
+    "id": "04-播放一个成功回合",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
-    "title": "按轮消费并保存请求快照",
-    "href": "/learn/scripted-model#按轮消费并保存请求快照",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
+    "title": "播放一个成功回合",
+    "href": "/learn/scripted-model#播放一个成功回合",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "test double",
@@ -743,15 +726,15 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 按轮消费并保存请求快照 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 播放一个成功回合 test double executable specification deterministic trace recorded request"
   },
   {
-    "id": "04-错误和取消也是脚本能力",
+    "id": "04-按轮消费并把失败放回流里",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
-    "title": "错误和取消也是脚本能力",
-    "href": "/learn/scripted-model#错误和取消也是脚本能力",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
+    "title": "按轮消费，并把失败放回流里",
+    "href": "/learn/scripted-model#按轮消费并把失败放回流里",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "test double",
@@ -759,13 +742,13 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 错误和取消也是脚本能力 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 按轮消费，并把失败放回流里 test double executable specification deterministic trace recorded request"
   },
   {
     "id": "04-故意把它弄坏",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
     "title": "故意把它弄坏",
     "href": "/learn/scripted-model#故意把它弄坏",
     "partTitle": "第一部 · 建立可执行语言",
@@ -775,13 +758,13 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 故意把它弄坏 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 故意把它弄坏 test double executable specification deterministic trace recorded request"
   },
   {
     "id": "04-本章验收",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
     "title": "本章验收",
     "href": "/learn/scripted-model#本章验收",
     "partTitle": "第一部 · 建立可执行语言",
@@ -791,13 +774,13 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 本章验收 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 本章验收 test double executable specification deterministic trace recorded request"
   },
   {
     "id": "04-可选迁移练习",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
     "title": "可选迁移练习",
     "href": "/learn/scripted-model#可选迁移练习",
     "partTitle": "第一部 · 建立可执行语言",
@@ -807,13 +790,13 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 可选迁移练习 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 可选迁移练习 test double executable specification deterministic trace recorded request"
   },
   {
     "id": "04-小结",
     "chapterId": "04",
     "chapterSlug": "scripted-model",
-    "chapterTitle": "ScriptedModel：把模型变成可执行规格",
+    "chapterTitle": "ScriptedModel：把模型行为写成可执行规格",
     "title": "小结",
     "href": "/learn/scripted-model#小结",
     "partTitle": "第一部 · 建立可执行语言",
@@ -823,7 +806,7 @@ export const searchIndex: SearchEntry[] = [
       "deterministic trace",
       "recorded request"
     ],
-    "searchText": "ScriptedModel：把模型变成可执行规格 小结 test double executable specification deterministic trace recorded request"
+    "searchText": "ScriptedModel：把模型行为写成可执行规格 小结 test double executable specification deterministic trace recorded request"
   },
   {
     "id": "05",

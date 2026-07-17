@@ -18,13 +18,13 @@ upstream: packages/agent/src/types.ts
 
 序章让你看见了一条完整轨迹，但还不能判断代码中的 `assistant_message` 是否覆盖了所有情况。本章进入时，系统只会播放固定数据；本章完成后，你能读写后续课程反复使用的 tagged union、`unknown` 收窄、Promise、ESM 导入和 Node 内置测试。
 
-我们只增加一种主要复杂性：**让编译器和测试成为两种不同的证据**。不会讲前端、DOM、装饰器或复杂泛型。你将修改 `workshop/src/survival/events.ts` 及其测试，观察缺少事件分支时的编译错误，以及实现错误时的测试失败。
+我们只增加一种主要复杂性：**让编译器和测试成为两种不同的证据**。不会讲前端、DOM、装饰器或复杂泛型。你将在隔离练习目录中创建 `packages/pi-course/src/survival/events.ts`；聚焦测试已经注入，不需要改测试。你会先看到缺少模块，再分别观察遗漏事件分支时的编译错误和实现错误时的测试失败。
 
 本章不变量是：
 
 > 来自系统边界的数据先是 `unknown`；只有经过验证和穷尽分支后，才能进入 Agent 的强类型核心。
 
-恢复起点时，先用 `git diff -- workshop/src/survival` 看清实验改动，再手动撤销故意加入的分支；不要重建项目或修改 `package-lock.json`。
+恢复起点时，不要在无 Git 历史的练习目录里寻找旧提交。保留当前目录作实验记录，再用 `npm run practice -w @pi/course -- 01 <新目录>` 从同一 parent 生成干净起点；不要修改注入的测试或 `package-lock.json`。
 
 :::rebuild title="Checkpoint 01 · 先让编译器暴露缺口"
 **模式：** 重建。从 00 的 target 开始，只补本章的 TypeScript 生存集。
@@ -33,7 +33,11 @@ upstream: packages/agent/src/types.ts
 
 **教学文件：** `packages/pi-course/src/survival/events.ts`
 
-**第一步：** 先不看 target diff，阅读聚焦测试的 import 与四种事件 fixture，先写 `DemoEvent` tagged union；让 `formatEvent` 的穷尽分支成为第一个编译证据。
+**动手前只需知道：** tagged union 是共享字面量标签（这里是 `type`）的一组互斥对象；`unknown` 表示边界值尚未被信任，必须验证后才能读字段；`never` 放在 `switch` 的剩余分支，会让编译器暴露遗漏的联合成员。ESM 测试虽然 import `events.js`，你实际创建的是 `events.ts`，`tsc` 会生成对应的 `.js`。
+
+**第一次红灯：** parent 还没有教学文件，因此首次 build 会报 `Cannot find module '../src/survival/events.js'`。这证明测试已经连到正确缺口，不是让你去修 import。
+
+**第一步：** 先不看 target diff，运行一次聚焦流程并记录上述红灯；再从测试的 import 与四种 fixture 推导 `DemoEvent`、`formatEvent`、`readDelta` 三个公共符号，先创建文件和 tagged union。
 
 **聚焦测试：** `packages/pi-course/test/01-typescript-survival.test.ts`
 
@@ -82,9 +86,9 @@ export function formatEvent(event: DemoEvent): string {
     case "started":
       return `start ${event.requestId}`;
     case "delta":
-      return `delta ${event.text}`;
+      return `delta ${event.requestId} ${event.text}`;
     case "finished":
-      return `finish ${event.reason}`;
+      return `finish ${event.requestId} ${event.reason}`;
     default: {
       const unreachable: never = event;
       return unreachable;
@@ -98,14 +102,15 @@ export function formatEvent(event: DemoEvent): string {
 :::lab title="实践 1.1 · 制造一次穷尽检查失败"
 **目标：** 让编译器先于运行时发现遗漏。
 
-**文件：** `workshop/src/survival/events.ts`
+**文件：** `packages/pi-course/src/survival/events.ts`
 
 **动作：**
-1. 为 `DemoEvent` 增加 `{ type: "aborted"; requestId: string }`。
-2. 暂时不修改 `formatEvent`，运行 typecheck 并记录首次错误。
-3. 补上 `aborted` 分支，再运行测试。
+1. 先完成三个导出，让本章聚焦测试转绿。
+2. 为 `DemoEvent` 临时增加 `{ type: "cancelled"; requestId: string }`，暂时不修改 `formatEvent`。
+3. 运行 build，确认 `never` 行报告遗漏；补上分支再次 build。
+4. 实验结束后删除临时 `cancelled` 类型和分支，恢复本章目标协议。
 
-**运行：** `npm run workshop:test -- survival`
+**运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/01-*.test.js`
 
 **预期：** 补分支前，`never` 行产生静态错误；补齐后聚焦测试通过。
 :::
@@ -165,21 +170,29 @@ test("formatEvent preserves event order", () => {
 
 ```text
 ✔ tagged union 的完成态覆盖全部事件分支
-tests 4
-pass 4
+tests 2
+pass 2
 ```
+
+:::note title="别让绿灯替测试夸大证明力"
+这 2 项聚焦测试只证明四种 fixture 的格式化结果、顺序、一个合法 delta 和一个
+数字 `text` 边界反例。`never` 是否能暴露遗漏，要由实践 1.1 中那次预期的
+编译失败提供证据；Promise 的顺序语义只是为后续章节建立阅读准备，不在本章
+聚焦 oracle 内。测试没观察到的性质，不能因为绿灯就宣称已被证明。
+:::
 
 :::lab title="实践 1.2 · 经历一次 red → green"
 **目标：** 区分形状正确与行为正确。
 
-**文件：** `workshop/test/foundations-labs.test.ts`
+**文件：** `packages/pi-course/src/survival/events.ts`
 
 **动作：**
-1. 先写测试，要求 `delta` 输出包含 `requestId`。
-2. 在尚未修改实现时运行，确认失败来自输出差异。
-3. 修改最小实现使测试转绿，再运行 typecheck。
+1. 保持注入测试不动，把 `delta` 的输出临时改成不含 `requestId`。
+2. 运行聚焦测试，确认 TypeScript 形状仍合法，但行为断言给出字符串 diff。
+3. 恢复 `requestId`，让测试转绿；再把 `readDelta` 的字段验证临时换成类型断言，观察非法数字 `text` 的测试失败。
+4. 恢复显式验证，确认 build 与两项测试都通过。
 
-**运行：** `npm run workshop:test -- survival`
+**运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/01-*.test.js`
 
 **预期：** 第一次得到明确 diff；第二次测试和静态检查同时通过。
 :::
@@ -226,7 +239,7 @@ console.log(formatEvent(event));
 ## 本章验收
 
 :::checkpoint title="Checkpoint 01 · 两条证据链"
-`npm run workshop:test -- survival` 应通过；你能解释 `tsc --noEmit`、编译后的 ESM 和 `node --test` 分别证明什么，并能在不运行代码时指出遗漏的联合分支。检查 `git diff -- workshop/src/survival workshop/test/foundations-labs.test.ts`，确认只保留完成态。下一章会把这些事件放进真正的异步序列。
+`npm run build -w @pi/course` 与 `node --test packages/pi-course/dist/test/01-*.test.js` 应通过 2/2；你能解释 `tsc`、编译后的 ESM 和 `node --test` 分别证明什么，并能在不运行代码时指出遗漏的联合分支。确认只修改了 `packages/pi-course/src/survival/events.ts`，测试与 lockfile 未变。下一章会把这些事件放进真正的异步序列。
 :::
 
 ## 可选迁移练习

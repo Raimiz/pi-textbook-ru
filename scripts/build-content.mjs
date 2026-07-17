@@ -11,6 +11,7 @@ const generatedSearchFile = path.join(
   "lib",
   "generated-search.ts",
 );
+const checkpointManifestFile = path.join(root, "content", "checkpoints.json");
 const upstreamRoot = path.resolve(root, "..", "pi");
 
 const parts = [
@@ -74,83 +75,24 @@ const expected = [
   ["14", "14-eval-capstone.md", "eval-capstone", "product"],
 ].map(([id, file, slug, part]) => ({ id, file, slug, part }));
 
-const checkpointHistory = {
-  "00": {
-    commit: "f9798b7ce690abeca3539e3410e5f402bc65862d",
-    parentCommit: "8479bd84743e8889f728acb21a62794102db0529",
-    subject: "observe a complete offline agent trace",
-  },
-  "01": {
-    commit: "a4d35a1b630b196dd38a95033ed18d6cbdf309bf",
-    parentCommit: "f9798b7ce690abeca3539e3410e5f402bc65862d",
-    subject: "establish TypeScript protocol evidence",
-  },
-  "02": {
-    commit: "c0a94291850237a679fb4668f300cea0cf4c0a29",
-    parentCommit: "a4d35a1b630b196dd38a95033ed18d6cbdf309bf",
-    subject: "make model time an explicit EventStream",
-  },
-  "03": {
-    commit: "244b2e857070378d233813286c5584852414d6cd",
-    parentCommit: "c0a94291850237a679fb4668f300cea0cf4c0a29",
-    subject: "define the canonical message IR",
-  },
-  "04": {
-    commit: "2f163eae8252723f606f774ed4e5e3d71ccdb174",
-    parentCommit: "244b2e857070378d233813286c5584852414d6cd",
-    subject: "turn model behavior into executable scripts",
-  },
-  "05": {
-    commit: "69c106fdbe47f583c9749d86506a045c82a55685",
-    parentCommit: "2f163eae8252723f606f774ed4e5e3d71ccdb174",
-    subject: "isolate the real provider streaming boundary",
-  },
-  "06": {
-    commit: "ed52618526d5d93f2cb5afda91758de6b4ad9003",
-    parentCommit: "69c106fdbe47f583c9749d86506a045c82a55685",
-    subject: "make tool execution a closed contract",
-  },
-  "07": {
-    commit: "129ef8066db4428188fe0339cf1fc357d8fe5c28",
-    parentCommit: "ed52618526d5d93f2cb5afda91758de6b4ad9003",
-    subject: "close the Agent feedback loop",
-  },
-  "08": {
-    commit: "f837ea09a5b7b581bdd25bb602d75c14bf4e02bc",
-    parentCommit: "129ef8066db4428188fe0339cf1fc357d8fe5c28",
-    subject: "let tools touch files and processes safely",
-  },
-  "09": {
-    commit: "907dee8008bbe4188818981b84ee823cb7c457bb",
-    parentCommit: "f837ea09a5b7b581bdd25bb602d75c14bf4e02bc",
-    subject: "add the stateful Agent lifecycle",
-  },
-  "10": {
-    commit: "90a4906a6b8710475240152dbe15f9bbbb3459d5",
-    parentCommit: "907dee8008bbe4188818981b84ee823cb7c457bb",
-    subject: "persist history as an append-only tree",
-  },
-  "11": {
-    commit: "f1098af6c25a7fcc9591798278caf4b2114647a9",
-    parentCommit: "90a4906a6b8710475240152dbe15f9bbbb3459d5",
-    subject: "derive bounded context without rewriting history",
-  },
-  "12": {
-    commit: "76fc7a569f4f50f498786fe875588aaa27413c71",
-    parentCommit: "f1098af6c25a7fcc9591798278caf4b2114647a9",
-    subject: "add progressive resources and trusted extensions",
-  },
-  "13": {
-    commit: "e1fcbe92708f9523ba851d4b721eb9fe8d2db036",
-    parentCommit: "76fc7a569f4f50f498786fe875588aaa27413c71",
-    subject: "assemble one runtime for every product mode",
-  },
-  "14": {
-    commit: "1c66d81276e2c480b2d52b910e82bec8a1556867",
-    parentCommit: "e1fcbe92708f9523ba851d4b721eb9fe8d2db036",
-    subject: "prove the whole system with deterministic evals",
-  },
-};
+const checkpointManifest = JSON.parse(
+  await readFile(checkpointManifestFile, "utf8"),
+);
+if (
+  !Array.isArray(checkpointManifest) ||
+  checkpointManifest.length !== expected.length
+) {
+  fail(`content/checkpoints.json 必须包含 ${expected.length} 个 checkpoint`);
+}
+const checkpointHistory = Object.fromEntries(
+  checkpointManifest.map((checkpoint) => [checkpoint.id, checkpoint]),
+);
+if (
+  Object.keys(checkpointHistory).length !== expected.length ||
+  expected.some(({ id }) => !checkpointHistory[id])
+) {
+  fail("content/checkpoints.json 的 checkpoint id 不完整或重复");
+}
 
 const requiredHeadings = [
   "你将得到什么",
@@ -454,6 +396,10 @@ async function readChapter(spec) {
   );
   const checkpoint = checkpointHistory[spec.id];
   if (!checkpoint) fail(`${spec.file} 缺少真实 checkpoint commit`);
+  const subjectPrefix = `course(${spec.id}): `;
+  if (!checkpoint.subject.startsWith(subjectPrefix)) {
+    fail(`${spec.file} 的 checkpoint subject 与章节编号不匹配`);
+  }
 
   return {
     id: spec.id,
@@ -472,8 +418,8 @@ async function readChapter(spec) {
     courseBranch: "course/build-your-own-pi",
     commit: checkpoint.commit,
     parentCommit: checkpoint.parentCommit,
-    commitSubject: checkpoint.subject,
-    checkpointTest: `packages/pi-course/test/${spec.id}-${spec.slug}.test.ts`,
+    commitSubject: checkpoint.subject.slice(subjectPrefix.length),
+    checkpointTest: checkpoint.focusedTest,
     html,
     toc,
     searchText: [

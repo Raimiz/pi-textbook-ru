@@ -50,6 +50,10 @@ npm run history:verify
 真实存在于相邻的 Pi 仓库。网站构建不依赖该本地仓库，所以部署环境只需执行
 普通 `npm run build`。
 
+如果课程分支重写了某个 checkpoint，先运行 `npm run history:sync`。它会从相邻的
+`pi-course-history` 读取实时提交链、每章源文件变更和聚焦测试，再更新
+`content/checkpoints.json`。`history:verify` 会拒绝过期的清单。
+
 ## 和陪学 Agent 一起学习
 
 在教学 worktree 中：

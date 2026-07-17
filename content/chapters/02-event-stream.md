@@ -4,27 +4,32 @@ slug: event-stream
 part: foundations
 partTitle: 第一部 · 建立可执行语言
 chapter: "02"
-title: EventStream、AsyncIterable 与取消
-summary: 把过程事件、最终结果和协作式取消统一进一个不会悬挂的异步流契约。
+title: EventStream：让过程和结果走同一条流
+summary: 实现一个既能逐项读取事件、又能等待最终结果的异步流，并把终态写成唯一结束信号。
 minutes: 95
 difficulty: 进阶
 artifact: packages/pi-course/src/event-stream.ts
 prerequisites: 01
-terms: AsyncIterable, EventStream, backpressure, terminal event, AbortSignal
+terms: AsyncIterable, EventStream, queue, waiter, terminal event
 upstream: packages/ai/src/utils/event-stream.ts
 ---
 
 ## 你将得到什么
 
-上一章的事件已经有可靠形状，却仍像一张一次性数组。真实模型会在未知时间逐块返回文本；界面需要立刻显示 delta，Agent loop 又需要等待最终消息。进入本章时，你只能遍历静态事件；完成后将得到 `workshop/src/event-stream.ts`：它既可被 `for await...of` 逐项消费，也可通过 `result()` 等待最终值。
+上一章只解决了“事件长什么样”。当时所有事件都已经放在一个数组里。真实模型不是这样：文本会一段一段到达，界面要马上显示每段内容，Agent loop 还要等整条消息结束。
 
-本章只增加一种复杂性：**时间**。不定义消息语义，也不连接网络。你会观察生产者快于消费者、消费者先等待、终态到达以及取消四条路径。
+这一章只处理事件到达的先后顺序。你会创建
+`packages/pi-course/src/event-stream.ts`，让同一个 `EventStream` 同时支持
+`for await...of` 和 `result()`。这里不定义消息内容，不连接网络，也不实现取消。
 
 本章不变量是：
 
-> 每条流必须以一个可识别的终态结束；迭代器和 `result()` 必须从同一个终态得到一致结论，不能有一方永远等待。
+> 每条流都要有一个明确的终态。迭代器和 `result()` 必须由同一个终态结束，
+> 不能一个已经完成，另一个还在等。
 
-要恢复起点，撤销 `workshop/src/event-stream.ts` 和对应测试中本章故障实验的改动，再运行聚焦测试。不要用 `setTimeout` 延长测试来掩盖悬挂。
+需要重新开始时，保留当前练习目录，再运行
+`npm run practice -w @pi/course -- 02 <新目录>`。练习目录没有 Git 历史，
+不要在里面执行 `git restore`，也不要修改注入的聚焦测试。
 
 :::rebuild title="Checkpoint 02 · 先闭合一次 push 与 next"
 **模式：** 重建。从 01 的 target 开始，只引入时间与等待关系。
@@ -33,7 +38,20 @@ upstream: packages/ai/src/utils/event-stream.ts
 
 **教学文件：** `packages/pi-course/src/event-stream.ts`
 
-**第一步：** 先不看 target diff，从聚焦测试画出两种时序：先 `push` 后 `next`、先 `next` 后 `push`；先实现一个 queue 与一个 pending iterator 的最小闭环，再处理终态。
+**动手前只需知道：** `queue` 保存“事件先到”的情况；`waiter` 是正在等待下一项的
+迭代器；终态表示以后不会再有新事件。`push()` 每次只能二选一：把事件交给一个
+waiter，或者放进 queue。`result()` 等的是终态提取出的最终值。
+
+**第一次红灯：** parent 里还没有 `event-stream.ts`。首次 build 会报
+`Cannot find module '../src/event-stream.js'`。测试中的 `.js` 路径没有写错；
+你要创建同名的 `.ts` 源文件。
+
+**第一步：**
+1. 先不看 target diff，运行一次 build，记下第一条错误。
+2. 阅读两项聚焦测试，画出“先 `push` 后 `next`”和“先 `next` 后 `push`”
+   两条时间线。
+3. 先声明完整公共接口，再只实现 queue 路径；下一次实验再补 waiter 路径。
+4. 最后让终态同时结束迭代和 `result()`。
 
 **聚焦测试：** `packages/pi-course/test/02-event-stream.test.ts`
 
@@ -43,14 +61,17 @@ upstream: packages/ai/src/utils/event-stream.ts
 
 **聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/02-*.test.js`
 
-**通过证据：** 聚焦测试通过且无悬挂；你能说明 `for await` 与 `result()` 为什么必须由同一个终态完成。
+**通过证据：** 2 项聚焦测试通过；queue 与 waiter 两条路径都能结束，你能说明
+为什么终态本身仍要交给迭代器，以及 `result()` 为什么不能另走一套完成逻辑。
 
 第一次尝试禁止查看完整答案；若卡住，先让陪练只指出 queue、waiter、terminal 三类状态。
 :::
 
 ## 先建立全景
 
-`AsyncIterable<T>` 只回答“下一项怎样异步到达”，没有方便的最终结果通道。普通消费者如果只拼 delta，会错过 stop reason、usage 和错误信息。我们需要把两个视角放在同一个对象中：
+`AsyncIterable<T>` 解决的是“下一项什么时候到”，却没有单独保存最终结果。
+如果调用者只拼接 delta，就会丢掉 stop reason、usage 和错误信息。我们需要让
+同一个对象同时提供逐项事件和最终结果：
 
 ```text
 生产者 push(e1) ─────┐
@@ -60,7 +81,8 @@ upstream: packages/ai/src/utils/event-stream.ts
               └─────────→ result() (最终事实)
 ```
 
-事件流不是回调列表。消费者每次请求下一项；若队列已有事件就立即取出，否则登记一个 waiter。终态事件既要交给迭代器，也要解析为最终结果。
+事件流不是一组回调。消费者每次只请求下一项。queue 里有事件，就马上取出；
+没有，就登记一个 waiter。终态也要像普通事件一样交给迭代器，同时解析出最终结果。
 
 :::predict title="运行前先判断"
 消费者收到第一个 delta 后 `break`，生产者是否会自动停止？另一个调用了 `result()` 的任务会自动完成吗？
@@ -97,13 +119,20 @@ export class EventStream<T, R = T> implements AsyncIterable<T> {
 
 `queue` 保存“事件先到”的情况，`waiting` 保存“消费者先等”的情况。`done` 防止终态后继续写入。`finalResult` 在构造时创建一次，所以先调用还是后调用 `result()` 都指向同一事实。
 
-:::mechanism title="为什么不是两个互不相关的 Promise"
-如果迭代结束和最终结果由不同代码路径控制，就会出现 iterator 已结束但 result 仍 pending，或 result 已完成却继续收到 delta。终态事件必须是唯一提交点；容器在同一次 `push` 中完成两边。
+:::mechanism title="只保留一个结束位置"
+如果两段代码分别控制迭代结束和最终结果，状态很容易分叉：迭代器已经结束，
+`result()` 却还在等；或者 `result()` 已经返回，队列里仍在增加 delta。
+终态必须是唯一结束位置。同一次 `push()` 既处理终态，也交付这条事件。
 :::
 
-这一版容器明确只支持一个事件消费者。多个地方都调用 `result()` 没问题，因为它们等待同一个 Promise；但两个 `for await` 会争抢同一队列，而不是各自看到完整广播。这个限制应当写进契约，而不是碰巧隐藏在实现里。界面与 Agent loop 如果都需要过程事件，后续应由上层建立明确的转发机制；贸然把 `queue` 复制成多份，会同时引入订阅取消、慢消费者占用内存和终态回收问题。
+这一版只支持一个事件消费者。多个地方调用 `result()` 没问题，因为它们等待同一个
+Promise；两个 `for await` 却会争抢同一条 queue，不会各自收到完整事件。
+先把这个限制说清楚。以后若界面和 Agent loop 都要读取过程事件，应由上层明确转发，
+不能偷偷复制几份 queue。
 
-所谓背压也要准确理解：AsyncIterable 让消费者决定何时请求下一项，却不能自动阻止一个主动 `push()` 的远端生产者。若 provider 比 UI 快，队列仍会增长。课程先用模型响应这种有限流量建立正确语义；面对无界日志或字节流时，还需要容量上限、暂停策略或丢弃策略。不要把语法上的 `for await` 误当作完整资源治理。
+`AsyncIterable` 也不会自动解决背压。它让消费者决定何时请求下一项，却挡不住一个
+不断调用 `push()` 的生产者。provider 比界面快时，queue 仍会增长。模型响应通常
+不长，本章先把结束语义写对；无界日志还需要容量上限、暂停或丢弃策略。
 
 `push()` 的关键不是数组操作，而是顺序：先识别终态并解析结果，再把该事件交给等待者或队列。终态本身仍然可观察。
 
@@ -127,83 +156,88 @@ push(event: T): void {
 :::lab title="实践 2.1 · 同时证明过程和结果"
 **目标：** 让一个终态完成两种消费方式。
 
-**文件：** `workshop/src/event-stream.ts`、`workshop/test/model-stream.test.ts`
+**文件：** `packages/pi-course/src/event-stream.ts`
 
 **动作：**
-1. 补齐 `push()` 和异步迭代器。
-2. 先推送两个 delta 和一个 done，再开始迭代，覆盖队列路径。
-3. 另写测试先启动迭代再推送，覆盖 waiter 路径。
-4. 同时断言事件序列与 `await stream.result()`。
+1. 先声明完整公共接口：构造器、`push()`、`end(result)`、`result()` 和异步迭代器。
+   这样 TypeScript 能编译整份只读测试；`end(result)` 与“空 queue 且未结束”的分支
+   暂时抛出 `new Error("not implemented in lab 2.1")`。
+2. 实现构造器、`result()` 和 `push()`。普通事件优先交给 waiter；没有 waiter
+   才放进 queue。
+3. 收到终态时，先完成最终 Promise，再照常交付这条终态事件。
+4. 实现异步迭代器的 queue 与 done 分支。保持注入测试不动，只运行第一项测试。
 
-**运行：** `npm run workshop:test -- event-stream`
+**运行：** `npm run build -w @pi/course`，然后
+`node --test --test-name-pattern="先到的事件" packages/pi-course/dist/test/02-*.test.js`
 
-**预期：** 两种时序都得到 `delta, delta, done`；最终结果相同，测试没有计时依赖。
+**预期：** 第一项测试读到 `delta → done`，`result()` 返回 `"AB"`。
 :::
 
-## 取消必须沿调用链协作
+:::lab title="实践 2.2 · 接住先等待的迭代器"
+**目标：** 在 queue 为空时保存 waiter，并让 `end()` 唤醒它。
 
-JavaScript 不能安全强杀任意 Promise。`AbortController` 只广播意图，等待函数、provider 和工具必须主动响应。一个可取消等待应同时处理“进入前已取消”和“等待中取消”：
-
-```ts
-export function abortableDelay(ms: number, signal?: AbortSignal): Promise<void> {
-  if (signal?.aborted) {
-    return Promise.reject(new DOMException("aborted", "AbortError"));
-  }
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(resolve, ms);
-    signal?.addEventListener("abort", () => {
-      clearTimeout(timer);
-      reject(new DOMException("aborted", "AbortError"));
-    }, { once: true });
-  });
-}
-```
-
-底层等待可以抛 `AbortError`，但流的公共边界不能让它变成一个无人处理的 rejected promise。生产者捕获后应推送协议规定的 `error` 终态；下一章会让该事件携带 `stopReason: "aborted"` 的最终 canonical assistant message。
-
-:::lab title="实践 2.2 · 让取消也完成 result"
-**目标：** 验证取消不是“停止打印”，而是一个完整终态。
-
-**文件：** `workshop/test/model-stream.test.ts`
+**文件：** `packages/pi-course/src/event-stream.ts`
 
 **动作：**
-1. 创建带延迟的生产者，先推一个 delta。
-2. 消费该 delta 后调用 `controller.abort()`。
-3. 由生产者捕获取消并推送 `error` 终态。
-4. 同时断言迭代器结束、`result()` 完成且没有后续 delta。
+1. 在 queue 为空且流未结束时，创建 Promise，把它的 `resolve` 放进 waiting。
+2. 下一次 `push()` 取出最早的 waiter，并把事件直接交给它。
+3. 实现 `end(result)`：完成最终 Promise、标记结束，并把仍在等待的迭代器全部唤醒为 `done: true`。
+4. 删除 Lab 2.1 的两个临时异常，运行完整聚焦测试；不要增加 `setTimeout`。
 
-**运行：** `npm run workshop:test -- event-stream`
+**运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/02-*.test.js`
 
-**预期：** 事件模式为 `delta → error(aborted)`；测试在有限时间内自然结束。
+**预期：** 先调用 `next()` 得到 pending Promise；随后一次 `push()` 就能唤醒它。
+`end("A")` 让下一次 `next()` 返回 `done: true`，同时让 `result()` 返回 `"A"`。
+:::
+
+:::note title="本章不实现取消"
+取消需要 `AbortSignal`、生产者协作和 `error` 终态，不能只在 EventStream 上加一个
+布尔值。本章 target 没有这些代码，也没有取消测试。第 04 章先处理“开始前已取消”，
+第 05 章再处理传输中的取消，第 09 章由 Agent 统一管理一次运行的取消。
+这里先把 queue、waiter 和终态写对。
+:::
+
+:::note title="这两项测试到底证明了什么"
+2 项聚焦测试覆盖 queue 路径、waiter 路径和可观察终态。第一项检查终态
+`push()` 会完成 `result()`；第二项检查显式 `end("A")` 会同时结束迭代并让
+`result()` 返回 `"A"`。它们不证明取消、错误终态、多个消费者或无限队列已经实现。
+后文提到这些问题时，只是在划清边界，不是把它们算进本章绿灯。
 :::
 
 :::pi title="与当前上游 Pi 对照"
-固定提交 `8479bd8` 的 `packages/ai/src/utils/event-stream.ts` 同样让 `EventStream<T,R>` 实现 `AsyncIterable<T>` 并提供 `result(): Promise<R>`；`AssistantMessageEventStream` 把 `done` 和 `error` 都识别为终态。课程暂时使用更小事件集并限制单消费者。上游模型错误与取消也进入流内终态，而不是随机从调用点向外抛出。
+固定提交 `8479bd8` 的 `packages/ai/src/utils/event-stream.ts` 也让
+`EventStream<T,R>` 实现 `AsyncIterable<T>`，并提供 `result(): Promise<R>`。
+上游的 `AssistantMessageEventStream` 还把 `done` 和 `error` 都当作终态。
+课程这一章只实现更小的单消费者版本；错误与取消会在后续 checkpoint 接入。
 :::
 
 ## 故意把它弄坏
 
-最隐蔽的错误是只通知迭代器结束，却忘记完成最终 Promise：
+一个常见错误是完成了 `result()`，却把终态本身吞掉：
 
 ```ts
 // 错误示例
-end(): void {
+if (this.isComplete(event)) {
   this.done = true;
-  while (this.waiting.length > 0) {
-    this.waiting.shift()?.({ value: undefined, done: true });
-  }
-  // result() 永远 pending
+  this.resolveFinalResult(this.extractResult(event));
+  return; // 终态没有进入 queue，也没有交给 waiter
 }
 ```
 
-:::failure title="预期失败 · 制造一个悬挂 result"
-临时绕过终态事件，直接把 `done` 设为 `true`。用 `Promise.race` 加一个很短但宽松的测试超时，首次偏差应明确为“result 未完成”。不要通过增加超时修复；恢复唯一终态提交点，使 result 与 iterator 同步结束。
+:::failure title="预期失败 · 吞掉终态事件"
+在终态分支末尾临时加入上面的 `return`，再运行聚焦测试。测试应立即失败：
+`result()` 仍返回 `"AB"`，迭代序列却只有 `delta`，缺少 `done`。删除 `return`，
+让终态继续走普通交付路径。这个实验不会制造永远等待的测试。
 :::
 
 ## 本章验收
 
 :::checkpoint title="Checkpoint 02 · 时间成为显式协议"
-运行 `npm run workshop:test -- event-stream`，队列路径、waiter 路径、正常终态和取消路径都应通过。你能解释为什么终态必须被迭代到、为什么 `break` 不等于 abort，以及为何 result 不能从 delta 临时拼出。恢复时只撤销故障实验。下一章将把通用 `T` 和 `R` 换成 Agent 的消息语言。
+运行 `npm run build -w @pi/course`，再运行
+`node --test packages/pi-course/dist/test/02-*.test.js`，结果应为 2/2。
+你要能画出 queue 与 waiter 两条时间线，并解释为什么终态既要出现在迭代序列里，
+又要完成 `result()`。确认只修改 `packages/pi-course/src/event-stream.ts`。
+下一章会把通用的 `T` 和 `R` 换成 Agent 自己的消息类型。
 :::
 
 ## 可选迁移练习
@@ -214,4 +248,7 @@ end(): void {
 
 ## 小结
 
-事件流把时间从隐藏的回调行为变成了显式协议。AsyncIterable 提供过程证据，`result()` 提供最终事实，唯一终态把两者锁在一起；AbortSignal 则把取消意图沿调用链传递。下一章不再使用无意义的示例字符串，而会定义 Pi 内部长期依赖的 canonical message IR。
+EventStream 把“事件何时到达”写进了接口。`AsyncIterable` 负责逐项读取，
+`result()` 负责最终结果，唯一终态让两边一起结束。本章还没有取消、错误终态和
+多消费者；这些能力会在拥有足够消息语义之后逐步接入。下一章先定义 Pi 内部长期
+使用的统一消息格式。

@@ -75,6 +75,368 @@
         "coach": "确认导出根 package.json 不含 prepare，完整流程无回退。",
         "evidence": "fresh sandbox ch00-retest4; quiet install, build 0, focused tests 2/2"
       }
+    },
+    {
+      "id": "L01-GUIDE-SNAPSHOT",
+      "chapter": "01",
+      "status": "resolved",
+      "observedBy": ["student"],
+      "evidence": "01 练习从 parent 导出后，AGENT_GUIDE.md 只有 Checkpoint 00，没有正文要求阅读的当前章提示。",
+      "firstPrinciple": "实现应来自 parent，但学习支架必须属于当前任务；二者不能被同一个快照策略误绑。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "fresh sandbox 的 AGENT_GUIDE 已包含 Checkpoint 01，仍在 L0 完成 2/2。",
+        "coach": "导出指南与 01 target 的指南 SHA-256 一致，未泄露实现。",
+        "evidence": "ch01-retest1 guide present; build 0; focused tests 2/2"
+      }
+    },
+    {
+      "id": "L01-ACTION-PATH-DRIFT",
+      "chapter": "01",
+      "status": "resolved",
+      "observedBy": ["student"],
+      "evidence": "rebuild 入口指向 packages/pi-course，但开场、lab 与验收多次要求修改禁止查看的 workshop。",
+      "firstPrinciple": "第一次重建只能有一个工作对象；解释、实验、恢复与验收必须共享同一目录和 oracle。",
+      "fix": [
+        "content/chapters/01-typescript-survival.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "正文已无 workshop 指令，只修改 sandbox 中的 events.ts。",
+        "coach": "开场、恢复、两个 lab、故障实验和验收均统一到 packages/pi-course。",
+        "evidence": "ch01-retest1 single-file edit; focused tests 2/2"
+      }
+    },
+    {
+      "id": "L01-FIRST-RED-ORDER",
+      "chapter": "01",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "正文入口先要求写 tagged union/never，但首次 build 实际先报 events 模块不存在；关键术语的操作性解释都在入口之后。",
+      "firstPrinciple": "即时学习必须在动作之前给够执行该动作的最小 schema，并准确预告当前状态的第一次偏差。",
+      "fix": [
+        "content/chapters/01-typescript-survival.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "最小概念足以开始，首次 build 精确复现预告的 TS2307。",
+        "coach": "入口在动作前定义三术语和 ESM .js 映射，首个红灯与 starter 一致。",
+        "evidence": "initial build exit 2 with TS2307; final build 0"
+      }
+    },
+    {
+      "id": "L01-ORACLE-COVERAGE",
+      "chapter": "01",
+      "status": "resolved",
+      "observedBy": ["coach"],
+      "evidence": "聚焦测试只有 2 项，却声称 tests 4/pass 4；它未覆盖 length、多个 invalid unknown 形状或静态非法组合。",
+      "firstPrinciple": "测试只能支持它实际观察的主张；行为承诺和 oracle 必须一一对应。",
+      "fix": [
+        "content/chapters/01-typescript-survival.md"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "能准确限定 2 项行为测试，并把 never 归到预期编译失败证据。",
+        "coach": "正文不再声称 4 项测试，也明确 Promise 不在本章 oracle 内。",
+        "evidence": "focused tests exactly 2/2 plus intentional compile-failure lab"
+      }
+    },
+    {
+      "id": "LC-ACTION-LANE-DRIFT",
+      "chapter": "02",
+      "status": "retest_pending",
+      "observedBy": ["audit"],
+      "evidence": "02～14 的 rebuild 指向 packages/pi-course，但开场、实验、恢复或验收仍把学生送到 workshop。",
+      "firstPrinciple": "所有重建章只能有一个可写工作对象；参考实现不能混入执行指令。",
+      "fix": [
+        "content/chapters/02-event-stream.md",
+        "content/chapters/03-message-ir.md",
+        "content/chapters/04-scripted-model.md",
+        "content/chapters/05-provider-adapter.md",
+        "content/chapters/06-tool-contract.md",
+        "content/chapters/07-agent-loop.md",
+        "content/chapters/08-coding-tools.md",
+        "content/chapters/09-stateful-agent.md",
+        "content/chapters/10-session-tree.md",
+        "content/chapters/11-context-compaction.md",
+        "content/chapters/12-resources-extensions.md",
+        "content/chapters/13-composition-root.md",
+        "content/chapters/14-eval-capstone.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": null
+    },
+    {
+      "id": "LC-FIRST-ACTION-BRIDGE",
+      "chapter": "05",
+      "status": "retest_pending",
+      "observedBy": ["audit"],
+      "evidence": "05～14 的重建卡直接给出实现动作，却没有在动作前说明完成该步必需的最小概念，也没有预告 fresh parent 的真实首红。",
+      "firstPrinciple": "从看懂到会写需要一座即时桥梁：先给最小数据形状和控制流，再让学生预测并处理当前唯一偏差。",
+      "fix": [
+        "content/chapters/05-provider-adapter.md",
+        "content/chapters/06-tool-contract.md",
+        "content/chapters/07-agent-loop.md",
+        "content/chapters/08-coding-tools.md",
+        "content/chapters/09-stateful-agent.md",
+        "content/chapters/10-session-tree.md",
+        "content/chapters/11-context-compaction.md",
+        "content/chapters/12-resources-extensions.md",
+        "content/chapters/13-composition-root.md",
+        "content/chapters/14-eval-capstone.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": null
+    },
+    {
+      "id": "L02-SCOPE-ORACLE",
+      "chapter": "02",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "02 target 只测试 queue、waiter、终态、result 和 end；正文却把取消与悬挂检测写成本章已通过能力。",
+      "firstPrinciple": "章节目标必须等于这个 commit 真正增加并由同章证据支持的能力，后续能力只能明确标为预告或迁移。",
+      "fix": [
+        "content/chapters/02-event-stream.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "能准确复述 2 项测试覆盖和未覆盖能力，L0 完成全量 2/2。",
+        "coach": "正文、target 与测试证据一致，取消等能力已明确后移。",
+        "evidence": "ch02-retest1; local 1/1 then focused 2/2"
+      }
+    },
+    {
+      "id": "L02-END-RESULT-UNTESTED",
+      "chapter": "02",
+      "status": "resolved",
+      "observedBy": ["student"],
+      "evidence": "第二项测试调用 end(\"A\") 后只检查 iterator.done，没有检查 result() 是否得到 \"A\"；错误实现仍可 2/2。",
+      "firstPrinciple": "章节核心不变量要求 end 同时结束迭代与最终结果，测试必须观察两边。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/02-event-stream.test.ts",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "新增断言实际证明 end(\"A\") 后 result() 返回 \"A\"。",
+        "coach": "同一测试同时观察 iterator.done 与最终 result。",
+        "evidence": "rewritten target febad621; focused tests 2/2"
+      }
+    },
+    {
+      "id": "L02-LAB-STAGING",
+      "chapter": "02",
+      "status": "resolved",
+      "observedBy": ["coach"],
+      "evidence": "Lab 2.1 要先通过第一项测试，却把 end() 留到 Lab 2.2；tsc 会编译整个只读测试，缺少 end() 时无法运行任何一项。",
+      "firstPrinciple": "分步练习的每个中间状态都必须能编译和运行自己的局部检查，不能依赖尚未教授的下一步。",
+      "fix": [
+        "content/chapters/02-event-stream.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "完整接口加两处临时异常可编译，name-pattern 局部测试 1/1。",
+        "coach": "Lab 2.1 和 2.2 的每个中间状态均可执行，无隐含下一章代码。",
+        "evidence": "intermediate build 0; local test 1/1; final test 2/2"
+      }
+    },
+    {
+      "id": "L02-FIRST-RED-NOISE",
+      "chapter": "02",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "首次 build 先报预期 TS2307，但测试回调因失去推断又产生两条 TS7006，模糊了教学红灯。",
+      "firstPrinciple": "测试夹具应让首个失败只指向当前缺口，级联类型噪声会诱导新手同时修错层。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/02-event-stream.test.ts",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "首次 build 只剩预告的 TS2307，没有 TS7006 级联错误。",
+        "coach": "fresh practice 独立复现单一红灯。",
+        "evidence": "initial build exit 2 with exactly one TypeScript diagnostic"
+      }
+    },
+    {
+      "id": "L03-SOURCE-DELTA",
+      "chapter": "03",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "03 target 同时新增 types.ts 并修改 event-stream.ts，正文重建入口只列 types.ts。",
+      "firstPrinciple": "教学文件清单必须覆盖本章真实 source delta，否则学生会在最后一个未声明文件处卡住。",
+      "fix": [
+        "content/chapters/03-message-ir.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "fresh parent 首次 build 只报告缺少 AssistantMessageEventStream 和 types.js，最终只修改 types.ts 与 event-stream.ts。",
+        "coach": "教学文件清单、parent 到 target 的 source delta 和 fresh sandbox 实际修改完全一致。",
+        "evidence": "ch03-retest1; initial build exit 2 with two expected diagnostics; final focused tests 2/2"
+      }
+    },
+    {
+      "id": "L03-LAB-STAGING",
+      "chapter": "03",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "Lab 3.1 只实现 types helper，但整份测试还会编译并导入 Lab 3.2 才实现的 AssistantMessageEventStream。",
+      "firstPrinciple": "每段练习都要先声明完整公共表面，再用局部测试验证当前行为。",
+      "fix": [
+        "content/chapters/03-message-ir.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "Lab 3.1 的完整类型表面与临时流可编译，文本投影局部测试 1/1；Lab 3.2 后全量 2/2。",
+        "coach": "临时流足以编译整份只读测试，局部阶段不需要提前实现终态映射。",
+        "evidence": "intermediate build 0; name-pattern test 1/1; final build 0 and tests 2/2"
+      }
+    },
+    {
+      "id": "L03-ORACLE-CLAIM",
+      "chapter": "03",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "03 聚焦测试只观察文本投影不改原消息与 error 终态 resolve；正文故障实验删除 toolCallId，真实测试不会失败。",
+      "firstPrinciple": "故障实验必须由当前可执行证据捕获；未测试的消息字段只能靠解释或后续测试验收。",
+      "fix": [
+        "content/chapters/03-message-ir.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "让 textOf 混入工具名后立即得到明确 diff，恢复后重新 2/2，并能列出两项测试未覆盖的消息组合。",
+        "coach": "故障实验只破坏真实 oracle；call/result 配对明确后移到第 06、07 章。",
+        "evidence": "fault run exit 1 with actual 先读取/read/再回答; recovery tests 2/2"
+      }
+    },
+    {
+      "id": "L03-TERMINAL-ORACLE",
+      "chapter": "03",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "第二项测试在 push(error) 后又调用 end(error)，所以不识别 error 终态的 Lab 3.1 临时实现也能 2/2；测试还只比较 stopReason，不能证明 result() 返回输入的最终消息。",
+      "firstPrinciple": "终态测试必须只靠被测终态结束，并验证返回值的完整身份；不能用测试自身的 end() 替错误实现补齐行为。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/03-message-ir.test.ts",
+        "content/chapters/03-message-ir.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "新测试不调用 end(error)，正确实现自行结束异步迭代，并用 strictEqual 与 errorMessage 验证最终消息。",
+        "coach": "保留 Lab 3.1 临时流时完整测试在约 0.13 秒内失败；真实映射恢复后 2/2。",
+        "evidence": "rewritten target f14e72ad; mutation red without manual end; ch03 student and coach retest 2/2"
+      }
+    },
+    {
+      "id": "L04-FIRST-RED-STAGING",
+      "chapter": "04",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "04 的真实 parent 首次 build 只缺 scripted-model.ts；原正文没有预告 TS2307，且两段实验把学生送到 workshop，并要求重复定义第 03 章已有的 Model 接口。",
+      "firstPrinciple": "学生开始写之前必须知道当前唯一缺口；分段实验要在真实 parent 上可编译，并且只修改本章 source delta。",
+      "fix": [
+        "content/chapters/04-scripted-model.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 2,
+        "result": "pass",
+        "student": "fresh parent 首次 build 只报告缺少 scripted-model.ts；Lab 4.1 可编译并局部 1/1，Lab 4.2 全量 3/3。",
+        "coach": "两段实验只修改 scripted-model.ts，联合类型收窄支架最多需要 L3，不需要完整答案。",
+        "evidence": "ch04-retest2; initial TS2307 only; intermediate build 0 and 1/1; final 3/3"
+      }
+    },
+    {
+      "id": "L04-ORACLE-COVERAGE",
+      "chapter": "04",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "原测试只检查一次请求数量和两个 stopReason，没有证明请求是调用时快照，也没有覆盖显式错误 turn 的 partial、errorMessage 或事件序列。",
+      "firstPrinciple": "可执行规格必须观察它承诺固定的输入快照、过程事件和最终诊断；只看一个枚举值会允许行为丢失后继续绿灯。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/04-scripted-model.test.ts",
+        "content/chapters/04-scripted-model.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 2,
+        "result": "pass",
+        "student": "三项测试分别观察请求快照、显式错误 partial 与诊断，以及脚本耗尽和预取消的流内终态。",
+        "coach": "保存 context 引用、删除错误说明和同步抛出耗尽错误的 mutation 都会立即红。",
+        "evidence": "rewritten target f4713907; correct tests 3/3; synchronous throw mutation 2 pass/1 fail"
+      }
+    },
+    {
+      "id": "L04-EVENT-PAYLOAD-CURSOR",
+      "chapter": "04",
+      "status": "resolved",
+      "observedBy": ["student"],
+      "evidence": "04 成功测试只比较事件 type 数组；错误的 delta、contentIndex、toolCall 内容仍可绿。测试也只调用一次 stream，没有证明 cursor 会按轮消费 turn。",
+      "firstPrinciple": "确定性生产者必须固定事件的内容和回合顺序；只固定事件名称无法充当后续 Agent loop 的可执行规格。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/04-scripted-model.test.ts",
+        "content/chapters/04-scripted-model.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 2,
+        "result": "pass",
+        "student": "能解释并实现 delta 前累计 partial、未完成 tool call、同位置完成和第二轮 cursor，最终 3/3。",
+        "coach": "错误 text/tool payload、清空累计 partial 或恒取 turns[0] 都被新 oracle 捕获。",
+        "evidence": "payload and cursor mutations red; correct implementation plus all 52 course tests pass"
+      }
+    },
+    {
+      "id": "LZH-NATURAL-CHINESE",
+      "chapter": "00",
+      "status": "retest_pending",
+      "observedBy": ["user"],
+      "evidence": "用户指出教程中文语法生硬，能看懂技术内容，但句子不像自然、直接的中文。",
+      "firstPrinciple": "技术精确依赖清楚的主体、动作和因果；翻译腔与抽象名词堆叠会额外占用工作记忆。",
+      "fix": [
+        "content/chapters/00-prologue.md",
+        "content/chapters/01-typescript-survival.md",
+        "content/chapters/02-event-stream.md",
+        "content/chapters/03-message-ir.md",
+        "content/chapters/04-scripted-model.md",
+        "content/chapters/05-provider-adapter.md",
+        "content/chapters/06-tool-contract.md",
+        "content/chapters/07-agent-loop.md",
+        "content/chapters/08-coding-tools.md",
+        "content/chapters/09-stateful-agent.md",
+        "content/chapters/10-session-tree.md",
+        "content/chapters/11-context-compaction.md",
+        "content/chapters/12-resources-extensions.md",
+        "content/chapters/13-composition-root.md",
+        "content/chapters/14-eval-capstone.md",
+        "docs/usability/chinese-style.md",
+        "tests/chinese-prose.test.mjs"
+      ],
+      "retest": null
     }
   ]
 }

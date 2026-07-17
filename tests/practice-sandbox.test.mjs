@@ -103,8 +103,103 @@ test("practice helper creates an answer-free chapter sandbox", async (t) => {
   );
   assert.match(chapter01Guide, /模式：重建/);
   assert.match(chapter01Guide, /当前源码来自 parent/);
+  assert.match(
+    await readFile(
+      path.join(chapter01, "packages/pi-course/AGENT_GUIDE.md"),
+      "utf8",
+    ),
+    /Checkpoint 01/,
+    "a parent sandbox must still receive the current chapter coaching guide",
+  );
 
   const duplicate = createPractice("01", chapter01);
   assert.notEqual(duplicate.status, 0);
   assert.match(duplicate.stderr, /已存在/);
+
+  const chapter02 = path.join(root, "chapter-02");
+  const eventStream = createPractice("02", chapter02);
+  assert.equal(eventStream.status, 0, eventStream.stderr);
+  const chapter02Test = await readFile(
+    path.join(
+      chapter02,
+      "packages/pi-course/test/02-event-stream.test.ts",
+    ),
+    "utf8",
+  );
+  assert.match(
+    chapter02Test,
+    /events\.end\("A"\);[\s\S]*await events\.result\(\)[\s\S]*"A"/,
+    "end(result) must be observed through result(), not only iterator.done",
+  );
+  assert.equal(
+    [...chapter02Test.matchAll(/\(event: Event\) =>/g)].length,
+    2,
+    "callback types must keep the expected first red focused on the missing module",
+  );
+
+  const chapter03 = path.join(root, "chapter-03");
+  const messageIr = createPractice("03", chapter03);
+  assert.equal(messageIr.status, 0, messageIr.stderr);
+  const chapter03Test = await readFile(
+    path.join(
+      chapter03,
+      "packages/pi-course/test/03-message-ir.test.ts",
+    ),
+    "utf8",
+  );
+  assert.match(
+    chapter03Test,
+    /const result = await stream\.result\(\);[\s\S]*assert\.strictEqual\(\s*result,\s*error\s*\)/,
+    "the error terminal test must prove that result() resolves the final message",
+  );
+  assert.doesNotMatch(
+    chapter03Test,
+    /stream\.end\(error\)/,
+    "the test must not complete the stream on behalf of a broken terminal detector",
+  );
+  assert.match(
+    chapter03Test,
+    /\{\s*timeout:\s*1_000\s*\}/,
+    "the terminal regression must fail promptly instead of hanging",
+  );
+
+  const chapter04 = path.join(root, "chapter-04");
+  const scriptedModel = createPractice("04", chapter04);
+  assert.equal(scriptedModel.status, 0, scriptedModel.stderr);
+  const chapter04Test = await readFile(
+    path.join(
+      chapter04,
+      "packages/pi-course/test/04-scripted-model.test.ts",
+    ),
+    "utf8",
+  );
+  assert.match(
+    chapter04Test,
+    /context\.messages\.push[\s\S]*model\.requests\[0\][\s\S]*messages/,
+    "the recorded request must be tested as a call-time snapshot",
+  );
+  assert.match(
+    chapter04Test,
+    /partialText:\s*"正在"[\s\S]*errorMessage:\s*"rate limited"/,
+    "an explicit error turn must preserve partial output and its diagnostic",
+  );
+  assert.ok(
+    [...chapter04Test.matchAll(/\{\s*timeout:\s*1_000\s*\}/g)].length >= 3,
+    "all three streaming regressions must fail promptly",
+  );
+  assert.match(
+    chapter04Test,
+    /textDelta\.contentIndex,\s*0[\s\S]*textDelta\.delta,\s*"先看"[\s\S]*textDelta\.partial\.content/,
+    "the success oracle must inspect event payloads, not only event type names",
+  );
+  assert.match(
+    chapter04Test,
+    /toolDelta\.contentIndex,\s*1[\s\S]*toolDelta\.delta[\s\S]*toolDelta\.partial\.content[\s\S]*toolEnd\.toolCall/,
+    "tool deltas and completion must preserve their index, cumulative partial, and canonical call",
+  );
+  assert.match(
+    chapter04Test,
+    /secondStream[\s\S]*textOf\([\s\S]*"第二轮"/,
+    "the scripted cursor must be observed across two successive turns",
+  );
 });
