@@ -2186,24 +2186,24 @@ export const searchIndex: SearchEntry[] = [
     "id": "11",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
-    "title": "History 是事实，Context 是投影",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "历史不动，上下文按预算重建",
     "href": "/learn/context-compaction",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 从追加式会话树派生有预算的模型视图，并用追加摘要而非删除历史完成压缩。 第三部 · 让 Harness 可靠 history, context projection, token budget, safe cut point, compaction 你将得到什么 先建立全景 先做纯投影，再谈压缩 安全裁剪单位是语义组 Compaction 是追加状态转移 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "历史不动，上下文按预算重建 把工具往返组成不可拆分的交互，在预算内选择完整后缀，并用追加的结构化摘要恢复更早事实。 第三部 · 让 Harness 可靠 history, context projection, token budget, interaction boundary, compaction 你将得到什么 为什么第 11 章放在这里 开始动手 先建立全景 第一步：让摘要成为可持久化事实 第二步：预算不能拆开一次完整交互 第三步：先扣固定成本，再选择最近的完整组 第四步：创建摘要记录，不替调用者写入 第五步：恢复时只认活动路径上的最新摘要 故意把它弄坏 本章没有证明什么 本章验收 可选迁移练习 小结"
   },
   {
     "id": "11-你将得到什么",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
+    "chapterTitle": "历史不动，上下文按预算重建",
     "title": "你将得到什么",
     "href": "/learn/context-compaction#你将得到什么",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -2211,16 +2211,50 @@ export const searchIndex: SearchEntry[] = [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 你将得到什么 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 你将得到什么 history context projection token budget interaction boundary compaction"
+  },
+  {
+    "id": "11-为什么第-11-章放在这里",
+    "chapterId": "11",
+    "chapterSlug": "context-compaction",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "为什么第 11 章放在这里",
+    "href": "/learn/context-compaction#为什么第-11-章放在这里",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "history",
+      "context projection",
+      "token budget",
+      "interaction boundary",
+      "compaction"
+    ],
+    "searchText": "历史不动，上下文按预算重建 为什么第 11 章放在这里 history context projection token budget interaction boundary compaction"
+  },
+  {
+    "id": "11-开始动手",
+    "chapterId": "11",
+    "chapterSlug": "context-compaction",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "开始动手",
+    "href": "/learn/context-compaction#开始动手",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "history",
+      "context projection",
+      "token budget",
+      "interaction boundary",
+      "compaction"
+    ],
+    "searchText": "历史不动，上下文按预算重建 开始动手 history context projection token budget interaction boundary compaction"
   },
   {
     "id": "11-先建立全景",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
+    "chapterTitle": "历史不动，上下文按预算重建",
     "title": "先建立全景",
     "href": "/learn/context-compaction#先建立全景",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -2228,67 +2262,101 @@ export const searchIndex: SearchEntry[] = [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 先建立全景 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 先建立全景 history context projection token budget interaction boundary compaction"
   },
   {
-    "id": "11-先做纯投影再谈压缩",
+    "id": "11-第一步让摘要成为可持久化事实",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
-    "title": "先做纯投影，再谈压缩",
-    "href": "/learn/context-compaction#先做纯投影再谈压缩",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "第一步：让摘要成为可持久化事实",
+    "href": "/learn/context-compaction#第一步让摘要成为可持久化事实",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 先做纯投影，再谈压缩 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 第一步：让摘要成为可持久化事实 history context projection token budget interaction boundary compaction"
   },
   {
-    "id": "11-安全裁剪单位是语义组",
+    "id": "11-第二步预算不能拆开一次完整交互",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
-    "title": "安全裁剪单位是语义组",
-    "href": "/learn/context-compaction#安全裁剪单位是语义组",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "第二步：预算不能拆开一次完整交互",
+    "href": "/learn/context-compaction#第二步预算不能拆开一次完整交互",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 安全裁剪单位是语义组 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 第二步：预算不能拆开一次完整交互 history context projection token budget interaction boundary compaction"
   },
   {
-    "id": "11-compaction-是追加状态转移",
+    "id": "11-第三步先扣固定成本再选择最近的完整组",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
-    "title": "Compaction 是追加状态转移",
-    "href": "/learn/context-compaction#compaction-是追加状态转移",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "第三步：先扣固定成本，再选择最近的完整组",
+    "href": "/learn/context-compaction#第三步先扣固定成本再选择最近的完整组",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 Compaction 是追加状态转移 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 第三步：先扣固定成本，再选择最近的完整组 history context projection token budget interaction boundary compaction"
+  },
+  {
+    "id": "11-第四步创建摘要记录不替调用者写入",
+    "chapterId": "11",
+    "chapterSlug": "context-compaction",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "第四步：创建摘要记录，不替调用者写入",
+    "href": "/learn/context-compaction#第四步创建摘要记录不替调用者写入",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "history",
+      "context projection",
+      "token budget",
+      "interaction boundary",
+      "compaction"
+    ],
+    "searchText": "历史不动，上下文按预算重建 第四步：创建摘要记录，不替调用者写入 history context projection token budget interaction boundary compaction"
+  },
+  {
+    "id": "11-第五步恢复时只认活动路径上的最新摘要",
+    "chapterId": "11",
+    "chapterSlug": "context-compaction",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "第五步：恢复时只认活动路径上的最新摘要",
+    "href": "/learn/context-compaction#第五步恢复时只认活动路径上的最新摘要",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "history",
+      "context projection",
+      "token budget",
+      "interaction boundary",
+      "compaction"
+    ],
+    "searchText": "历史不动，上下文按预算重建 第五步：恢复时只认活动路径上的最新摘要 history context projection token budget interaction boundary compaction"
   },
   {
     "id": "11-故意把它弄坏",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
+    "chapterTitle": "历史不动，上下文按预算重建",
     "title": "故意把它弄坏",
     "href": "/learn/context-compaction#故意把它弄坏",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -2296,16 +2364,33 @@ export const searchIndex: SearchEntry[] = [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 故意把它弄坏 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 故意把它弄坏 history context projection token budget interaction boundary compaction"
+  },
+  {
+    "id": "11-本章没有证明什么",
+    "chapterId": "11",
+    "chapterSlug": "context-compaction",
+    "chapterTitle": "历史不动，上下文按预算重建",
+    "title": "本章没有证明什么",
+    "href": "/learn/context-compaction#本章没有证明什么",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "history",
+      "context projection",
+      "token budget",
+      "interaction boundary",
+      "compaction"
+    ],
+    "searchText": "历史不动，上下文按预算重建 本章没有证明什么 history context projection token budget interaction boundary compaction"
   },
   {
     "id": "11-本章验收",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
+    "chapterTitle": "历史不动，上下文按预算重建",
     "title": "本章验收",
     "href": "/learn/context-compaction#本章验收",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -2313,16 +2398,16 @@ export const searchIndex: SearchEntry[] = [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 本章验收 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 本章验收 history context projection token budget interaction boundary compaction"
   },
   {
     "id": "11-可选迁移练习",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
+    "chapterTitle": "历史不动，上下文按预算重建",
     "title": "可选迁移练习",
     "href": "/learn/context-compaction#可选迁移练习",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -2330,16 +2415,16 @@ export const searchIndex: SearchEntry[] = [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 可选迁移练习 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 可选迁移练习 history context projection token budget interaction boundary compaction"
   },
   {
     "id": "11-小结",
     "chapterId": "11",
     "chapterSlug": "context-compaction",
-    "chapterTitle": "History 是事实，Context 是投影",
+    "chapterTitle": "历史不动，上下文按预算重建",
     "title": "小结",
     "href": "/learn/context-compaction#小结",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -2347,10 +2432,10 @@ export const searchIndex: SearchEntry[] = [
       "history",
       "context projection",
       "token budget",
-      "safe cut point",
+      "interaction boundary",
       "compaction"
     ],
-    "searchText": "History 是事实，Context 是投影 小结 history context projection token budget safe cut point compaction"
+    "searchText": "历史不动，上下文按预算重建 小结 history context projection token budget interaction boundary compaction"
   },
   {
     "id": "12",

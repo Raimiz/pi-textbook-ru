@@ -649,3 +649,30 @@ Lab 10.5 变为 `2/3`，底层 append 调用次数为 3 而不是 1；恢复检�
 entry、半写后的第二次 I/O、sibling 与工具结构投影。全部通过；Chapter 00～10 累计
 `72/72`。最终 target 为 `55516263`。两项额外测试建议进入全局审查清单，不重开本章。
 Chapter 10 封存。
+
+## Chapter 11 · 单一投影模型
+
+旧实现同时保留两套 summary、两套 context 入口和多组兼容字段，compaction 又提前
+混入 Chapter 10。fresh 练习首先缺少 `context.ts`，775 行实现只有 2 项测试。
+
+重写后，Chapter 11 第一次向 session schema 加入唯一的七字段 compaction，并只导出
+`groupInteractions()`、`buildContext()`、`createCompactionEntry()`。预算先扣 system、
+输出预留和安全余量，再按完整 interaction 选择最近后缀；恢复只使用活动路径上的最新
+摘要。主审还补齐了一个公共 API 缺口：`systemPrompt` 既然参与计费，也必须随投影
+返回，供后续 Runtime 直接交给模型。
+
+学生从双 starter 一次完成：
+
+```text
+first red       Lab 11.1 compaction entry 尚未实现 · 0/3
+Lab 11.1–11.5  3/3 → 3/3 → 3/3 → 2/2 → 3/3
+full            14/14
+```
+
+五段均为 L0，无正文回读。把整组选择替换为 `slice(-3)` 后，Lab 11.3 变为 `0/3`，
+分别暴露上下文从 assistant 开始、多工具组丢 user/call、新交互丢首条 user。恢复组
+边界后回到 `3/3` 与 `14/14`。
+
+陪练通过公开输入检查旧 schema、反序 toolResult、单组超限、不安全 first kept、最新
+compaction 与 systemPrompt 返回。全部通过，Chapter 00～11 累计 `86/86`。最终 target
+为 `5fb517c2`。Chapter 11 封存。

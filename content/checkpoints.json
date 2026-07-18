@@ -208,22 +208,35 @@
   },
   {
     "id": "11",
-    "commit": "970bb071ab15e40e1521089013bbd40acefbc05b",
+    "commit": "5fb517c2012d8e6227c0e17ee65e530e18ac13e6",
     "parentCommit": "555162636bf0a8fd6e667e366d0103891cef1d6c",
-    "subject": "course(11): derive bounded context without rewriting history",
+    "subject": "course(11): project bounded context from immutable history",
     "sourceDelta": [
+      "packages/pi-course/src/session.ts",
       "packages/pi-course/src/context.ts"
     ],
     "focusedTest": "packages/pi-course/test/11-context-compaction.test.ts",
     "testTitles": [
-      "预算只在完整 interaction 边界裁剪，结果完成顺序不影响配对",
-      "compaction 只追加摘要，并保留 first kept 与原历史"
+      "Lab 11.1 · compaction schema 严格收窄并深复制七个摘要字段",
+      "Lab 11.1 · compaction schema 拒绝旧字段、缺字段与无效数字",
+      "Lab 11.1 · Memory 与 JSONL 都能写入并重开 compaction",
+      "Lab 11.2 · groupInteractions 以 user 为边界并返回独立副本",
+      "Lab 11.2 · tool results 可反序出现，仍按 callId 完整配对",
+      "Lab 11.2 · interaction 拒绝 orphan、duplicate 与 missing tool fact",
+      "Lab 11.3 · buildContext 先扣 system、输出预留与安全余量",
+      "Lab 11.3 · 最新单组超限时仍完整保留 user、call、results 与终态",
+      "Lab 11.3 · 预算只在完整 group 边界截断，结果与输入不共享引用",
+      "Lab 11.4 · createCompactionEntry 推导 parent 并保持历史与输入独立",
+      "Lab 11.4 · createCompactionEntry 只接受完整 interaction 的首条 message",
+      "Lab 11.5 · 恢复只用最新 compaction 摘要，并从 firstKept 保留后缀",
+      "Lab 11.5 · 多次 compaction 只读取最新一条，重复构建结果确定且隔离",
+      "Lab 11.5 · 恢复后的路径可以再次压缩，预算仍只截完整 group"
     ]
   },
   {
     "id": "12",
     "commit": "40e113d528d8a95905482311c06c1c4851167dc2",
-    "parentCommit": "970bb071ab15e40e1521089013bbd40acefbc05b",
+    "parentCommit": "5fb517c2012d8e6227c0e17ee65e530e18ac13e6",
     "subject": "course(12): add progressive resources and trusted extensions",
     "sourceDelta": [
       "packages/pi-course/src/resources.ts"

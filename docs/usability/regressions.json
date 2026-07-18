@@ -969,6 +969,29 @@
       }
     },
     {
+      "id": "L11-CONTEXT-ROOT-CONTRACT",
+      "chapter": "11",
+      "status": "resolved",
+      "observedBy": ["student", "coach", "coordinator"],
+      "evidence": "旧章继承两套 summary 和多组兼容 API，compaction 在 Chapter 10 提前出现却无法由新版 parser 恢复；775 行实现只有 2 项测试，fresh 练习还会先缺 context 模块。",
+      "firstPrinciple": "上下文只能从活动历史派生；预算裁剪必须尊重完整交互，compaction 只能追加一条可恢复事实，不能成为第二个历史拥有者。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/session.ts",
+        "../pi-course-history/packages/pi-course/src/context.ts",
+        "../pi-course-history/packages/pi-course/test/11-context-compaction.test.ts",
+        "../pi-course-history/packages/pi-course/starters/11-session.ts",
+        "../pi-course-history/packages/pi-course/starters/11-context.ts",
+        "content/chapters/11-context-compaction.md"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "五段均为 L0 且一次通过，得到 3/3、3/3、3/3、2/2、3/3；把选择改成 slice(-3) 后 Lab 11.3 准确变为 0/3。",
+        "coach": "fresh 首红 0/3，14/14 与累计 86/86 通过；旧 schema、反序结果、单组超限、不安全切点、最新摘要与 systemPrompt 返回均通过公开反例。",
+        "evidence": "target 5fb517c2; student and coach black-box PASS; P0=0"
+      }
+    },
+    {
       "id": "LZH-NATURAL-CHINESE",
       "chapter": "00",
       "status": "retest_pending",

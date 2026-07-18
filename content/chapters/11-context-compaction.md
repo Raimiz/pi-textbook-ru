@@ -4,38 +4,95 @@ slug: context-compaction
 part: state
 partTitle: 第三部 · 让 Harness 可靠
 chapter: "11"
-title: History 是事实，Context 是投影
-summary: 从追加式会话树派生有预算的模型视图，并用追加摘要而非删除历史完成压缩。
-minutes: 120
+title: 历史不动，上下文按预算重建
+summary: 把工具往返组成不可拆分的交互，在预算内选择完整后缀，并用追加的结构化摘要恢复更早事实。
+minutes: 145
 difficulty: 核心
 artifact: packages/pi-course/src/context.ts
 prerequisites: 03,10
-terms: history, context projection, token budget, safe cut point, compaction
+terms: history, context projection, token budget, interaction boundary, compaction
 upstream: packages/coding-agent/src/core/compaction/compaction.ts
 ---
 
-# History 是事实，Context 是投影
-
 ## 你将得到什么
 
-进入本章时，你的 Pi 已经把消息写成带 `id`、`parentId` 的追加式会话树，能够恢复和分支；缺口是：模型窗口有限，而会话事实会持续增长。若直接把“省 token”实现成删除旧 entry，你会同时破坏审计、分支和恢复。
+第 10 章已经把完整消息保存成一棵追加式历史树。它可以一直增长，但模型窗口不会一起
+增长。如果为了省 token 直接删除旧记录，分支、恢复和审计都会失去事实依据。
 
-本章只增加一种复杂性：**从不变的 history 派生可替换的 context**。你将新增 `workshop/src/context.ts`，并在 `workshop/src/session.ts` 的 tagged union 中加入 `CompactionEntry`，得到 `buildContext(activePath, options)` 与 `compact(entries, input)`。这里的 `activePath` 由第 10 章的 `pathTo` 选出，context builder 不拥有“当前 leaf”。完成后可以观察到 history 条目只增不减，而模型收到的 messages 会因预算和最新 compaction entry 改变。
+本章只增加一种复杂性：**从不改写的历史中，派生本次模型真正要看的有限上下文。**
+完成后，你会得到：
 
-不能破坏的不变量是：
+- `CompactionSessionEntry`：把一份结构化摘要追加到 session；
+- `groupInteractions()`：按用户回合和工具 `callId` 组成不可拆分的交互；
+- `buildContext()`：先扣除 system、输出预留和安全余量，再选择最近的完整交互；
+- `createCompactionEntry()`：只创建一条新的摘要记录，不修改历史，也不偷偷写 Store；
+- 可重复的恢复规则：只使用活动路径上最新摘要，再接上它要求保留的消息后缀。
 
-> History 记录发生过什么；context 只回答本次模型需要看到什么。Compaction 改变投影，不改写过去。
+本章只有一个总原则：
 
-先运行 `git status --short`，把第 10 章验收状态提交为自己的 checkpoint。要回到本章起点，用该提交恢复 `workshop/src/context.ts`、`workshop/src/session.ts` 与对应测试；不要用本章结束状态覆盖第 10 章的会话实现。
+> 历史回答“发生过什么”；上下文回答“这次模型需要看到什么”。压缩改变后者，不改写
+> 前者。
 
-:::rebuild title="Checkpoint 11 · 先保持一个 interaction 不被切开"
-**模式：** 重建。从 10 的 target 开始，history 保持不变，只派生 context。
+## 为什么第 11 章放在这里
 
-**起终点：** parent 是本章开始时的起点快照；target 是聚焦测试通过的终点快照。
+上下文压缩必须晚于 session。没有第 10 章的稳定身份和活动路径，所谓“删掉旧消息”
+既无法说明删的是哪条分支，也无法在重启后得到同一结果。
 
-**教学文件：** `packages/pi-course/src/context.ts`
+它又必须早于资源和扩展。第 12 章会把项目说明、Skill 和扩展提供的提示加入 system
+prompt；这些内容同样占模型窗口。先把预算入口固定下来，后续资源才能作为明确输入接
+进来，而不是在各处自行裁剪消息。
 
-**第一步：** 先不看 target diff，先实现 `groupInteractions`，用 `toolCallId` 把 assistant call 与可能逆序完成的 results 组成不可分割组；分组通过后再加入预算和 compaction。
+```text
+第 10 章：选中一条真实、可恢复的历史路径
+        ↓
+第 11 章：从这条路径派生有限上下文
+        ↓
+第 12 章：把本轮资源提示加入同一个预算入口
+```
+
+## 开始动手
+
+仍然在教学历史仓库中生成隔离练习：
+
+```bash
+cd <你的工作区>/pi-course-history
+npm run practice -w @pi/course -- 11 <新目录>
+cd <新目录>
+npm install
+```
+
+本章只修改：
+
+```text
+packages/pi-course/src/session.ts
+packages/pi-course/src/context.ts
+```
+
+`session.ts` 保留第 10 章的完整实现，只把 compaction 的类型和运行时解析留给你。
+`context.ts` 已固定分组、预算、创建摘要和恢复所需的公共签名。不要复制旧版
+`safeTail()`、`compact()` overload 或自动 summarizer；它们不属于本章契约。
+
+:::rebuild title="Checkpoint 11 · 分五步从历史派生有限上下文"
+**模式：** 重建。从 10 的 `target` 开始，历史仍然追加，模型视图开始受到预算约束。
+
+**起终点：** `parent` 是本章开始时的起点快照；`target` 是 14 项聚焦测试通过的
+终点快照。
+
+**教学文件：** `packages/pi-course/src/session.ts`、
+`packages/pi-course/src/context.ts`
+
+**学习脚手架：** 两个文件都能编译。`session.ts` 只缺 compaction 运行时分支；
+`context.ts` 的每项公共函数都在对应 Lab 抛出明确异常。
+
+**动手前只需知道：** 一个 interaction 从 user 消息开始，到下一个 user 消息之前
+结束。该段中的每个 tool call 都必须有同 `callId` 的唯一 toolResult。预算只能在
+interaction 之间裁剪。
+
+**第一步：** 先让 `parseSessionEntry()` 识别严格的 compaction entry，并确认两种
+Store 都能写入和重新打开它。暂时不要写预算算法。
+
+**第一次红灯：** 初始 build 应通过；首次只运行 Lab 11.1 时，三项都应准确显示
+`Lab 11.1 compaction entry 尚未实现`。
 
 **聚焦测试：** `packages/pi-course/test/11-context-compaction.test.ts`
 
@@ -43,126 +100,58 @@ upstream: packages/coding-agent/src/core/compaction/compaction.ts
 
 **练习目录：** `npm run practice -w @pi/course -- 11`
 
-**聚焦运行：** `npm run build -w @pi/course`，然后 `node --test packages/pi-course/dist/test/11-*.test.js`
+**聚焦运行：** `npm run build -w @pi/course`，然后运行
+`node --test packages/pi-course/dist/test/11-*.test.js`。
 
-**通过证据：** safe cut、单组超限、结果逆序、摘要追加与 context 重建测试通过；history 条目数只增不减。
+**通过证据：** 14 项测试按 `3/3 → 3/3 → 3/3 → 2/2 → 3/3` 检查摘要记录、完整
+交互、预算投影、纯创建和重复恢复。
 
-第一次尝试禁止查看完整答案；若预算算法卡住，先让陪练只检查分组是否正确，暂时不要讨论 token 估算。
+卡住时，让陪练只画当前 Lab 的数据流。不要在写分组时讨论摘要，也不要在写摘要时
+引入真实模型。
 :::
 
 ## 先建立全景
 
-一次请求实际经过两个不同的数据面：
+先分清历史和上下文。
+
+一次请求的数据流是：
 
 ```text
-SessionEntry 全集（事实）
-        │ 选择当前 leaf 的祖先路径
-        ▼
-active path
-        │ 应用最新 compaction + 保留后缀
-        │ 加入本轮 system prompt
-        ▼
-ContextProjection（临时视图） ──→ model.stream(...)
+SessionEntry 全集
+  → pathTo(entries, leafId)
+  → active path                       历史层在这里结束
+  → 最新 compaction + 保留后缀
+  → 完整 interaction 分组
+  → system / output / margin 预算
+  → BuildContextResult                本轮模型输入
 ```
 
-Session store 拥有事实；context builder 只有读取权。System prompt、当前工具定义、项目规则和已激活 skill 也不等于历史消息：它们可能随 cwd、配置或运行模式变化，因此必须在每轮投影时组合。
+Session Store 拥有写入权。`buildContext()` 只有读取权；它不选择 leaf，也不把结果写回
+session。相同历史可以针对不同模型窗口生成不同上下文，只要过程确定且来源可追踪，
+这并不表示历史互相矛盾。
 
-这一区分还决定了调试方法。若用户说“模型忘了我们已经改过哪个文件”，先沿当前 leaf 查询原始 entry：事实不存在，是写入或分支选择问题；事实存在但没有进入 view，是投影问题；事实进入 view 后模型仍答错，才是模型行为问题。没有这三步，团队很容易靠不断加长 system prompt 掩盖 session 漏写，或为了减少 token 误删唯一可审计证据。
+调试时也按这条边界排查：
 
-同一份 history 也可以产生多个合法 context。例如小窗口模型需要更早压缩，大窗口模型可以保留更多原文；只读 mode 可以暴露不同工具描述；切换到子目录后项目指令也会改变。只要投影记录来源并且可重建，这些差异不是历史不一致。反过来，任何会影响“过去发生了什么”的信息都不能只放在瞬时 view 中：关键工具结果必须先成为 entry，再参与下一轮 context。
+1. 事实不在 active path：检查写入或分支选择；
+2. 事实在 active path、没有进入结果：检查 compaction 或预算；
+3. 事实已经进入结果、模型仍答错：再检查模型行为。
 
-:::predict title="删掉旧消息真的等价吗"
-假设当前分支有 20 个 entry。你删除前 12 个，再保留一条摘要。模型也许仍能回答，那么恢复旧分支和审计工具执行还能正确吗？
+:::predict title="预算只够三条消息时，能不能直接取尾部"
+最后五条消息是 user、assistant(call c1)、toolResult(c1)、assistant(done)，再加上一条
+更早的 assistant。若预算只够三条，直接 `slice(-3)` 会得到什么？它还能作为合法模型
+上下文吗？
 ---answer
-不能。摘要是有损派生物，无法证明原工具输入、结果和顺序；旧分支还可能引用被删 entry。正确做法是保留 20 个事实，再追加第 21 个 compaction entry，仅让 context builder 隐藏被摘要的前缀。
+它会从 toolResult 开始，模型看不到声明 c1 的 assistant，也不知道这条结果回答了哪次
+调用。预算选择必须先把 user 开始的完整 interaction 组成一组，再整组保留或整组
+丢弃；如果最新一组单独就超限，也要完整返回并报告 `single_group_overflow`。
 :::
 
-## 先做纯投影，再谈压缩
+## 第一步：让摘要成为可持久化事实
 
-第一版 `buildContext` 不生成摘要，只做两件事：把调用者已经选好的 active path 转成 canonical message，再报告预算。分支选择仍由 Session 层的 `pathTo(entries, leafId)` 负责；否则 builder 会偷偷拥有第二份“当前 leaf”。纯函数边界让测试可以证明输入没有被修改。
-
-不要把 `ContextProjection` 缓存成新的事实源。它可以按 history leaf、模型能力、资源版本组成 cache key 来加速，但缓存失效后必须能从原始输入重新得到等价结果。尤其不能在 projection 上直接追加下一轮消息，再稍后“同步回”session；这会制造两个拥有写权的 transcript。
+课程只保留一套结构化摘要：
 
 ```ts
-const activePath = pathTo(entries, "e8");
-const before = structuredClone(activePath);
-const view = buildContext(activePath, {
-  systemPrompt: "You are a coding agent.",
-  tokenBudget: 600,
-});
-
-assert.deepEqual(activePath, before);
-console.log(view.messages.map((m) => m.role));
-console.log(view.usage);
-```
-
-稳定输出模式应类似：
-
-```text
-[ "user", "assistant", "toolResult", "assistant" ]
-{ system: 6, messages: 91, total: 97, budget: 600, overflow: false }
-```
-
-这里的 token 数是保守估计，不是假装与某家 tokenizer 完全一致。真正需要保证的是：分项可见、同一输入结果确定、给输出预留空间。课程版只统计 system 与 messages；生产系统还应把 tool schema 等固定开销纳入报告。
-
-:::mechanism title="预算是一项准入检查"
-设模型窗口为 `W`，预留输出为 `R`，安全余量为 `M`，那么输入预算最多为 `W - R - M`。不要先把窗口塞满再等 provider 报错；应在请求前计算并把首次超限归因到 context 层。
-:::
-
-:::lab title="实践 11.1 · 建立只读 ContextProjection"
-**目标：** 让同一组 entry 产生确定、可解释且不修改输入的模型视图。
-
-**文件：** `workshop/src/context.ts`、`workshop/test/context-resources.test.ts`
-
-**动作：**
-1. 定义 `ContextProjection`，至少包含 `systemPrompt`、`messages`、分项 `usage`。
-2. 在调用处用第 10 章的 `pathTo` 选择 leaf；builder 只转换 `message` 和可进入 context 的 summary entry。
-3. 注入字符近似 estimator；为输出和安全余量预留预算。
-4. 测试分支选择、空 history、确定输出与输入深冻结。
-
-**运行：** `npm run workshop:test -- context`
-
-**预期：** 同一 fixture 连续构建两次结果深相等；SessionEntry 的数量、父子关系和内容均不变。
-:::
-
-## 安全裁剪单位是语义组
-
-超限后不能简单取最后 N 条。一个 assistant message 可能声明两个 tool call：完成事件可以先报 c2 再报 c1，但第 07 章会按 call 源顺序把 c1、c2 的结果写入 canonical history。无论哪种顺序，若视图以孤立的 `toolResult` 开头，provider 都无法看到它回答哪次调用。课程版先把路径分成 interaction group，再只在组与组之间选择 cut point。
-
-```text
-g1: user(u1) → assistant(a1:text)
-g2: user(u2) → assistant(a2:call c1,c2)
-  end events: c2 → c1
-  history:    toolResult(c1) → toolResult(c2)
-             → assistant(a3:text)
-safe cut:  ^g1 或 ^g2
-unsafe cut:                         ^toolResult(c1)
-```
-
-注意三个顺序仍然不同：tool call 的声明顺序、工具完成顺序、canonical transcript 的写入顺序。分组逻辑必须依靠 `toolCallId` 配对，不能假设数组相邻就表示因果关系。
-
-:::lab title="实践 11.2 · 找到不会拆散工具往返的 cut point"
-**目标：** 在保留最近内容时，绝不留下孤立 call 或 result。
-
-**文件：** `workshop/src/context.ts`、`workshop/test/context-resources.test.ts`
-
-**动作：**
-1. 实现 `groupInteractions(messages)`，输出完整语义组及来源 entry id。
-2. 从新到旧累加估算 token，在完整组边界选择 `firstKeptEntryId`。
-3. 若单个组本身超预算，返回显式 `single_group_overflow`，不要悄悄从中间切。
-4. 加入多工具、失败 toolResult、连续 user message 三组 fixture。
-
-**运行：** `npm run workshop:test -- context`
-
-**预期：** 任意选出的后缀都能通过 call/result 配对校验；单个超大组得到可诊断失败。
-:::
-
-## Compaction 是追加状态转移
-
-摘要不是一段“看起来通顺”的散文，而是可继续工作的状态：目标、约束、已完成工作、关键决策、改动文件、未解决问题和下一步。先用 deterministic summarizer 测协议，不让真实模型随机性污染核心测试。
-
-```ts
-type CompactionSummary = {
+interface CompactionSummary {
   goal: string;
   constraints: string[];
   completed: string[];
@@ -170,115 +159,339 @@ type CompactionSummary = {
   changedFiles: string[];
   unresolved: string[];
   next: string[];
-};
+}
 
-type CompactionEntry = SessionEntryBase & {
+interface CompactionSessionEntry {
+  id: string;
+  parentId: string;
+  timestamp: number;
   type: "compaction";
   summary: CompactionSummary;
   firstKeptEntryId: string;
   tokensBefore: number;
-};
+}
 ```
 
-`CompactionEntry` 是历史中的新事实，所以它必须进入第 10 章的 `SessionEntry` union 并可由两种 store 追加；context builder 只负责把它渲染成 synthetic summary message。不要把 summary 直接塞进一份内存 messages 数组而不落盘，否则 resume 后无法重建同一视图。
+每个字段都有单一含义。`firstKeptEntryId` 指向摘要之后仍要原样保留的第一个
+interaction；`tokensBefore` 记录创建摘要时的估算规模，用于诊断，不参与树结构。
 
-```ts
-const after = compact(entries, {
-  id: "cmp-1",
-  parentId: "e8",
-  timestamp: "2026-01-01T00:00:00.000Z",
-  firstKeptEntryId: "e6",
-  summary: {
-    goal: "修复解析器",
-    constraints: ["不改公开消息协议"],
-    completed: ["复现失败 fixture"],
-    decisions: ["保留 tagged union"],
-    changedFiles: ["src/parser.ts"],
-    unresolved: ["检查空输入"],
-    next: ["运行边界测试"],
-  },
-  tokensBefore: 1700,
-});
+compaction 必须有 parent，因为它总结的是一条已经存在的活动路径。`tokensBefore`
+必须是非负有限数。七个摘要字段全部必填；不要接受旧版 `files`、`nextSteps`、
+`invariants`，也不要保留两套 schema 再相互转换。
 
-console.log(entries.length, after.length);
-const compactedPath = pathTo(after, "cmp-1");
-console.log(buildContext(compactedPath, options).sourceEntryIds);
-```
+`parseSessionEntry()` 继续承担外部数据边界。实现顺序如下：
 
-预期关系是：
+1. 增加严格的 `summaryAt()`，拒绝缺字段、多余字段和非字符串数组；
+2. 在 entry 判别分支中加入 `type === "compaction"`；
+3. 复用第 10 章的非空字符串、有限数和普通 JSON 对象检查；
+4. 返回新对象，不与输入 summary 数组共享引用。
 
-```text
-history: 8 → 9 entries
-context: [cmp-1, e6, e7, e8]
-old entries e1…e5: 仍可查询，但不发送给模型
-```
+两种 Store 不需要新增特殊逻辑。它们都通过 `parseSessionEntry()` 取得快照，所以 union
+和解析器正确后，内存与 JSONL 自然能够保存新记录。
 
-重复压缩时，新摘要要接续上一摘要和上次保留的内容；每轮最多自动压缩一次，摘要非法或仍然超限时明确失败，不能递归重试到失控。
+:::lab title="实践 11.1 · 持久化一条严格的 compaction 记录"
+**目标：** 让摘要使用唯一 schema，并能跨 JSONL 重开。
 
-:::lab title="实践 11.3 · 追加摘要并重建有限视图"
-**目标：** 让压缩成为可恢复的 history 状态转移，而不是数组裁剪。
-
-**文件：** `workshop/src/context.ts`、`workshop/src/session.ts`、`workshop/test/context-resources.test.ts`
+**文件：** `packages/pi-course/src/session.ts`
 
 **动作：**
-1. 把 `CompactionEntry` 加入 `SessionEntry` union，并保证 memory/JSONL store 原样追加。
-2. 实现 `compact`：校验安全边界与 summary schema，返回旧 entries 加一条新 entry。
-3. 让 `buildContext` 使用 active path 上最新 summary 加保留后缀；旧 entry 仍能按 id 查询。
-4. 测试 resume、重复 compaction、非法 summary 和每轮最多一次自动尝试。
+1. 加入 `CompactionSummary`、`CompactionSessionEntry` 和 union 分支。
+2. 逐字段收窄七项摘要内容。
+3. 要求非空 `parentId`、非空 `firstKeptEntryId` 和非负有限 `tokensBefore`。
+4. 拒绝缺字段、多余字段、旧字段和错误数组成员。
+5. 验证解析结果与输入不共享 summary 数组。
+6. 删除 Lab 11.1 的显式异常，只运行本段测试。
 
-**运行：** `npm run workshop:test -- context`
+**运行：**
 
-**预期：** history 增加一条而 context 缩短；重启后投影一致；非法摘要不改变 history。
+```bash
+npm run build -w @pi/course
+node --test --test-name-pattern="Lab 11.1" \
+  packages/pi-course/dist/test/11-*.test.js
+```
+
+**预期：** `3/3`。第三项会把记录依次写入内存和 JSONL Store，再重新打开文件；不是
+只检查 TypeScript 类型。
 :::
 
-:::pi title="Pi 8479bd84743e 的两条实现线"
-当前产品主路径由 coding-agent 的 `SessionManager` 沿活动分支构造 context，追加 `CompactionEntry{summary, firstKeptEntryId, tokensBefore}`；旧 entry 仍留在 JSONL 中。`packages/agent/src/harness/` 也有通用 session/compaction 实现和 `AgentHarness`，它是并存的演进方向，不能写成 coding-agent 已迁移完成。课程保留同一不变量，但用结构化 deterministic summary 和单组超限错误缩小机制；这属于教学实现，不是逐行复刻。
+## 第二步：预算不能拆开一次完整交互
+
+按“最后 N 条消息”裁剪会留下孤立工具结果：
+
+```text
+user(u)
+assistant(call c1, call c2)
+toolResult(c2)             完成顺序可以反过来
+toolResult(c1)
+assistant(done)
+```
+
+这五条属于同一个 interaction。判断依据不是数组相邻，而是：
+
+- user 开始新组；
+- assistant 中的每个 tool call id 在本组唯一；
+- toolResult 用 `toolCallId` 找到本组内的 call；
+- 到下一个 user 或路径结束时，每个 call 都有且只有一个 result。
+
+因此要拒绝四类损坏：第一个 user 之前出现消息、孤立 result、重复 call/result、缺失
+result。错误必须带上相关 entry 或 `callId`，否则预算层只会在更晚的位置报出难懂
+错误。
+
+`groupInteractions()` 返回记录副本，而不是直接引用输入。后面的预算选择和测试故障
+注入都不能改写 session 历史。
+
+:::lab title="实践 11.2 · 用 callId 组成完整 interaction"
+**目标：** 得到预算可以安全保留或丢弃的最小单位。
+
+**文件：** `packages/pi-course/src/context.ts`
+
+**动作：**
+1. user 消息开始一个新组；结束上一组前先验证工具配对。
+2. 收集 assistant 中的 tool call id。
+3. 用 `toolCallId` 配对结果，允许结果记录反序出现。
+4. 拒绝 user 前消息、orphan、duplicate 和 missing tool fact。
+5. 返回深副本。
+6. 删除 Lab 11.2 的显式异常，只运行本段测试。
+
+**运行：**
+
+```bash
+npm run build -w @pi/course
+node --test --test-name-pattern="Lab 11.2" \
+  packages/pi-course/dist/test/11-*.test.js
+```
+
+**预期：** `3/3`。一项覆盖普通分组，一项证明反序 result 仍按 id 配对，另一项集中
+检查损坏输入。
+:::
+
+## 第三步：先扣固定成本，再选择最近的完整组
+
+本章不假装实现某家模型的精确 tokenizer。调用者注入同一个
+`estimateTokens(value)`，测试用确定性数字固定选择结果。预算公式是：
+
+```text
+messages 可用额度
+  = maxTokens
+  - system prompt
+  - reservedOutput
+  - safetyMargin
+```
+
+`reservedOutput` 给本轮回答留空间，`safetyMargin` 吸收估算误差。三者都必须是非负
+有限数，估算器返回负数或非有限数也要拒绝。
+
+选择算法从最新 interaction 向前累加：
+
+```text
+先完整保留最新组
+  → 它单独超限：仍完整返回，reason=single_group_overflow
+  → 没超限：继续尝试加入前一组
+  → 下一组放不下：停在组边界，reason=trimmed
+  → 全部放下：reason=within_budget
+```
+
+单组超限时不能从中间切开工具往返。显式返回 overflow，让上层决定是否生成摘要、压缩
+超大工具结果或换模型。
+
+结果必须同时返回 `systemPrompt` 和 `messages`。system prompt 既然计入预算，就不能
+只用于统计后丢掉；第 12、13 章会把这份完整投影直接交给模型。
+
+:::lab title="实践 11.3 · 在完整组边界选择预算后缀"
+**目标：** 让每项固定成本可见，并且任何结果都保持工具协议完整。
+
+**文件：** `packages/pi-course/src/context.ts`
+
+**动作：**
+1. 检查 max、输出预留、安全余量和估算值。
+2. 计算 system 成本和 messages 可用额度。
+3. 调用 `groupInteractions()`，从最新组向前累加。
+4. 单个最新组超限时完整保留并返回 `single_group_overflow`。
+5. 返回 `systemPrompt`、消息深副本、保留的 entry id、原因和分项 token。
+6. 不修改 active path 或估算器收到的消息对象。
+7. 删除 Lab 11.3 的显式异常，只运行本段测试。
+
+**运行：**
+
+```bash
+npm run build -w @pi/course
+node --test --test-name-pattern="Lab 11.3" \
+  packages/pi-course/dist/test/11-*.test.js
+```
+
+**预期：** `3/3`。三项分别检查固定成本、单组超限和多组边界。
+:::
+
+## 第四步：创建摘要记录，不替调用者写入
+
+`createCompactionEntry(activePath, input)` 只做一件事：返回一条经过验证、可以交给
+Store 的新记录。
+
+```text
+activePath 最后一条 id
+  → 新 compaction.parentId
+
+input.firstKeptEntryId
+  → 必须是 activePath 中某个 interaction 的第一条 user message
+```
+
+函数不能接受组内的 assistant 或 toolResult 作为切点。它也不调用 Store：
+`SessionStore.append()` 是唯一写入者，上层可以先展示摘要、请求确认或记录审计，再决定
+是否追加。
+
+创建过程可以复用已经写好的边界：
+
+1. 用 `groupInteractions()` 找出所有合法组首；
+2. 用 active path 最后一项推导 parent，不让调用者另传一份可能冲突的 parent；
+3. 构造候选 compaction；
+4. 交给 `parseSessionEntry()` 完成严格校验与深复制。
+
+:::lab title="实践 11.4 · 纯函数创建 compaction entry"
+**目标：** 让摘要记录只有一个 parent 来源，并且切点一定安全。
+
+**文件：** `packages/pi-course/src/context.ts`
+
+**动作：**
+1. 拒绝空路径和重复 id。
+2. 从路径末尾推导 `parentId`。
+3. 只接受 interaction 首条 message 作为 `firstKeptEntryId`。
+4. 用 parser 校验 summary、timestamp 和 tokens。
+5. 证明输入路径、input 与返回值不共享可变引用。
+6. 删除 Lab 11.4 的显式异常，只运行本段测试。
+
+**运行：**
+
+```bash
+npm run build -w @pi/course
+node --test --test-name-pattern="Lab 11.4" \
+  packages/pi-course/dist/test/11-*.test.js
+```
+
+**预期：** `2/2`。一项检查 parent 与所有权，另一项集中撞击不安全切点。
+:::
+
+## 第五步：恢复时只认活动路径上的最新摘要
+
+追加 compaction 后，旧消息仍在历史中：
+
+```text
+u1 → a1 → u2 → a2 → cmp1 → u3 → a3
+                 ↑
+          firstKeptEntryId=u2
+```
+
+构建上下文时：
+
+1. 从 active path 末尾向前找到最新 compaction；
+2. 把它的结构化 summary 转成格式固定的 synthetic user message；
+3. 从 `firstKeptEntryId` 开始收集原消息，跳过 metadata 和 compaction 记录；
+4. 再按 interaction 分组和预算选择；
+5. 返回摘要消息加选中的完整后缀。
+
+如果路径还有更早的 compaction，只使用最新一条。最新摘要已经承担了接续更早事实的
+责任；同时塞入多份摘要会重复甚至冲突。
+
+重复调用 `buildContext()` 必须得到深相等结果。修改第一次返回的摘要或工具参数，
+不能影响第二次构建。再次压缩也只会创建新的 compaction entry，旧摘要和原消息仍留在
+session。
+
+:::lab title="实践 11.5 · 用最新摘要恢复并再次压缩"
+**目标：** 让重启、重复构建和第二次压缩得到同一套确定规则。
+
+**文件：** `packages/pi-course/src/context.ts`
+
+**动作：**
+1. 查找活动路径上最新的 compaction。
+2. 验证 `firstKeptEntryId` 位于该 compaction 之前，且是 interaction 起点。
+3. 用固定字段顺序生成 synthetic user message。
+4. 从 first kept 收集消息，随后复用 Lab 11.2、11.3。
+5. 忽略更早摘要与 metadata。
+6. 证明重复构建和返回副本隔离。
+7. 用恢复后的路径再创建一条 compaction，确认预算仍只截完整组。
+8. 删除 Lab 11.5 的显式异常，运行本段与全章测试。
+
+**运行：**
+
+```bash
+npm run build -w @pi/course
+node --test --test-name-pattern="Lab 11.5" \
+  packages/pi-course/dist/test/11-*.test.js
+node --test packages/pi-course/dist/test/11-*.test.js
+```
+
+**预期：** 本段 `3/3`，全章 `14/14`。
 :::
 
 ## 故意把它弄坏
 
-:::failure title="失败注入 · 从 toolResult 中间截断"
-把安全分组暂时替换成 `messages.slice(-3)`，让 fixture 的第一条保留消息成为 `toolResult(c2)`。
+临时把 Lab 11.3 的组选择替换成按消息数量取尾部，例如
+`messages.slice(-3)`。
 
-```text
-expected: context begins at user(u2), calls c1/c2 are both visible
-observed: context begins at toolResult(c2)
-first divergence: context.selectCutPoint
-violated invariant: 每个 toolResult 必须能在当前视图中找到同 id 的 toolCall
-```
+:::failure title="让上下文从孤立 toolResult 开始"
+只运行 Lab 11.3。多工具 fixture 会让结果从某个 toolResult 或 assistant 终态开始，
+它对应的 user 和 tool call 已经被切掉。测试应在 context 层直接失败，而不是等
+provider 报错。
 
-不要在 provider adapter 外层加 catch 来“修复”它。最小下一信号是打印 `sourceEntryIds` 和未配对的 `toolCallId`；修复位置是 cut point，而不是模型、session 或工具。
+恢复“先分组，再在组边界选择”后，Lab 11.3 回到 `3/3`，全章回到 `14/14`。
+:::
+
+## 本章没有证明什么
+
+14 项测试没有规定：
+
+- 某家 provider tokenizer 的精确计数；
+- tool schema、图片、缓存或网络层的额外 token 成本；
+- 真实模型怎样生成高质量摘要；
+- 摘要是否完整保留了所有业务事实；
+- 单个超大 interaction 应该压缩工具输出、换模型还是停止；
+- 何时自动触发 compaction；
+- Store 是否应该自动写入 `createCompactionEntry()` 的结果；
+- 多个并发压缩任务如何协调。
+
+课程使用结构化摘要和确定性格式，是为了测试恢复规则，不是宣称摘要质量已经解决。
+
+:::pi title="与上游 Pi 的固定提交对照"
+固定提交 `8479bd8` 的 coding-agent 也把 compaction 追加到 session，并保存
+`firstKeptEntryId` 与 `tokensBefore`；重建时使用活动路径上最新的摘要和保留后缀。
+
+该固定提交的产品摘要主体是字符串，课程则使用七字段结构化对象。这是为了让学习者能
+分别验证目标、约束、文件和下一步，不是对上游格式的逐行复刻。上游还包含自动触发、
+模型摘要和更复杂的超限策略，本章没有声称实现这些能力。
 :::
 
 ## 本章验收
 
-```bash
-npm run workshop:test -- context
-npm run workshop:test -- session
-```
+:::checkpoint title="Checkpoint 11 · 有限窗口下仍不改写历史"
+在隔离目录运行 build 与 14 项测试，并向陪练展示：
 
-验收不仅是绿灯。你还应能展示：压缩前后的 history JSON 完全保留旧 entry；context 从摘要加保留后缀重建；故障输出能指出第一个协议偏差。
+1. JSONL 重开后 compaction 的七个字段、first kept 和 tokens 均保持；
+2. 两个工具结果反序出现时，仍由 call id 组成一个完整 interaction；
+3. system、输出预留和安全余量先扣除，裁剪只发生在组边界；
+4. 单组超限时完整返回并给出明确 reason；
+5. 追加摘要前后，旧 session entries 完全不变；
+6. 恢复只使用最新摘要，重复构建结果深相等。
 
-:::checkpoint title="Checkpoint 11 · 有限窗口下仍不改写过去"
-**完成状态：** `workshop/src/context.ts` 能构建分项预算、选择安全边界、追加 compaction 并重建视图；`session.ts` 能持久化该 entry。
-
-**观察证据：** history 数量增加一，context 数量减少；旧分支和旧工具结果仍可由 id 查询。
-
-**恢复：** 用本章开始前记录的提交恢复 `workshop/src/context.ts`、`workshop/src/session.ts` 与 `workshop/test/context-resources.test.ts`，再运行 `npm run workshop:test -- session`，应回到“会话可恢复但尚无预算投影”的状态。
+最后指出 `systemPrompt` 与 `messages` 如何一起进入下一章的唯一上下文入口。做到这些，
+本章通过。
 :::
 
 ## 可选迁移练习
 
-:::transfer title="无现成答案 · 为单个超大 interaction 设计策略"
-不修改 history，设计并实现一种 `single_group_overflow` 处理：可以压缩超大工具输出，也可以生成 turn-prefix summary，但必须保留 call/result 配对和来源 id。只给自己写行为测试，不复制 Pi 的 split-turn 实现。比较压缩前后关键事实召回，并记录至少一个摘要丢失的信息。
-:::
+:::transfer title="陪练迁移 · 为单个超大 interaction 制定策略"
+不要先写实现。让旁边的 Agent 只帮你列出行为测试：完整保留 call/result、原 session
+不变、来源 id 可追踪、摘要失败可诊断。然后任选一种策略：缩短超大工具结果，或生成
+该 interaction 的专用摘要。
 
-隔一章后，请不看本页重新回答：为什么 summary entry 属于 history，而由它生成的 synthetic message 只属于 context？能从所有权解释清楚，才算掌握，而不只是测试通过。
+比较策略前后的事实损失，并明确至少一项无法从摘要恢复的信息。不要把这个可选策略
+塞回本章的 `buildContext()` 主路径。
+:::
 
 ## 小结
 
-- History 是追加式事实树；context 是按 leaf、运行资源与预算重建的临时视图。
-- 预算要在 provider 请求前分项测量，并为输出留空间。
-- Cut point 必须尊重完整 interaction，尤其是 tool call/result 配对。
-- Compaction 追加可追溯摘要并重建 context，绝不删除旧历史。
-- 当前 Pi 的生产 `AgentSession + SessionManager` 与通用 `AgentHarness` 实现并存；课程对齐行为边界，不假装架构已经统一。
+Session 保存不可改写的事实，context 是每次请求前重新计算的临时视图。先用
+`callId` 把消息组成完整 interaction，再扣除 system、输出预留和安全余量，从最近的
+完整组向前选择。
+
+Compaction 是一条新历史记录，不是删除动作。它保存结构化摘要、first kept 和创建时
+规模；恢复只使用活动路径上的最新摘要，再接保留后缀。下一章会把项目资源和受信扩展
+生成的提示接入同一个 `systemPrompt`，而不会创建第二套 context builder。
