@@ -35,7 +35,7 @@ function nonEmptyLines(value) {
   return value.split("\n").filter(Boolean);
 }
 
-function changedFiles(commit, directory) {
+function changedFiles(commit, ...paths) {
   return nonEmptyLines(
     git(
       "diff-tree",
@@ -45,7 +45,7 @@ function changedFiles(commit, directory) {
       "--diff-filter=AM",
       commit,
       "--",
-      directory,
+      ...paths,
     ),
   ).sort();
 }
@@ -109,12 +109,20 @@ function buildManifest() {
       );
     }
 
+    const teachingPaths = checkpoint.id === "14"
+      ? [
+          "packages/pi-course/test-support",
+          "packages/pi-course/tsconfig.json",
+        ]
+      : ["packages/pi-course/src"];
     const sourceDelta = changedFiles(
       checkpoint.commit,
-      "packages/pi-course/src",
+      ...teachingPaths,
     );
     if (sourceDelta.length === 0) {
-      fail(`course(${checkpoint.id}) 没有新增或修改 packages/pi-course/src 文件`);
+      fail(
+        `course(${checkpoint.id}) 没有新增或修改本章声明的教学文件`,
+      );
     }
 
     const focusedTests = changedFiles(

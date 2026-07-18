@@ -100,10 +100,17 @@ test("第一次学习明确禁止直接查看目标实现", async () => {
 test("页面主 artifact 指向学生实际修改的教学历史", async () => {
   const all = await chapters();
   const failures = all
-    .filter(({ source }) =>
-      !/^artifact:\s*packages\/pi-course\/src\/\S+$/m.test(source)
+    .filter(({ id, source }) => {
+      const pattern = id === "14"
+        ? /^artifact:\s*packages\/pi-course\/test-support\/eval\.ts$/m
+        : /^artifact:\s*packages\/pi-course\/src\/\S+$/m;
+      return !pattern.test(source);
+    })
+    .map(({ id }) =>
+      id === "14"
+        ? "14: artifact does not point to pi-course test-support/eval.ts"
+        : `${id}: artifact does not point to pi-course src`
     )
-    .map(({ id }) => `${id}: artifact does not point to pi-course`);
 
   assert.deepEqual(failures, []);
 });

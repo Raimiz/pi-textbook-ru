@@ -2441,513 +2441,845 @@ export const searchIndex: SearchEntry[] = [
     "id": "12",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
-    "title": "Resources、Skills 与 Extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "知识按需进入上下文，代码先过信任门",
     "href": "/learn/resources-extensions",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions 用渐进式披露加载知识资源，并把可执行扩展放在明确的信任边界之后。 第四部 · 从核心到产品 resource, prompt template, skill, extension, progressive disclosure, trust boundary 你将得到什么 先建立全景 Resource 是带来源的数据 Skill 的资源根不能变成任意文件入口 Extension 先过信任门，再执行工厂 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "知识按需进入上下文，代码先过信任门 把项目说明、Skill 和模板接入同一个上下文入口，再用信任检查、原子注册与故障隔离控制可执行扩展。 第四部 · 从核心到产品 resource catalog, skill activation, prompt template, extension host, trust gate, hook 你将得到什么 为什么第 12 章放在这里 开始动手 先建立全景 第一步：目录的冲突规则由调用者决定 第二步：路径边界要检查两次 第三步：资源只从一个入口进入模型上下文 第四步：Extension 的原子性从 staging 开始 第五步：策略失败时，前置关闭；观察失败时，事实保留 故意把它弄坏 读测试时，先找观察量 本章验收 可选迁移练习 小结"
   },
   {
     "id": "12-你将得到什么",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
     "title": "你将得到什么",
     "href": "/learn/resources-extensions#你将得到什么",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions 你将得到什么 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 你将得到什么 resource catalog skill activation prompt template extension host trust gate hook"
+  },
+  {
+    "id": "12-为什么第-12-章放在这里",
+    "chapterId": "12",
+    "chapterSlug": "resources-extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "为什么第 12 章放在这里",
+    "href": "/learn/resources-extensions#为什么第-12-章放在这里",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "resource catalog",
+      "skill activation",
+      "prompt template",
+      "extension host",
+      "trust gate",
+      "hook"
+    ],
+    "searchText": "知识按需进入上下文，代码先过信任门 为什么第 12 章放在这里 resource catalog skill activation prompt template extension host trust gate hook"
+  },
+  {
+    "id": "12-开始动手",
+    "chapterId": "12",
+    "chapterSlug": "resources-extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "开始动手",
+    "href": "/learn/resources-extensions#开始动手",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "resource catalog",
+      "skill activation",
+      "prompt template",
+      "extension host",
+      "trust gate",
+      "hook"
+    ],
+    "searchText": "知识按需进入上下文，代码先过信任门 开始动手 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
     "id": "12-先建立全景",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
     "title": "先建立全景",
     "href": "/learn/resources-extensions#先建立全景",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions 先建立全景 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 先建立全景 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
-    "id": "12-resource-是带来源的数据",
+    "id": "12-第一步目录的冲突规则由调用者决定",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
-    "title": "Resource 是带来源的数据",
-    "href": "/learn/resources-extensions#resource-是带来源的数据",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "第一步：目录的冲突规则由调用者决定",
+    "href": "/learn/resources-extensions#第一步目录的冲突规则由调用者决定",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions Resource 是带来源的数据 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 第一步：目录的冲突规则由调用者决定 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
-    "id": "12-skill-的资源根不能变成任意文件入口",
+    "id": "12-第二步路径边界要检查两次",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
-    "title": "Skill 的资源根不能变成任意文件入口",
-    "href": "/learn/resources-extensions#skill-的资源根不能变成任意文件入口",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "第二步：路径边界要检查两次",
+    "href": "/learn/resources-extensions#第二步路径边界要检查两次",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions Skill 的资源根不能变成任意文件入口 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 第二步：路径边界要检查两次 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
-    "id": "12-extension-先过信任门再执行工厂",
+    "id": "12-第三步资源只从一个入口进入模型上下文",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
-    "title": "Extension 先过信任门，再执行工厂",
-    "href": "/learn/resources-extensions#extension-先过信任门再执行工厂",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "第三步：资源只从一个入口进入模型上下文",
+    "href": "/learn/resources-extensions#第三步资源只从一个入口进入模型上下文",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions Extension 先过信任门，再执行工厂 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 第三步：资源只从一个入口进入模型上下文 resource catalog skill activation prompt template extension host trust gate hook"
+  },
+  {
+    "id": "12-第四步extension-的原子性从-staging-开始",
+    "chapterId": "12",
+    "chapterSlug": "resources-extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "第四步：Extension 的原子性从 staging 开始",
+    "href": "/learn/resources-extensions#第四步extension-的原子性从-staging-开始",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "resource catalog",
+      "skill activation",
+      "prompt template",
+      "extension host",
+      "trust gate",
+      "hook"
+    ],
+    "searchText": "知识按需进入上下文，代码先过信任门 第四步：Extension 的原子性从 staging 开始 resource catalog skill activation prompt template extension host trust gate hook"
+  },
+  {
+    "id": "12-第五步策略失败时前置关闭观察失败时事实保留",
+    "chapterId": "12",
+    "chapterSlug": "resources-extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "第五步：策略失败时，前置关闭；观察失败时，事实保留",
+    "href": "/learn/resources-extensions#第五步策略失败时前置关闭观察失败时事实保留",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "resource catalog",
+      "skill activation",
+      "prompt template",
+      "extension host",
+      "trust gate",
+      "hook"
+    ],
+    "searchText": "知识按需进入上下文，代码先过信任门 第五步：策略失败时，前置关闭；观察失败时，事实保留 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
     "id": "12-故意把它弄坏",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
     "title": "故意把它弄坏",
     "href": "/learn/resources-extensions#故意把它弄坏",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions 故意把它弄坏 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 故意把它弄坏 resource catalog skill activation prompt template extension host trust gate hook"
+  },
+  {
+    "id": "12-读测试时先找观察量",
+    "chapterId": "12",
+    "chapterSlug": "resources-extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
+    "title": "读测试时，先找观察量",
+    "href": "/learn/resources-extensions#读测试时先找观察量",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "resource catalog",
+      "skill activation",
+      "prompt template",
+      "extension host",
+      "trust gate",
+      "hook"
+    ],
+    "searchText": "知识按需进入上下文，代码先过信任门 读测试时，先找观察量 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
     "id": "12-本章验收",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
     "title": "本章验收",
     "href": "/learn/resources-extensions#本章验收",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions 本章验收 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 本章验收 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
     "id": "12-可选迁移练习",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
     "title": "可选迁移练习",
     "href": "/learn/resources-extensions#可选迁移练习",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions 可选迁移练习 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 可选迁移练习 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
     "id": "12-小结",
     "chapterId": "12",
     "chapterSlug": "resources-extensions",
-    "chapterTitle": "Resources、Skills 与 Extensions",
+    "chapterTitle": "知识按需进入上下文，代码先过信任门",
     "title": "小结",
     "href": "/learn/resources-extensions#小结",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "resource",
+      "resource catalog",
+      "skill activation",
       "prompt template",
-      "skill",
-      "extension",
-      "progressive disclosure",
-      "trust boundary"
+      "extension host",
+      "trust gate",
+      "hook"
     ],
-    "searchText": "Resources、Skills 与 Extensions 小结 resource prompt template skill extension progressive disclosure trust boundary"
+    "searchText": "知识按需进入上下文，代码先过信任门 小结 resource catalog skill activation prompt template extension host trust gate hook"
   },
   {
     "id": "13",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
-    "title": "一个核心，多种产品入口",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "把已有能力接成一个可落盘的 Runtime",
     "href": "/learn/composition-root",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 在唯一组装边界连接模型、工具、会话与资源，让交互、文本和 JSON 模式共享同一套 Agent 语义。 第四部 · 从核心到产品 composition root, runtime, mode adapter, wire event, stdout, stderr 你将得到什么 先建立全景 Composition root 只组装，不承载业务 Mode 是协议适配器 配置先归一化，再进入对象图 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 显式选择活动分支，恢复 Agent，在每次模型请求前统一构造上下文，并让 prompt 只有在新消息落盘后才完成。 第四部 · 从核心到产品 composition root, runtime, active leaf, context projection, durability, poison state 你将得到什么 为什么第 13 章放在这里 开始动手 先建立全景 Runtime 拥有什么 一次 prompt 穿过哪些层 第一步：恢复明确选择的历史 先写恢复规则 再接 Runtime 外壳 第二步：每次模型请求前投影 context 临时 entry 只为调用 buildContext 第三步：让 prompt 的完成等于事实已经落盘 先完成对象图 只保存本轮新增的 suffix 用一条队列串行 prompt append 失败后必须 poison flush 和 dispose 的边界 故意把它弄坏 第四步：Mode 只负责一次呈现 本章验收 和陪练 Agent 一起复盘 可选迁移练习 小结"
   },
   {
     "id": "13-你将得到什么",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
     "title": "你将得到什么",
     "href": "/learn/composition-root#你将得到什么",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 你将得到什么 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 你将得到什么 composition root runtime active leaf context projection durability poison state"
+  },
+  {
+    "id": "13-为什么第-13-章放在这里",
+    "chapterId": "13",
+    "chapterSlug": "composition-root",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "为什么第 13 章放在这里",
+    "href": "/learn/composition-root#为什么第-13-章放在这里",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "composition root",
+      "runtime",
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
+    ],
+    "searchText": "把已有能力接成一个可落盘的 Runtime 为什么第 13 章放在这里 composition root runtime active leaf context projection durability poison state"
+  },
+  {
+    "id": "13-开始动手",
+    "chapterId": "13",
+    "chapterSlug": "composition-root",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "开始动手",
+    "href": "/learn/composition-root#开始动手",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "composition root",
+      "runtime",
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
+    ],
+    "searchText": "把已有能力接成一个可落盘的 Runtime 开始动手 composition root runtime active leaf context projection durability poison state"
   },
   {
     "id": "13-先建立全景",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
     "title": "先建立全景",
     "href": "/learn/composition-root#先建立全景",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 先建立全景 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 先建立全景 composition root runtime active leaf context projection durability poison state"
   },
   {
-    "id": "13-composition-root-只组装不承载业务",
+    "id": "13-第一步恢复明确选择的历史",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
-    "title": "Composition root 只组装，不承载业务",
-    "href": "/learn/composition-root#composition-root-只组装不承载业务",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "第一步：恢复明确选择的历史",
+    "href": "/learn/composition-root#第一步恢复明确选择的历史",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 Composition root 只组装，不承载业务 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 第一步：恢复明确选择的历史 composition root runtime active leaf context projection durability poison state"
   },
   {
-    "id": "13-mode-是协议适配器",
+    "id": "13-第二步每次模型请求前投影-context",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
-    "title": "Mode 是协议适配器",
-    "href": "/learn/composition-root#mode-是协议适配器",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "第二步：每次模型请求前投影 context",
+    "href": "/learn/composition-root#第二步每次模型请求前投影-context",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 Mode 是协议适配器 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 第二步：每次模型请求前投影 context composition root runtime active leaf context projection durability poison state"
   },
   {
-    "id": "13-配置先归一化再进入对象图",
+    "id": "13-第三步让-prompt-的完成等于事实已经落盘",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
-    "title": "配置先归一化，再进入对象图",
-    "href": "/learn/composition-root#配置先归一化再进入对象图",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "第三步：让 prompt 的完成等于事实已经落盘",
+    "href": "/learn/composition-root#第三步让-prompt-的完成等于事实已经落盘",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 配置先归一化，再进入对象图 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 第三步：让 prompt 的完成等于事实已经落盘 composition root runtime active leaf context projection durability poison state"
   },
   {
     "id": "13-故意把它弄坏",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
     "title": "故意把它弄坏",
     "href": "/learn/composition-root#故意把它弄坏",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 故意把它弄坏 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 故意把它弄坏 composition root runtime active leaf context projection durability poison state"
+  },
+  {
+    "id": "13-第四步mode-只负责一次呈现",
+    "chapterId": "13",
+    "chapterSlug": "composition-root",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "第四步：Mode 只负责一次呈现",
+    "href": "/learn/composition-root#第四步mode-只负责一次呈现",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "composition root",
+      "runtime",
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
+    ],
+    "searchText": "把已有能力接成一个可落盘的 Runtime 第四步：Mode 只负责一次呈现 composition root runtime active leaf context projection durability poison state"
   },
   {
     "id": "13-本章验收",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
     "title": "本章验收",
     "href": "/learn/composition-root#本章验收",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 本章验收 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 本章验收 composition root runtime active leaf context projection durability poison state"
+  },
+  {
+    "id": "13-和陪练-agent-一起复盘",
+    "chapterId": "13",
+    "chapterSlug": "composition-root",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
+    "title": "和陪练 Agent 一起复盘",
+    "href": "/learn/composition-root#和陪练-agent-一起复盘",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "composition root",
+      "runtime",
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
+    ],
+    "searchText": "把已有能力接成一个可落盘的 Runtime 和陪练 Agent 一起复盘 composition root runtime active leaf context projection durability poison state"
   },
   {
     "id": "13-可选迁移练习",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
     "title": "可选迁移练习",
     "href": "/learn/composition-root#可选迁移练习",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 可选迁移练习 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 可选迁移练习 composition root runtime active leaf context projection durability poison state"
   },
   {
     "id": "13-小结",
     "chapterId": "13",
     "chapterSlug": "composition-root",
-    "chapterTitle": "一个核心，多种产品入口",
+    "chapterTitle": "把已有能力接成一个可落盘的 Runtime",
     "title": "小结",
     "href": "/learn/composition-root#小结",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
       "composition root",
       "runtime",
-      "mode adapter",
-      "wire event",
-      "stdout",
-      "stderr"
+      "active leaf",
+      "context projection",
+      "durability",
+      "poison state"
     ],
-    "searchText": "一个核心，多种产品入口 小结 composition root runtime mode adapter wire event stdout stderr"
+    "searchText": "把已有能力接成一个可落盘的 Runtime 小结 composition root runtime active leaf context projection durability poison state"
   },
   {
     "id": "14",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
-    "title": "用故障矩阵证明你造出了 Pi",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "给完整的 Pi 建一套独立评测",
     "href": "/learn/eval-capstone",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 用确定性黑盒评测、跨层故障归因和无 starter 终局任务证明系统在失败时仍守住不变量。 第四部 · 从核心到产品 deterministic eval, fault injection, first divergence, protocol violation, capstone 你将得到什么 先建立全景 Eval case 是可执行规格 故障矩阵必须覆盖层间传播 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "给完整的 Pi 建一套独立评测 用新鲜 fixture、独立判定器、严格协议和脱敏报告，判断一次 Agent 运行究竟是任务失败、协议失败，还是评测设施坏了。 第四部 · 从核心到产品 eval runner, fresh fixture, oracle, active path, protocol failure, safe evidence, held-out 你将得到什么 为什么最后才做评测 开始动手 先建立全景 Case 负责造一个新世界 Runner 负责事实是否可信 Judge 只回答任务有没有做对 先定义失败语言 实践 14.1：隔离执行，只交出受限事实 第一个动作：搭出始终能清理的外壳 第二个动作：明确执行和收集的分界线 第三个动作：只取活动祖先链 第四个动作：只读取声明文件 第五个动作：先复制，再递归冻结 运行第一段 实践 14.2：先验协议，再让 oracle 判任务 独立 oracle 的最小规则 协议检查要维护状态，不能只数 call 与 result 两条证据链必须汇合 固定分类，不转述异常 运行第二段 实践 14.3：报告只带安全证据，生命周期保留根因 SafeEvidence 只保留计数 一次运行只有一个 primary failure Suite 故意串行 运行第三段 故意把它弄坏 实践 14.4：held-out 检查能否迁移规则 测试结果该怎样判断 与原始 Pi 的关系 和陪学 Agent 一起走最后一章 本章验收 可选迁移练习 小结"
   },
   {
     "id": "14-你将得到什么",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
     "title": "你将得到什么",
     "href": "/learn/eval-capstone#你将得到什么",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 你将得到什么 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 你将得到什么 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-为什么最后才做评测",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "为什么最后才做评测",
+    "href": "/learn/eval-capstone#为什么最后才做评测",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 为什么最后才做评测 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-开始动手",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "开始动手",
+    "href": "/learn/eval-capstone#开始动手",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 开始动手 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   },
   {
     "id": "14-先建立全景",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
     "title": "先建立全景",
     "href": "/learn/eval-capstone#先建立全景",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 先建立全景 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 先建立全景 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   },
   {
-    "id": "14-eval-case-是可执行规格",
+    "id": "14-先定义失败语言",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
-    "title": "Eval case 是可执行规格",
-    "href": "/learn/eval-capstone#eval-case-是可执行规格",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "先定义失败语言",
+    "href": "/learn/eval-capstone#先定义失败语言",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi Eval case 是可执行规格 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 先定义失败语言 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   },
   {
-    "id": "14-故障矩阵必须覆盖层间传播",
+    "id": "14-实践-141隔离执行只交出受限事实",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
-    "title": "故障矩阵必须覆盖层间传播",
-    "href": "/learn/eval-capstone#故障矩阵必须覆盖层间传播",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "实践 14.1：隔离执行，只交出受限事实",
+    "href": "/learn/eval-capstone#实践-141隔离执行只交出受限事实",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 故障矩阵必须覆盖层间传播 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 实践 14.1：隔离执行，只交出受限事实 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-实践-142先验协议再让-oracle-判任务",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "实践 14.2：先验协议，再让 oracle 判任务",
+    "href": "/learn/eval-capstone#实践-142先验协议再让-oracle-判任务",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 实践 14.2：先验协议，再让 oracle 判任务 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-实践-143报告只带安全证据生命周期保留根因",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "实践 14.3：报告只带安全证据，生命周期保留根因",
+    "href": "/learn/eval-capstone#实践-143报告只带安全证据生命周期保留根因",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 实践 14.3：报告只带安全证据，生命周期保留根因 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   },
   {
     "id": "14-故意把它弄坏",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
     "title": "故意把它弄坏",
     "href": "/learn/eval-capstone#故意把它弄坏",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 故意把它弄坏 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 故意把它弄坏 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-实践-144held-out-检查能否迁移规则",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "实践 14.4：held-out 检查能否迁移规则",
+    "href": "/learn/eval-capstone#实践-144held-out-检查能否迁移规则",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 实践 14.4：held-out 检查能否迁移规则 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-测试结果该怎样判断",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "测试结果该怎样判断",
+    "href": "/learn/eval-capstone#测试结果该怎样判断",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 测试结果该怎样判断 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-与原始-pi-的关系",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "与原始 Pi 的关系",
+    "href": "/learn/eval-capstone#与原始-pi-的关系",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 与原始 Pi 的关系 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
+  },
+  {
+    "id": "14-和陪学-agent-一起走最后一章",
+    "chapterId": "14",
+    "chapterSlug": "eval-capstone",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
+    "title": "和陪学 Agent 一起走最后一章",
+    "href": "/learn/eval-capstone#和陪学-agent-一起走最后一章",
+    "partTitle": "第四部 · 从核心到产品",
+    "terms": [
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
+    ],
+    "searchText": "给完整的 Pi 建一套独立评测 和陪学 Agent 一起走最后一章 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   },
   {
     "id": "14-本章验收",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
     "title": "本章验收",
     "href": "/learn/eval-capstone#本章验收",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 本章验收 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 本章验收 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   },
   {
     "id": "14-可选迁移练习",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
     "title": "可选迁移练习",
     "href": "/learn/eval-capstone#可选迁移练习",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 可选迁移练习 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 可选迁移练习 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   },
   {
     "id": "14-小结",
     "chapterId": "14",
     "chapterSlug": "eval-capstone",
-    "chapterTitle": "用故障矩阵证明你造出了 Pi",
+    "chapterTitle": "给完整的 Pi 建一套独立评测",
     "title": "小结",
     "href": "/learn/eval-capstone#小结",
     "partTitle": "第四部 · 从核心到产品",
     "terms": [
-      "deterministic eval",
-      "fault injection",
-      "first divergence",
-      "protocol violation",
-      "capstone"
+      "eval runner",
+      "fresh fixture",
+      "oracle",
+      "active path",
+      "protocol failure",
+      "safe evidence",
+      "held-out"
     ],
-    "searchText": "用故障矩阵证明你造出了 Pi 小结 deterministic eval fault injection first divergence protocol violation capstone"
+    "searchText": "给完整的 Pi 建一套独立评测 小结 eval runner fresh fixture oracle active path protocol failure safe evidence held-out"
   }
 ];

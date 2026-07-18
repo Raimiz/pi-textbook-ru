@@ -34,11 +34,16 @@ export async function validateLearningContract() {
     const id = file.slice(0, 2);
     const source = await readFile(path.join(chapterRoot, file), "utf8");
     const body = rebuildBlock(source);
-    if (!/^artifact:\s*packages\/pi-course\/src\/\S+$/m.test(source)) {
+    const artifactPattern = id === "14"
+      ? /^artifact:\s*packages\/pi-course\/test-support\/eval\.ts$/m
+      : /^artifact:\s*packages\/pi-course\/src\/\S+$/m;
+    if (!artifactPattern.test(source)) {
       issues.push({
         code: "LC_ARTIFACT_PATH",
         chapter: id,
-        message: `${id} artifact must point to packages/pi-course/src`,
+        message: id === "14"
+          ? "14 artifact must point to packages/pi-course/test-support/eval.ts"
+          : `${id} artifact must point to packages/pi-course/src`,
       });
     }
     if (!body) {

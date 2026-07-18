@@ -212,8 +212,8 @@
     "parentCommit": "555162636bf0a8fd6e667e366d0103891cef1d6c",
     "subject": "course(11): project bounded context from immutable history",
     "sourceDelta": [
-      "packages/pi-course/src/session.ts",
-      "packages/pi-course/src/context.ts"
+      "packages/pi-course/src/context.ts",
+      "packages/pi-course/src/session.ts"
     ],
     "focusedTest": "packages/pi-course/test/11-context-compaction.test.ts",
     "testTitles": [
@@ -235,54 +235,71 @@
   },
   {
     "id": "12",
-    "commit": "40e113d528d8a95905482311c06c1c4851167dc2",
+    "commit": "03541892bcd533444af599d1813401f79807de3c",
     "parentCommit": "5fb517c2012d8e6227c0e17ee65e530e18ac13e6",
-    "subject": "course(12): add progressive resources and trusted extensions",
+    "subject": "course(12): load resources and isolate extensions",
     "sourceDelta": [
       "packages/pi-course/src/resources.ts"
     ],
     "focusedTest": "packages/pi-course/test/12-resources-extensions.test.ts",
     "testTitles": [
-      "buildContext 报告分项预算，并只在完整 interaction 边界裁剪",
-      "单个 interaction 自身超限时显式报告，不从 toolResult 中间切",
-      "compact 只追加结构化摘要，记录 safe cut、first kept 与 tokens before",
-      "resource discovery 确定冲突，skill 正文只在激活后读取",
-      "skill resource 使用 canonical root，拒绝 ..、绝对路径和 symlink 逃逸",
-      "extension trust gate 在 import 前生效，before hook 的 deny 真正包住 executor",
-      "before hook 抛错按 deny 处理，并返回同 call id 的结构化 toolResult"
+      "Lab 12.1 · roots 输入顺序决定 kind+name 冲突的 precedence",
+      "Lab 12.1 · catalog 按逻辑身份稳定输出，inactive skill 不含正文",
+      "Lab 12.2 · activateSkill 才读取正文，并返回 canonical source",
+      "Lab 12.2 · activateSkill 显式读取 root 内文件并返回每个来源",
+      "Lab 12.2 · activateSkill 用 realpath 拒绝 traversal、绝对路径和 symlink 逃逸",
+      "Lab 12.3 · renderTemplate 使用唯一占位协议并返回 UserMessage",
+      "Lab 12.3 · formatResourceContext 只生成 systemPrompt，并接入唯一 buildContext",
+      "Lab 12.4 · trust gate 严格发生在 import 之前",
+      "Lab 12.4 · factory 使用 staging registration，失败或重名都零残留",
+      "Lab 12.5 · before deny 生成配对 error result，core 不执行",
+      "Lab 12.5 · before throw 与 timeout 都 fail-closed，并产生 diagnostic",
+      "Lab 12.5 · after 对每个 core result 只运行一次，失败不替换结果"
     ]
   },
   {
     "id": "13",
-    "commit": "3c4154a256571d8e34afe3f70eb254e2a63c1657",
-    "parentCommit": "40e113d528d8a95905482311c06c1c4851167dc2",
-    "subject": "course(13): assemble one runtime for every product mode",
+    "commit": "1caf1082b3f92504346bbeda969e4cfbb0f8f636",
+    "parentCommit": "03541892bcd533444af599d1813401f79807de3c",
+    "subject": "course(13): assemble one durable runtime",
     "sourceDelta": [
+      "packages/pi-course/src/agent.ts",
       "packages/pi-course/src/composition.ts"
     ],
-    "focusedTest": "packages/pi-course/test/13-composition-root.test.ts",
+    "focusedTest": "packages/pi-course/test/13-composition-modes.test.ts",
     "testTitles": [
-      "print 与 JSON 借用同一个 runtime，只改变外部协议",
-      "runtime extension host 真正包住 loop 的工具执行"
+      "Lab 13.1 · 空 session 创建唯一 Runtime 外壳，不从 control 暴露 prompt",
+      "Lab 13.1 · 非空 session 必须显式选择 leaf，并把所选 path 深复制给 Agent",
+      "Lab 13.2 · context adapter 把未持久化 suffix 临时接到 active path",
+      "Lab 13.2 · context adapter 先扣固定成本，再只保留完整的最近 interaction",
+      "Lab 13.2 · context adapter 保留 tools 与 signal，同时隔离 inner model 的输入",
+      "Lab 13.3 · Runtime 接通 resources 与 extension，并等持久化后串行 resolve",
+      "Lab 13.3 · 只追加恢复历史之后的新 suffix，写入失败后 Runtime poison",
+      "Lab 13.3 · flush 等待当前队列，dispose 等待落盘并永久关闭 prompt",
+      "Lab 13.4 · interactive 与 print 都只调用一次 Runtime.prompt，并写最终文本",
+      "Lab 13.4 · json 只改变呈现；未知 mode 先失败，IO 错误原样上抛"
     ]
   },
   {
     "id": "14",
-    "commit": "6581731fe34051a9ddf3f64bb74265a5a37b3ab5",
-    "parentCommit": "3c4154a256571d8e34afe3f70eb254e2a63c1657",
-    "subject": "course(14): prove the whole system with deterministic evals",
+    "commit": "d2bfac24e212fec05299679e8af18abc6c1bbc67",
+    "parentCommit": "1caf1082b3f92504346bbeda969e4cfbb0f8f636",
+    "subject": "course(14): evaluate complete agents with safe evidence",
     "sourceDelta": [
-      "packages/pi-course/src/eval.ts",
-      "packages/pi-course/src/index.ts"
+      "packages/pi-course/test-support/eval.ts",
+      "packages/pi-course/tsconfig.json"
     ],
     "focusedTest": "packages/pi-course/test/14-eval-capstone.test.ts",
     "testTitles": [
-      "composition root 使用注入依赖，三种 adapter 共享核心语义",
-      "print/json 都用 stderr 与 exit code 表达失败，JSON 仍有唯一终态",
-      "composition 把 resource disclosure 与 extension hook 接入真实 loop",
-      "结构化 eval 使用临时 workspace、composition root 与确定性报告",
-      "eval 分开报告 protocol、task 与 infra failure，并继续 suite",
-      "tool 抛错会成为配对 result，而不是 runner infra failure"
+      "Lab 14.1 · 同一个 case 每次都重新 prepare，且 runner 按执行、dispose、cleanup 收口",
+      "Lab 14.1 · judge 只看到 active path 与声明文件，而且观察值已深复制并冻结",
+      "Lab 14.1 · 执行故障与收集故障由 runner 分成不同 infra phase",
+      "Lab 14.2 · task verdict 只决定任务成败，自相矛盾的 verdict 属于 judge infra",
+      "Lab 14.2 · active path 拒绝不一致 transcript、跨 assistant 补交、重复或悬空 call",
+      "Lab 14.2 · prepare 与 judge 的异常只留下固定分层，不泄露异常正文",
+      "Lab 14.3 · SafeEvidence 只保留计数，不包含 transcript、文件、路径或 callId",
+      "Lab 14.3 · dispose 与 cleanup 不覆盖已有 primary，只按发生顺序追加 secondary",
+      "Lab 14.3 · suite 串行保持输入顺序，并对重复 case 重新 prepare"
     ]
   }
 ]

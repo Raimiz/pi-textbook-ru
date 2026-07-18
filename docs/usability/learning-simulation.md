@@ -676,3 +676,76 @@ full            14/14
 陪练通过公开输入检查旧 schema、反序 toolResult、单组超限、不安全 first kept、最新
 compaction 与 systemPrompt 返回。全部通过，Chapter 00～11 累计 `86/86`。最终 target
 为 `5fb517c2`。Chapter 11 封存。
+
+## Chapter 12 · 数据权限与执行权限分开
+
+旧章把资源发现、Skill 激活和 Extension 放在一起讲，却没有给学生一条能逐段落笔的
+路线。正文还把 root 按 source path 排序，与真实的“输入顺序决定优先级”相反；练习
+命令混用 workshop，公开测试也只有少量旧行为。
+
+重写后，本章只保留两条路径：
+
+```text
+resource roots → catalog → activateSkill → systemPrompt
+extension source → trust → import → staging → wrapped executor
+```
+
+实现拆成五段：`2/2 → 3/3 → 2/2 → 2/2 → 3/3`。陪练在 target 上用五组公开
+反例验证 root precedence、inactive body、realpath containment、trust-before-import、
+factory 零残留、before fail-closed 和 after 保留事实；本章 `12/12`，累计
+`98/98`，没有 P0。
+
+学生从 fresh starter 得到准确首红 `Lab 12.1 resource catalog 尚未实现 · 0/2`，
+随后完成全章。第一次黑盒在 Lab 12.4 停住：公开 `ExtensionHost` 只有
+`wrapExecutor()`，正文却直接写 `host.stage()`，没有说明 loader 如何取得私有 staging
+通道。正文补上 `ExtensionHostImpl.stage()`、`StagedRegistration` 与
+`hostImplementation()` 的内部签名，同时明确不能把 `stage()` 扩成 Extension 作者可
+调用的公共权限。
+
+定点复测中，学生只依正文以 L0 完成 Lab 12.4 `2/2`，全章恢复 `12/12`。故障实验把
+trust 与 import 交换后得到 `1/2` 和 `["trust", "import"]`，恢复后重新全绿。最终
+target 为 `03541892`。Chapter 12 封存。
+
+## Chapter 13 · 一个 Runtime 拥有恢复、投影和落盘
+
+本章没有再给 interactive、print 和 JSON 各写一套入口。它先规定唯一对象图：
+Runtime 显式选择 session leaf，恢复一个 Agent；模型请求统一经过 context adapter；
+工具执行器统一经过 extension host；`prompt()` 等本轮新增消息落盘后才返回。
+
+公开测试拆成四段：
+
+```text
+13.1  Runtime 外壳与活动路径恢复          2/2
+13.2  未持久化 suffix 的 context 投影      3/3
+13.3  资源、扩展、持久化和生命周期          3/3
+13.4  三种 mode 的薄呈现                   2/2
+```
+
+干净学生从 fresh starter 得到精确首红 `0/2`，随后完成
+`2/2 → 3/3 → 3/3 → 2/2`，本章 `10/10`、累计 `108/108`。Lab 13.3 需要一次局部
+推断：先建立会持续更新的持久化状态，再让 model adapter 的闭包读取它。这个 L1 不会
+阻断施工，也不需要查看答案。移除 poison 状态后，定向测试准确变为 `0/1`；恢复后
+重新 `1/1`。
+
+陪练在不看实现的前提下验证了分支选择、资源与扩展接线、落盘 poison、dispose 和
+mode 五组反例，`5/5` 通过。最终 target 为 `1caf1082`，P0 为 0。Chapter 13 封存。
+
+## Chapter 14 · 站在 Pi 外面验证整机
+
+最终章不修改产品核心。评测实现放在 `test-support/eval.ts`，把 case、runner 和 judge
+分开：case 每次准备新环境；runner 执行、取证、验协议、分层失败并清理；judge 只读
+冻结后的 observation，判断任务是否完成。公开报告只保留固定分类和计数。
+
+公开练习按 `3/3 → 3/3 → 3/3` 展开，held-out 的 3 项只在官方 target 中运行。干净
+学生从 `0/3` 开始，三段全部为 L0，公开 `9/9`。移除
+`result_session_mismatch` 检查后，定向测试准确打红；恢复后回到 `1/1` 和公开
+`9/9`。practice 中没有 hidden fixture。
+
+第一名陪练误读了 held-out 文件，这轮证据被直接作废。重新启动的不继承上下文陪练只
+执行隐藏测试并过滤输出，得到公开 `9/9`、held-out `3/3`、全课程 `120/120`。它另外
+构造五组公开接口反例，检查 transcript 分裂、跨 assistant 的悬空 call、报告泄漏、
+cleanup 主次和重复 case 的 fresh prepare，结果 `5/5`。
+
+Starter 里有一个公开路线未使用的 `tool_call_without_user` 枚举，学生将它记为 P1。
+它不影响三段施工、协议结果或 held-out，通过当前收尾标准不重开章节。最终 target 为
+`d2bfac24`，P0 为 0。Chapter 14 封存。

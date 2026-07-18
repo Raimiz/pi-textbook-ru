@@ -46,12 +46,19 @@ test("checkpoint manifest describes all focused tests on one linear chain", asyn
       ),
     );
     assert.ok(checkpoint.testTitles.length > 0);
-    assert.ok(
-      checkpoint.sourceDelta.length > 0 &&
-        checkpoint.sourceDelta.every((file) =>
-          file.startsWith("packages/pi-course/src/")
-        ),
-    );
+    if (checkpoint.id === "14") {
+      assert.deepEqual(checkpoint.sourceDelta, [
+        "packages/pi-course/test-support/eval.ts",
+        "packages/pi-course/tsconfig.json",
+      ]);
+    } else {
+      assert.ok(
+        checkpoint.sourceDelta.length > 0 &&
+          checkpoint.sourceDelta.every((file) =>
+            file.startsWith("packages/pi-course/src/")
+          ),
+      );
+    }
 
     const testExists = spawnSync(
       "git",

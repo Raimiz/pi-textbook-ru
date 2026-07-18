@@ -154,7 +154,7 @@
     {
       "id": "LC-ACTION-LANE-DRIFT",
       "chapter": "02",
-      "status": "retest_pending",
+      "status": "resolved",
       "observedBy": ["audit"],
       "evidence": "02～14 的 rebuild 指向 packages/pi-course，但开场、实验、恢复或验收仍把学生送到 workshop。",
       "firstPrinciple": "所有重建章只能有一个可写工作对象；参考实现不能混入执行指令。",
@@ -174,12 +174,18 @@
         "content/chapters/14-eval-capstone.md",
         "tests/learning-contract.test.mjs"
       ],
-      "retest": null
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "Chapter 02～14 的练习都从 packages/pi-course 隔离目录进入，没有再把 workshop 当作可写目标。",
+        "coach": "学习契约逐章扫描所有正文，重建章不含 workshop/ 执行动作。",
+        "evidence": "learning-contract action-lane checks PASS; 15/15 contract tests"
+      }
     },
     {
       "id": "LC-FIRST-ACTION-BRIDGE",
       "chapter": "05",
-      "status": "retest_pending",
+      "status": "resolved",
       "observedBy": ["audit"],
       "evidence": "05～14 的重建卡直接给出实现动作，却没有在动作前说明完成该步必需的最小概念，也没有预告 fresh parent 的真实首红。",
       "firstPrinciple": "从看懂到会写需要一座即时桥梁：先给最小数据形状和控制流，再让学生预测并处理当前唯一偏差。",
@@ -196,7 +202,13 @@
         "content/chapters/14-eval-capstone.md",
         "tests/learning-contract.test.mjs"
       ],
-      "retest": null
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "最终章节都能从 fresh starter 的唯一红灯开始；Chapter 12～14 没有出现 L2 或隐藏施工文件。",
+        "coach": "每个重建入口在第一步前给出最小数据形状、控制流和真实首红，且命令与 checkpoint 一致。",
+        "evidence": "minimum-schema and first-red checks PASS; 15/15 contract tests"
+      }
     },
     {
       "id": "L02-SCOPE-ORACLE",
@@ -992,9 +1004,76 @@
       }
     },
     {
+      "id": "L12-RESOURCE-EXTENSION-ROOT-CONTRACT",
+      "chapter": "12",
+      "status": "resolved",
+      "observedBy": ["student", "coach", "coordinator"],
+      "evidence": "旧章的优先级、练习路线和测试与真实实现不一致；首次重写又直接写 host.stage，却没有说明窄公共接口与私有 staging 通道如何连接。",
+      "firstPrinciple": "资源文字与宿主代码必须分开授权；教学脚手架还必须给出跨私有实现边界的最小连接方式，不能让学生在正确架构处自行发明隐藏接口。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/resources.ts",
+        "../pi-course-history/packages/pi-course/test/12-resources-extensions.test.ts",
+        "../pi-course-history/packages/pi-course/starters/12-resources.ts",
+        "content/chapters/12-resources-extensions.md"
+      ],
+      "retest": {
+        "round": 2,
+        "result": "pass",
+        "student": "fresh 首红 0/2；修正文后 Lab 12.4 以 L0 完成 2/2，全章 12/12，trust/import 故障实验从 1/2 恢复到全绿。",
+        "coach": "五组公开根反例全部通过；Chapter 12 为 12/12，截至本章累计 98/98。",
+        "evidence": "target 03541892; private staging bridge retest PASS; P0=0"
+      }
+    },
+    {
+      "id": "L13-COMPOSITION-ROOT-CONTRACT",
+      "chapter": "13",
+      "status": "resolved",
+      "observedBy": ["student", "coach", "coordinator"],
+      "evidence": "旧章把多种入口、恢复、上下文与落盘责任混在一起；最终实现需要显式 leaf、唯一 Runtime、临时 suffix 投影、串行持久化与 fail-closed 生命周期。",
+      "firstPrinciple": "一次请求只能有一个运行时负责人；它使用哪条历史，就沿哪条历史投影上下文，并在承诺完成前写入新增事实。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/agent.ts",
+        "../pi-course-history/packages/pi-course/src/composition.ts",
+        "../pi-course-history/packages/pi-course/test/13-composition-modes.test.ts",
+        "../pi-course-history/packages/pi-course/starters/13-composition.ts",
+        "content/chapters/13-composition-root.md"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "fresh 首红 0/2；四段为 2/2、3/3、3/3、2/2，本章 10/10、累计 108/108；poison 故障从 0/1 恢复到 1/1。",
+        "coach": "五组公开反例覆盖活动分支、context suffix、资源扩展、落盘 poison、dispose 和 mode；全部通过。",
+        "evidence": "target 1caf1082; student L0/L1 with no L2; coach 5/5; P0=0"
+      }
+    },
+    {
+      "id": "L14-EVAL-ROOT-CONTRACT",
+      "chapter": "14",
+      "status": "resolved",
+      "observedBy": ["student", "coach", "coordinator"],
+      "evidence": "旧章把 eval 放进产品 src 并混入多种入口协议；最终章需要站在 Runtime 外面，用 fresh fixture、独立 oracle、协议交叉验证和安全报告判断整机。",
+      "firstPrinciple": "演示只能证明一个样本；可信评测必须先证明环境和执行轨迹可靠，再判任务，并把评测设施故障与任务失败分开。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test-support/eval.ts",
+        "../pi-course-history/packages/pi-course/test/14-eval-capstone.test.ts",
+        "../pi-course-history/packages/pi-course/test/capstone-held-out.test.ts",
+        "../pi-course-history/packages/pi-course/starters/14-eval.ts",
+        "content/chapters/14-eval-capstone.md",
+        "scripts/sync-checkpoint-history.mjs",
+        "tests/checkpoint-manifest.test.mjs"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "fresh 首红 0/3；三段均为 L0，公开 9/9；移除 transcript 交叉验证后定向变红，恢复后回绿。",
+        "coach": "干净 target 验证公开 9/9、held-out 3/3、全课程 120/120；五组独立黑盒反例全部通过且报告无 canary 泄漏。",
+        "evidence": "target d2bfac24; student public 9/9; coach hidden 3/3 and probes 5/5; P0=0"
+      }
+    },
+    {
       "id": "LZH-NATURAL-CHINESE",
       "chapter": "00",
-      "status": "retest_pending",
+      "status": "resolved",
       "observedBy": ["user"],
       "evidence": "用户指出教程中文语法生硬，能看懂技术内容，但句子不像自然、直接的中文。",
       "firstPrinciple": "技术精确依赖清楚的主体、动作和因果；翻译腔与抽象名词堆叠会额外占用工作记忆。",
@@ -1017,7 +1096,13 @@
         "docs/usability/chinese-style.md",
         "tests/chinese-prose.test.mjs"
       ],
-      "retest": null
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "最终两章能按正文连续施工；Chapter 13 只有一个局部 L1，Chapter 14 三段全为 L0，没有因中文语序或抽象名词停住。",
+        "coach": "逐章套话与反转句门禁通过，关键主张都写明主体、动作、顺序和证据范围。",
+        "evidence": "Chinese prose tests 2/2; learning contract 15/15; Chapter 13 and 14 learner simulations PASS"
+      }
     }
   ]
 }
