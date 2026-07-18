@@ -514,6 +514,310 @@
       }
     },
     {
+      "id": "L06-ACTION-ROUTE",
+      "chapter": "06",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "rebuild 使用 packages/pi-course 与 echo，正文实验却使用 workshop、add 和 workshop:test；fresh practice 没有 Git 历史，正文恢复命令也不可执行。",
+      "firstPrinciple": "一次练习只能有一个工作对象、一个样例和一组验证命令；学生不应替教材选择互斥路线。",
+      "fix": [
+        "content/chapters/06-tool-contract.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "四次修订后的 fresh practice 都只使用 packages/pi-course、echo 与聚焦 node:test 命令；最终按 1/1、1/1、2/2、4/4 完成。",
+        "coach": "正文、checkpoint、manifest、starter 与注入测试指向同一 target；不存在 workshop、add 或 Git 恢复路线。",
+        "evidence": "ch06 r4 student L0; coach PASS; target f27c7a55"
+      }
+    },
+    {
+      "id": "L06-FIRST-RED-SCAFFOLD",
+      "chapter": "06",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "fresh parent 首红同时出现缺少 tool.ts 的 TS2307 与失去上下文类型后的 TS7031；从空文件还要一次推导 callable validator metadata、mapped type 和泛型 Registry。",
+      "firstPrinciple": "高密度泛型只应服务当前机制，不能成为开始练习前的空白页障碍；公共表面可由不泄露算法的学习脚手架固定。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course-history/packages/pi-course/starters/06-tool.ts",
+        "content/chapters/06-tool-contract.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "fresh scaffold 首次 build 通过；validator 局部首红只有 Lab 6.1 objectSchema 尚未实现，无缺模块或级联类型错误。",
+        "coach": "公共表面不泄露 Registry、schema 或错误归一化算法，五次 fresh 验证均能从精确运行时红灯开始。",
+        "evidence": "build green; validator 0/1 exact Lab 6.1; starter overlay verified"
+      }
+    },
+    {
+      "id": "L06-ORACLE-COVERAGE",
+      "chapter": "06",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "删除重名保护、让非法参数仍执行、丢弃 signal/progress、丢弃 details/isError、把失败 toolName 改错，原 2 项测试全部仍为 2/2。",
+      "firstPrinciple": "工具契约的价值在运行时信任与结果配对；测试必须观察验证先于副作用、完整执行上下文、输出传播和错误外壳。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/06-tool-contract.test.ts",
+        "content/chapters/06-tool-contract.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "能用不同于 target 的实现取得 4/4，并解释 constructor、顺序、验证先于副作用、上下文与结果配对。",
+        "coach": "忽略初始工具、反转 list、删除重名保护、验证后执行、丢 context、丢 details/isError、错误 toolName 七个变异全部变红。",
+        "evidence": "7/7 mutations killed; focused 4/4; course 59/59"
+      }
+    },
+    {
+      "id": "L06-CLAIM-BOUNDARY",
+      "chapter": "06",
+      "status": "resolved",
+      "observedBy": ["coach"],
+      "evidence": "正文把 signal 传播写成取消保证，把本章 promise/result 层的失败写成 assistant event 与 transcript 偏差，并使用不存在的 ToolCallContent。",
+      "firstPrinciple": "每章只能声称当前层实际拥有和测试的语义；传播一个 signal 不等于执行器能强制工具停止。",
+      "fix": [
+        "content/chapters/06-tool-contract.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "能准确区分 signal 传播与取消保证，并指出 error.message 仍可能包含路径或密钥。",
+        "coach": "正文只声称当前四项测试实际观察到的参数、Registry 与 executor 语义，未借用下一章 transcript 或未实现的脱敏能力。",
+        "evidence": "student concept replay; coach claim audit PASS; chinese prose gate PASS"
+      }
+    },
+    {
+      "id": "L07-ACTION-ROUTE",
+      "chapter": "07",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "正文的 frontmatter 与 rebuild 指向 packages/pi-course，开场、两组 Lab、验收和恢复却指向 workshop；fresh practice 没有 Git 历史，无法执行正文的 diff 与撤销命令。",
+      "firstPrinciple": "同一轮练习只能有一个工作目录、一组命令和一种恢复方式；教材不能要求学生在互不相通的实现之间猜路线。",
+      "fix": [
+        "content/chapters/07-agent-loop.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "四次 fresh practice 都只使用 packages/pi-course 与分段 node:test 命令；最终按 1/1、1/1、2/2、2/2、3/3、9/9 完成。",
+        "coach": "正文、starter、checkpoint、manifest 与 target 指向同一条练习路线；正文没有 workshop 或 Git 恢复动作。",
+        "evidence": "ch07 r4 student L0; coach PASS; target f33bd46e"
+      }
+    },
+    {
+      "id": "L07-FIRST-RED-SCAFFOLD",
+      "chapter": "07",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "fresh parent 缺少 agent-loop.ts，首次 build 同时出现 TS2307 和四条级联 TS7006；学生还要从空文件一次猜出公共事件、返回值、options 和约 160 行控制流。",
+      "firstPrinciple": "学习 Agent Loop 的对象是状态迁移，不是从编译器级联错误反推公共类型；脚手架应固定公共表面，把分支算法留给学生。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/starters/07-agent-loop.ts",
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "content/chapters/07-agent-loop.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "fresh scaffold 首次 build 通过；首次局部运行只出现 Lab 7.1 收集模型终态 尚未实现，没有缺模块或级联类型错误。",
+        "coach": "starter 只固定公共类型、主循环骨架和五个施工位，不泄露终态、并发、错误归一化或取消算法。",
+        "evidence": "build green; exact first red; five staged runs; full 9/9"
+      }
+    },
+    {
+      "id": "L07-HIDDEN-DELTA",
+      "chapter": "07",
+      "status": "resolved",
+      "observedBy": ["coach"],
+      "evidence": "旧 target 除新增 209 行 agent-loop 外，还重写 prologue 273 行并修改 Chapter 00 测试；正文没有披露这些文件，07 聚焦测试也不验证它们。",
+      "firstPrinciple": "一个 checkpoint 的 target 必须等于学生按本章路线能重建并由本章测试验证的增量；隐藏的大型重构会让 commit 失去教学意义。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/demo/prologue.ts",
+        "../pi-course-history/packages/pi-course/test/00-prologue.test.ts",
+        "content/checkpoints.json"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "只需修改 agent-loop.ts；练习目录没有出现序章重构或 Chapter 00 测试变化。",
+        "coach": "f33bd46e 相对 f27c7a55 只含 AGENT_GUIDE、agent-loop.ts 与 07 聚焦测试；后续 steering/follow-up 仍在 Chapter 09。",
+        "evidence": "target delta audited; hidden prologue and test00 delta removed"
+      }
+    },
+    {
+      "id": "L07-ORACLE-COVERAGE",
+      "chapter": "07",
+      "status": "resolved",
+      "observedBy": ["coach"],
+      "evidence": "旧 4 项测试会放过一个联合变异：修改调用者 context、不向模型传工具定义、忽略 abort、允许 stop 携带悬空 call、吞掉 turn_end；注入 executor reject 也会直接炸穿 Promise.all。",
+      "firstPrinciple": "循环控制器的测试必须观察所有权、请求配置、每个终态的配对规则、唯一结束事件和并发失败隔离，而不能只看最终文本。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/agent-loop.ts",
+        "../pi-course-history/packages/pi-course/test/07-agent-loop.test.ts",
+        "content/chapters/07-agent-loop.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "能独立得到 9/9，并解释 context 所有权、最终 assistant、call/result 配对、非执行终态、并发顺序、取消与 maxSteps。",
+        "coach": "原 12 项行为反例与删除或重复最终 assistant 的 2 项定向反例全部变红；恢复后源码哈希与 target 相同且 9/9。",
+        "evidence": "0/14 survivors; final roles and assistant_message reasons asserted; course 59/59"
+      }
+    },
+    {
+      "id": "L07-CLAIM-PROSE",
+      "chapter": "07",
+      "status": "resolved",
+      "observedBy": ["coach", "user"],
+      "evidence": "正文把未测试的 provider error、abort、maxSteps 与工具异常列为已证明能力，混用 observation、context、canonical history 等抽象名词，并出现三次固定反转句。",
+      "firstPrinciple": "先写清谁在何时追加哪条消息，再命名状态；每项能力只能由当前实现和测试支持，maxSteps 也不能替忽略 signal 的依赖提供墙钟终止保证。",
+      "fix": [
+        "content/chapters/07-agent-loop.md",
+        "docs/usability/chinese-style.md",
+        "tests/chinese-prose.test.mjs",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 4,
+        "result": "pass",
+        "student": "正文无需回读；probe、单调用、多调用、实际完成顺序、length 0→2 和取消边界都能一次复述。",
+        "coach": "正文只声称测试覆盖的外部行为，明确排除墙钟终止、忽略 signal 的依赖停止、通用脱敏和进程清理；中文整体平顺。",
+        "evidence": "four prose retests; chinese prose gate PASS; claim audit PASS"
+      }
+    },
+    {
+      "id": "L08-ACTION-ROUTE",
+      "chapter": "08",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "旧正文的 rebuild 指向 packages/pi-course，开场、两组 Lab、验收和恢复却要求修改 workshop，并在没有 Git 历史的 practice 目录运行 diff 与撤销命令。",
+      "firstPrinciple": "真实副作用章节必须只有一个隔离工作目录；路径、运行命令和恢复方式若分叉，学生可能误操作真实项目。",
+      "fix": [
+        "content/chapters/08-coding-tools.md",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "三轮都只在全新 practice 目录使用 packages/pi-course 与六段 node:test 命令，最终按 2/1/2/2/4/1 和 12/12 完成。",
+        "coach": "正文、starter、checkpoint、manifest 与 target 使用同一练习路线；没有 workshop 或 Git 恢复动作。",
+        "evidence": "ch08 r3 student L0; target 6b3b1b77; fresh build green and exact first red"
+      }
+    },
+    {
+      "id": "L08-FIRST-RED-SCAFFOLD",
+      "chapter": "08",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "旧 fresh parent 缺少 coding-tools.ts，首次 build 只给出缺模块错误；学生随后要从空文件一次推导四个工具的公共类型、约 440 行文件与进程实现。",
+      "firstPrinciple": "本章的学习对象是资源边界与提交顺序，不是从空白文件反推公共表面；脚手架应让第一条红灯直接落在 Read 行为。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/starters/08-coding-tools.ts",
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "content/chapters/08-coding-tools.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "fresh scaffold 可直接编译；Lab 8.1 首次运行只有两条 Read 尚未实现，没有缺模块或级联类型错误。",
+        "coach": "starter 只固定公共类型、参数表面和六个施工位，不包含文件系统或进程算法。",
+        "evidence": "three fresh practices; build 0; Lab 8.1 first red 0/2 with exact expected message"
+      }
+    },
+    {
+      "id": "L08-READ-RECOVERY",
+      "chapter": "08",
+      "status": "resolved",
+      "observedBy": ["coach", "coordinator"],
+      "evidence": "旧 Read 先按行计算 endLine，再从格式化文本中截取固定字节；它可能切断 UTF-8 行，却仍让 continuation 跳到预选范围之后，永久漏掉未完整显示的内容。",
+      "firstPrinciple": "有界观察必须可恢复；details 与续读游标只能来自实际完整显示的内容，不能来自截断前的计划范围。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/coding-tools.ts",
+        "../pi-course-history/packages/pi-course/test/08-coding-tools.test.ts",
+        "content/chapters/08-coding-tools.md"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "能独立实现完整行预算、准确 endLine 与 offset，并在无完整可续读结果时返回明确错误。",
+        "coach": "硬切字节、预计算 endLine、offset 越界降级和追加多余提示都会被新测试识别。",
+        "evidence": "Lab 8.1 2/2; exact output assertion; continuation and impossible-line cases pass"
+      }
+    },
+    {
+      "id": "L08-ORACLE-COVERAGE",
+      "chapter": "08",
+      "status": "resolved",
+      "observedBy": ["coach", "coordinator"],
+      "evidence": "旧 2 项测试只覆盖一个行窗口、一次成功 edit、symlink、批次失败和预取消返回值；write、details、字节续读、默认修改队列、Bash cwd/exit/timeout/runtime abort/output cap 与真实 loop 都没有证据。",
+      "firstPrinciple": "副作用工具的测试必须观察开始条件、提交顺序、资源上限和最终环境事实；只看一段结果文本无法证明动作没有发生或没有交错。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/coding-tools.ts",
+        "../pi-course-history/packages/pi-course/test/08-coding-tools.test.ts",
+        "content/chapters/08-coding-tools.md",
+        "tests/learning-contract.test.mjs",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "按 2/1/2/2/4/1 完成 12/12，并解释路径、替换提交、队列、进程终态和真实 loop 的证据边界。",
+        "coach": "R1 的 7 个幸存错误实现经补强后全部变红；target 单章 12/12、截至 08 累计 47/47、当前课程 69/69。",
+        "evidence": "0/7 survivors; hard-link and rename-failure witnesses; Bash markers; real loop pairing"
+      }
+    },
+    {
+      "id": "L08-DETERMINISTIC-QUEUE",
+      "chapter": "08",
+      "status": "resolved",
+      "observedBy": ["coordinator"],
+      "evidence": "第一版新测试用 16 MB 内容和 setImmediate 制造 Write 竞态；即使当前机器稳定，它仍把调度速度误当成修改队列的行为证据。",
+      "firstPrinciple": "并发测试应控制因果顺序，而不是猜测耗时；Promise gate 必须直接决定哪项操作能够开始。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/coding-tools.ts",
+        "../pi-course-history/packages/pi-course/test/08-coding-tools.test.ts",
+        "content/chapters/08-coding-tools.md"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "能用 Promise gate 实现同键等待、异键继续和失败释放，不依赖大文件或调度时机。",
+        "coach": "测试同时记录 MutationQueue receiver 与解析后的绝对路径键；Write/Edit 不同默认实例的变异得到 11/12。",
+        "evidence": "controlled Promise gates; receiver identity assertion; no 16 MB fixture or setImmediate"
+      }
+    },
+    {
+      "id": "L08-CLAIM-PROSE",
+      "chapter": "08",
+      "status": "resolved",
+      "observedBy": ["coach", "user"],
+      "evidence": "旧正文混用 contract、mutation、containment 等术语，把路径 guardrail、一次 rename 和预取消结果扩大成安全沙箱、事务或进程未启动的证据；原预取消测试也没有检查环境标记。",
+      "firstPrinciple": "先说明哪个动作在何时发生、测试观察了什么，再命名机制；路径限制、文件提交和进程回收都只能声称当前层实际拥有的边界。",
+      "fix": [
+        "content/chapters/08-coding-tools.md",
+        "docs/usability/chinese-style.md",
+        "tests/chinese-prose.test.mjs",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "无需回读即可区分同 Registry 与跨 Registry、双流预算与持续排空、guardrail 测试与源码分支、marker 与 await/finally 证据。",
+        "coach": "正文准确限定 workspace guardrail、temp+rename、POSIX 同组后代和输出预算；未证明清单覆盖 TOCTOU、跨 Registry、异常清理与 OS 隔离。",
+        "evidence": "three prose rounds; strict claim audit PASS; chinese prose gate PASS"
+      }
+    },
+    {
       "id": "LZH-NATURAL-CHINESE",
       "chapter": "00",
       "status": "retest_pending",

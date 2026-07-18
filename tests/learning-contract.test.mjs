@@ -42,7 +42,10 @@ test("每章把讲解桥接到真实 commit 的第一个可执行动作", async 
     const required = [
       [`模式`, new RegExp(`\\*\\*模式：\\*\\*\\s*${expectedMode}`)],
       ["起终点", /\*\*起终点：\*\*\s*parent .*起点.*target .*终点/],
-      ["教学文件", /\*\*教学文件：\*\*\s*`packages\/pi-course\/[^`]+`/],
+      [
+        "教学文件",
+        /\*\*教学文件：\*\*\s*(?:-\s*)?`packages\/pi-course\/[^`]+`/,
+      ],
       ["第一步", /\*\*第一步：\*\*\s*\S+/],
       [
         "聚焦测试",
@@ -65,7 +68,7 @@ test("每章把讲解桥接到真实 commit 的第一个可执行动作", async 
       [
         "聚焦运行",
         new RegExp(
-          `\\*\\*聚焦运行：\\*\\*\\s*\`npm run build -w @pi/course\`.*\`node --test packages/pi-course/dist/test/${chapter.id}-\\*\\.test\\.js\``,
+          `\\*\\*聚焦运行：\\*\\*\\s*\`npm run build -w @pi/course\`[\\s\\S]*\`node --test packages/pi-course/dist/test/${chapter.id}-\\*\\.test\\.js\``,
         ),
       ],
       ["通过证据", /\*\*通过证据：\*\*\s*\S+/],
@@ -253,6 +256,152 @@ test("第五章披露两个源文件，并把 provider 边界拆成可运行的�
     /没有证明.*所有 OpenAI-compatible.*并发.*重试/s,
   );
   assert.doesNotMatch(chapter.source, /transport (?:保持)?很薄/);
+});
+
+test("第六章沿唯一教学路线分三步闭合工具契约", async () => {
+  const chapter = (await chapters()).find(({ id }) => id === "06");
+  assert.ok(chapter);
+  const body = rebuildBlock(chapter.source);
+  assert.ok(body);
+
+  assert.match(
+    body,
+    /\*\*教学文件：\*\*\s*`packages\/pi-course\/src\/tool\.ts`/,
+  );
+  assert.match(body, /学习脚手架.*公共.*不含.*实现/s);
+  assert.match(body, /第一次红灯.*Lab 6\.1.*validator/s);
+  assert.match(
+    chapter.source,
+    /实践 6\.1.*--test-name-pattern="validator".*1\/1/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 6\.2.*--test-name-pattern="Registry".*1\/1/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 6\.3.*--test-name-pattern="执行器".*2\/2.*4\/4/s,
+  );
+  assert.match(
+    chapter.source,
+    /4 项聚焦测试.*validator.*Registry.*执行器.*signal.*progress.*details/s,
+  );
+  assert.match(
+    chapter.source,
+    /没有证明.*预取消.*中途取消.*并发.*错误.*密钥/s,
+  );
+  assert.match(chapter.source, /`echo`/);
+  assert.doesNotMatch(chapter.source, /`add`|workshop\//);
+});
+
+test("第七章把 Agent Loop 拆成五段可单独验证的状态迁移", async () => {
+  const chapter = (await chapters()).find(({ id }) => id === "07");
+  assert.ok(chapter);
+  const body = rebuildBlock(chapter.source);
+  assert.ok(body);
+
+  assert.match(
+    body,
+    /\*\*教学文件：\*\*\s*`packages\/pi-course\/src\/agent-loop\.ts`/,
+  );
+  assert.match(body, /学习脚手架.*公共.*(?:分支|算法).*留给/s);
+  assert.match(body, /第一次红灯.*Lab 7\.1.*收集模型终态/s);
+  assert.match(
+    chapter.source,
+    /实践 7\.1.*--test-name-pattern="纯文本 stop".*1\/1/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 7\.2.*--test-name-pattern="单工具往返".*1\/1/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 7\.3.*--test-name-pattern="非执行终态".*[2-9]\/[2-9]/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 7\.4.*--test-name-pattern="并发工具".*[2-9]\/[2-9]/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 7\.5.*--test-name-pattern="取消与上限".*[2-9]\/[2-9].*(?:8|9|10|11|12)\/(?:8|9|10|11|12)/s,
+  );
+  assert.match(
+    chapter.source,
+    /stop.*tool call.*不得执行.*toolUse.*没有.*call.*error/s,
+  );
+  assert.match(
+    chapter.source,
+    /context.*不修改.*systemPrompt.*tool definitions.*唯一.*turn_end/s,
+  );
+  assert.match(
+    chapter.source,
+    /没有证明.*墙钟.*忽略.*signal.*subscriber|没有证明.*忽略.*signal.*墙钟.*subscriber/s,
+  );
+  assert.doesNotMatch(chapter.source, /`add`|workshop\//);
+});
+
+test("第八章把环境副作用拆成六段可恢复的资源协议", async () => {
+  const chapter = (await chapters()).find(({ id }) => id === "08");
+  assert.ok(chapter);
+  const body = rebuildBlock(chapter.source);
+  assert.ok(body);
+
+  assert.match(
+    body,
+    /\*\*教学文件：\*\*\s*`packages\/pi-course\/src\/coding-tools\.ts`/,
+  );
+  assert.match(
+    body,
+    /学习脚手架.*公共类型.*Lab 8\.1–8\.6.*(?:不包含|留给你实现)/s,
+  );
+  assert.match(body, /第一次红灯.*Lab 8\.1 Read.*尚未实现/s);
+  assert.match(
+    chapter.source,
+    /实践 8\.1.*--test-name-pattern="Lab 8\.1".*2\/2/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 8\.2.*--test-name-pattern="Lab 8\.2".*1\/1/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 8\.3.*--test-name-pattern="Lab 8\.3".*2\/2/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 8\.4.*--test-name-pattern="Lab 8\.4".*2\/2/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 8\.5.*--test-name-pattern="Lab 8\.5".*4\/4/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 8\.6.*--test-name-pattern="Lab 8\.6".*1\/1.*12\/12/s,
+  );
+  assert.match(chapter.source, /`endLine`.*实际.*完整/s);
+  assert.match(chapter.source, /续读位置为 `endLine \+ 1`/);
+  assert.match(chapter.source, /同一路径.*登记顺序/s);
+  assert.match(chapter.source, /Edit 先验证整批/s);
+  assert.match(chapter.source, /`bash`.*一个有界的终态/s);
+  assert.match(
+    chapter.source,
+    /硬链接.*直接改写.*`rename`.*提交失败.*临时文件/s,
+  );
+  assert.match(
+    chapter.source,
+    /stdout、stderr 与截断说明共用.*`maxBashOutputBytes`/s,
+  );
+  assert.match(
+    chapter.source,
+    /POSIX.*`SIGTERM`.*`SIGKILL`.*忽略 `SIGTERM` 的后代进程/s,
+  );
+  assert.match(
+    chapter.source,
+    /没有证明.*符号链接竞态.*断电持久性.*文件操作的运行中取消.*Windows.*命令审批/s,
+  );
+  assert.doesNotMatch(chapter.source, /workshop\//);
 });
 
 test("序章的实验、所有权和离线语义与 checkpoint 00 一致", async () => {

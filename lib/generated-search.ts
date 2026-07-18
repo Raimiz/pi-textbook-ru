@@ -1010,7 +1010,7 @@ export const searchIndex: SearchEntry[] = [
       "tool result",
       "call id"
     ],
-    "searchText": "Tool 是类型化的环境动作 建立模型提议动作、程序验证并执行、结果重新进入对话的可信边界。 第二部 · 闭合 Agent 核心 tool contract, runtime validation, registry, tool result, call id 你将得到什么 先建立全景 把描述层与执行层绑成一个契约 无论怎样失败，都闭合一次调用 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "Tool 是类型化的环境动作 依次实现 validator、Registry 和 executor，把模型提出的动作变成完整、配对的环境结果。 第二部 · 闭合 Agent 核心 tool contract, runtime validation, registry, tool result, call id 你将得到什么 先建立全景 第一步：让 validator 同时携带行为和描述 第二步：让每次运行显式持有动作空间 第三步：让每种预期结果都带着原调用返回 故意把它弄坏 本章验收 可选迁移练习 小结"
   },
   {
     "id": "06-你将得到什么",
@@ -1047,12 +1047,12 @@ export const searchIndex: SearchEntry[] = [
     "searchText": "Tool 是类型化的环境动作 先建立全景 tool contract runtime validation registry tool result call id"
   },
   {
-    "id": "06-把描述层与执行层绑成一个契约",
+    "id": "06-第一步让-validator-同时携带行为和描述",
     "chapterId": "06",
     "chapterSlug": "tool-contract",
     "chapterTitle": "Tool 是类型化的环境动作",
-    "title": "把描述层与执行层绑成一个契约",
-    "href": "/learn/tool-contract#把描述层与执行层绑成一个契约",
+    "title": "第一步：让 validator 同时携带行为和描述",
+    "href": "/learn/tool-contract#第一步让-validator-同时携带行为和描述",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "tool contract",
@@ -1061,15 +1061,15 @@ export const searchIndex: SearchEntry[] = [
       "tool result",
       "call id"
     ],
-    "searchText": "Tool 是类型化的环境动作 把描述层与执行层绑成一个契约 tool contract runtime validation registry tool result call id"
+    "searchText": "Tool 是类型化的环境动作 第一步：让 validator 同时携带行为和描述 tool contract runtime validation registry tool result call id"
   },
   {
-    "id": "06-无论怎样失败都闭合一次调用",
+    "id": "06-第二步让每次运行显式持有动作空间",
     "chapterId": "06",
     "chapterSlug": "tool-contract",
     "chapterTitle": "Tool 是类型化的环境动作",
-    "title": "无论怎样失败，都闭合一次调用",
-    "href": "/learn/tool-contract#无论怎样失败都闭合一次调用",
+    "title": "第二步：让每次运行显式持有动作空间",
+    "href": "/learn/tool-contract#第二步让每次运行显式持有动作空间",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "tool contract",
@@ -1078,7 +1078,24 @@ export const searchIndex: SearchEntry[] = [
       "tool result",
       "call id"
     ],
-    "searchText": "Tool 是类型化的环境动作 无论怎样失败，都闭合一次调用 tool contract runtime validation registry tool result call id"
+    "searchText": "Tool 是类型化的环境动作 第二步：让每次运行显式持有动作空间 tool contract runtime validation registry tool result call id"
+  },
+  {
+    "id": "06-第三步让每种预期结果都带着原调用返回",
+    "chapterId": "06",
+    "chapterSlug": "tool-contract",
+    "chapterTitle": "Tool 是类型化的环境动作",
+    "title": "第三步：让每种预期结果都带着原调用返回",
+    "href": "/learn/tool-contract#第三步让每种预期结果都带着原调用返回",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "tool contract",
+      "runtime validation",
+      "registry",
+      "tool result",
+      "call id"
+    ],
+    "searchText": "Tool 是类型化的环境动作 第三步：让每种预期结果都带着原调用返回 tool contract runtime validation registry tool result call id"
   },
   {
     "id": "06-故意把它弄坏",
@@ -1152,154 +1169,205 @@ export const searchIndex: SearchEntry[] = [
     "id": "07",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
-    "title": "Agent Loop 是可证明的状态机",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
+    "title": "把 Agent Loop 写成可验证的状态迁移",
     "href": "/learn/agent-loop",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 把模型响应与工具结果闭合为可终止、可重放、顺序明确的最小 Agent Loop。 第二部 · 闭合 Agent 核心 agent loop, state machine, stop reason, transcript order, terminal state 你将得到什么 先建立全景 先闭合单个动作，再推广到一批 截断是“不允许执行”，并发是“两种顺序” 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 让模型调用、工具执行和结果回填形成一条有明确终点的反馈回路。 第二部 · 闭合 Agent 核心 agent loop, state transition, stop reason, transcript order, terminal state 你将得到什么 先建立全景 把循环写成决策表 第一步：完成一次纯文本 stop 第二步：把一个工具结果送回模型 第三步：给不会执行的调用也配对 第四步：同时执行，按调用顺序写回 第五步：让控制器有明确边界 故意把它弄坏 本章验收 可选迁移练习 小结"
   },
   {
     "id": "07-你将得到什么",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
     "title": "你将得到什么",
     "href": "/learn/agent-loop#你将得到什么",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 你将得到什么 agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 你将得到什么 agent loop state transition stop reason transcript order terminal state"
   },
   {
     "id": "07-先建立全景",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
     "title": "先建立全景",
     "href": "/learn/agent-loop#先建立全景",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 先建立全景 agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 先建立全景 agent loop state transition stop reason transcript order terminal state"
   },
   {
-    "id": "07-先闭合单个动作再推广到一批",
+    "id": "07-第一步完成一次纯文本-stop",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
-    "title": "先闭合单个动作，再推广到一批",
-    "href": "/learn/agent-loop#先闭合单个动作再推广到一批",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
+    "title": "第一步：完成一次纯文本 stop",
+    "href": "/learn/agent-loop#第一步完成一次纯文本-stop",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 先闭合单个动作，再推广到一批 agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 第一步：完成一次纯文本 stop agent loop state transition stop reason transcript order terminal state"
   },
   {
-    "id": "07-截断是不允许执行并发是两种顺序",
+    "id": "07-第二步把一个工具结果送回模型",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
-    "title": "截断是“不允许执行”，并发是“两种顺序”",
-    "href": "/learn/agent-loop#截断是不允许执行并发是两种顺序",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
+    "title": "第二步：把一个工具结果送回模型",
+    "href": "/learn/agent-loop#第二步把一个工具结果送回模型",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 截断是“不允许执行”，并发是“两种顺序” agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 第二步：把一个工具结果送回模型 agent loop state transition stop reason transcript order terminal state"
+  },
+  {
+    "id": "07-第三步给不会执行的调用也配对",
+    "chapterId": "07",
+    "chapterSlug": "agent-loop",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
+    "title": "第三步：给不会执行的调用也配对",
+    "href": "/learn/agent-loop#第三步给不会执行的调用也配对",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "agent loop",
+      "state transition",
+      "stop reason",
+      "transcript order",
+      "terminal state"
+    ],
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 第三步：给不会执行的调用也配对 agent loop state transition stop reason transcript order terminal state"
+  },
+  {
+    "id": "07-第四步同时执行按调用顺序写回",
+    "chapterId": "07",
+    "chapterSlug": "agent-loop",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
+    "title": "第四步：同时执行，按调用顺序写回",
+    "href": "/learn/agent-loop#第四步同时执行按调用顺序写回",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "agent loop",
+      "state transition",
+      "stop reason",
+      "transcript order",
+      "terminal state"
+    ],
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 第四步：同时执行，按调用顺序写回 agent loop state transition stop reason transcript order terminal state"
+  },
+  {
+    "id": "07-第五步让控制器有明确边界",
+    "chapterId": "07",
+    "chapterSlug": "agent-loop",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
+    "title": "第五步：让控制器有明确边界",
+    "href": "/learn/agent-loop#第五步让控制器有明确边界",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "agent loop",
+      "state transition",
+      "stop reason",
+      "transcript order",
+      "terminal state"
+    ],
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 第五步：让控制器有明确边界 agent loop state transition stop reason transcript order terminal state"
   },
   {
     "id": "07-故意把它弄坏",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
     "title": "故意把它弄坏",
     "href": "/learn/agent-loop#故意把它弄坏",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 故意把它弄坏 agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 故意把它弄坏 agent loop state transition stop reason transcript order terminal state"
   },
   {
     "id": "07-本章验收",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
     "title": "本章验收",
     "href": "/learn/agent-loop#本章验收",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 本章验收 agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 本章验收 agent loop state transition stop reason transcript order terminal state"
   },
   {
     "id": "07-可选迁移练习",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
     "title": "可选迁移练习",
     "href": "/learn/agent-loop#可选迁移练习",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 可选迁移练习 agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 可选迁移练习 agent loop state transition stop reason transcript order terminal state"
   },
   {
     "id": "07-小结",
     "chapterId": "07",
     "chapterSlug": "agent-loop",
-    "chapterTitle": "Agent Loop 是可证明的状态机",
+    "chapterTitle": "把 Agent Loop 写成可验证的状态迁移",
     "title": "小结",
     "href": "/learn/agent-loop#小结",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
       "agent loop",
-      "state machine",
+      "state transition",
       "stop reason",
       "transcript order",
       "terminal state"
     ],
-    "searchText": "Agent Loop 是可证明的状态机 小结 agent loop state machine stop reason transcript order terminal state"
+    "searchText": "把 Agent Loop 写成可验证的状态迁移 小结 agent loop state transition stop reason transcript order terminal state"
   },
   {
     "id": "08",
@@ -1310,13 +1378,13 @@ export const searchIndex: SearchEntry[] = [
     "href": "/learn/coding-tools",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 让 Agent 获得可截断、可取消、可诊断的文件和进程能力，同时说清真正的安全边界。 第二部 · 闭合 Agent 核心 execution environment, exact edit, mutation queue, output truncation, containment 你将得到什么 先建立全景 先让文件动作可证明 Bash 是生命周期，不是一个字符串 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "Read、Write、Edit 与 Bash 把文件和进程能力接入 Agent Loop，并用明确的路径、提交和资源边界约束副作用。 第二部 · 闭合 Agent 核心 bounded observation, path containment, mutation queue, exact edit, process lifecycle 你将得到什么 开始前：只认一条练习路线 先建立全景 四个工具共享一条处理路径 第一步：让 Read 只报告完整观察 第二步：让路径判断覆盖符号链接 第三步：把 Write 变成一次明确提交 第四步：Edit 先验证整批，再写一次 第五步：把 Bash 当成一段生命周期 第六步：让真实工具走完 Agent Loop 故意把它弄坏 本章没有证明什么 本章验收 可选迁移练习 小结"
   },
   {
     "id": "08-你将得到什么",
@@ -1327,13 +1395,30 @@ export const searchIndex: SearchEntry[] = [
     "href": "/learn/coding-tools#你将得到什么",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 你将得到什么 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 你将得到什么 bounded observation path containment mutation queue exact edit process lifecycle"
+  },
+  {
+    "id": "08-开始前只认一条练习路线",
+    "chapterId": "08",
+    "chapterSlug": "coding-tools",
+    "chapterTitle": "Read、Write、Edit 与 Bash",
+    "title": "开始前：只认一条练习路线",
+    "href": "/learn/coding-tools#开始前只认一条练习路线",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "bounded observation",
+      "path containment",
+      "mutation queue",
+      "exact edit",
+      "process lifecycle"
+    ],
+    "searchText": "Read、Write、Edit 与 Bash 开始前：只认一条练习路线 bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
     "id": "08-先建立全景",
@@ -1344,47 +1429,115 @@ export const searchIndex: SearchEntry[] = [
     "href": "/learn/coding-tools#先建立全景",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 先建立全景 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 先建立全景 bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
-    "id": "08-先让文件动作可证明",
+    "id": "08-第一步让-read-只报告完整观察",
     "chapterId": "08",
     "chapterSlug": "coding-tools",
     "chapterTitle": "Read、Write、Edit 与 Bash",
-    "title": "先让文件动作可证明",
-    "href": "/learn/coding-tools#先让文件动作可证明",
+    "title": "第一步：让 Read 只报告完整观察",
+    "href": "/learn/coding-tools#第一步让-read-只报告完整观察",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 先让文件动作可证明 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 第一步：让 Read 只报告完整观察 bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
-    "id": "08-bash-是生命周期不是一个字符串",
+    "id": "08-第二步让路径判断覆盖符号链接",
     "chapterId": "08",
     "chapterSlug": "coding-tools",
     "chapterTitle": "Read、Write、Edit 与 Bash",
-    "title": "Bash 是生命周期，不是一个字符串",
-    "href": "/learn/coding-tools#bash-是生命周期不是一个字符串",
+    "title": "第二步：让路径判断覆盖符号链接",
+    "href": "/learn/coding-tools#第二步让路径判断覆盖符号链接",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash Bash 是生命周期，不是一个字符串 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 第二步：让路径判断覆盖符号链接 bounded observation path containment mutation queue exact edit process lifecycle"
+  },
+  {
+    "id": "08-第三步把-write-变成一次明确提交",
+    "chapterId": "08",
+    "chapterSlug": "coding-tools",
+    "chapterTitle": "Read、Write、Edit 与 Bash",
+    "title": "第三步：把 Write 变成一次明确提交",
+    "href": "/learn/coding-tools#第三步把-write-变成一次明确提交",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "bounded observation",
+      "path containment",
+      "mutation queue",
+      "exact edit",
+      "process lifecycle"
+    ],
+    "searchText": "Read、Write、Edit 与 Bash 第三步：把 Write 变成一次明确提交 bounded observation path containment mutation queue exact edit process lifecycle"
+  },
+  {
+    "id": "08-第四步edit-先验证整批再写一次",
+    "chapterId": "08",
+    "chapterSlug": "coding-tools",
+    "chapterTitle": "Read、Write、Edit 与 Bash",
+    "title": "第四步：Edit 先验证整批，再写一次",
+    "href": "/learn/coding-tools#第四步edit-先验证整批再写一次",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "bounded observation",
+      "path containment",
+      "mutation queue",
+      "exact edit",
+      "process lifecycle"
+    ],
+    "searchText": "Read、Write、Edit 与 Bash 第四步：Edit 先验证整批，再写一次 bounded observation path containment mutation queue exact edit process lifecycle"
+  },
+  {
+    "id": "08-第五步把-bash-当成一段生命周期",
+    "chapterId": "08",
+    "chapterSlug": "coding-tools",
+    "chapterTitle": "Read、Write、Edit 与 Bash",
+    "title": "第五步：把 Bash 当成一段生命周期",
+    "href": "/learn/coding-tools#第五步把-bash-当成一段生命周期",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "bounded observation",
+      "path containment",
+      "mutation queue",
+      "exact edit",
+      "process lifecycle"
+    ],
+    "searchText": "Read、Write、Edit 与 Bash 第五步：把 Bash 当成一段生命周期 bounded observation path containment mutation queue exact edit process lifecycle"
+  },
+  {
+    "id": "08-第六步让真实工具走完-agent-loop",
+    "chapterId": "08",
+    "chapterSlug": "coding-tools",
+    "chapterTitle": "Read、Write、Edit 与 Bash",
+    "title": "第六步：让真实工具走完 Agent Loop",
+    "href": "/learn/coding-tools#第六步让真实工具走完-agent-loop",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "bounded observation",
+      "path containment",
+      "mutation queue",
+      "exact edit",
+      "process lifecycle"
+    ],
+    "searchText": "Read、Write、Edit 与 Bash 第六步：让真实工具走完 Agent Loop bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
     "id": "08-故意把它弄坏",
@@ -1395,13 +1548,30 @@ export const searchIndex: SearchEntry[] = [
     "href": "/learn/coding-tools#故意把它弄坏",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 故意把它弄坏 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 故意把它弄坏 bounded observation path containment mutation queue exact edit process lifecycle"
+  },
+  {
+    "id": "08-本章没有证明什么",
+    "chapterId": "08",
+    "chapterSlug": "coding-tools",
+    "chapterTitle": "Read、Write、Edit 与 Bash",
+    "title": "本章没有证明什么",
+    "href": "/learn/coding-tools#本章没有证明什么",
+    "partTitle": "第二部 · 闭合 Agent 核心",
+    "terms": [
+      "bounded observation",
+      "path containment",
+      "mutation queue",
+      "exact edit",
+      "process lifecycle"
+    ],
+    "searchText": "Read、Write、Edit 与 Bash 本章没有证明什么 bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
     "id": "08-本章验收",
@@ -1412,13 +1582,13 @@ export const searchIndex: SearchEntry[] = [
     "href": "/learn/coding-tools#本章验收",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 本章验收 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 本章验收 bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
     "id": "08-可选迁移练习",
@@ -1429,13 +1599,13 @@ export const searchIndex: SearchEntry[] = [
     "href": "/learn/coding-tools#可选迁移练习",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 可选迁移练习 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 可选迁移练习 bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
     "id": "08-小结",
@@ -1446,13 +1616,13 @@ export const searchIndex: SearchEntry[] = [
     "href": "/learn/coding-tools#小结",
     "partTitle": "第二部 · 闭合 Agent 核心",
     "terms": [
-      "execution environment",
-      "exact edit",
+      "bounded observation",
+      "path containment",
       "mutation queue",
-      "output truncation",
-      "containment"
+      "exact edit",
+      "process lifecycle"
     ],
-    "searchText": "Read、Write、Edit 与 Bash 小结 execution environment exact edit mutation queue output truncation containment"
+    "searchText": "Read、Write、Edit 与 Bash 小结 bounded observation path containment mutation queue exact edit process lifecycle"
   },
   {
     "id": "09",

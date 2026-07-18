@@ -1,8 +1,8 @@
 # Pi 教材学习模拟记录
 
-测试日期：2026-07-17  
-学生：干净 subagent，基本编程经验，无 Agent 工程与课程前置知识  
-陪练：干净 subagent，只读 target，受 L0–L4 提示阶梯约束  
+测试日期：2026-07-17 至 2026-07-18
+学生：干净 subagent，基本编程经验，无 Agent 工程与课程前置知识
+陪练：干净 subagent，只读 target，受 L0–L4 提示阶梯约束
 协调者：主 agent
 
 ## 总览
@@ -15,7 +15,10 @@
 | 03 | 是 | 4.5/5 | L0 | PASS · 局部 1/1、全量 2/2 |
 | 04 | 是 | 4.5/5 | L0 | PASS · 局部 1/1、全量 3/3 |
 | 05 | 是 | 4.8/5 | L0 | PASS · 局部 1/3/5/2、全量 11/11 |
-| 06–14 | 待测 | — | — | 待测 |
+| 06 | 是 | 4.8/5 | L0 | PASS · 局部 1/1/2、全量 4/4 |
+| 07 | 是 | 4.8/5 | L0 | PASS · 局部 1/1/2/2/3、全量 9/9 |
+| 08 | 是 | 4.8/5 | L0 | PASS · 局部 2/1/2/2/4/1、全量 12/12 |
+| 09–14 | 待测 | — | — | 待测 |
 
 ## Chapter 00 · 基线
 
@@ -287,3 +290,234 @@ L0，Chapter 05 可以封存。
 测试依据也经过实际变异验证：错误 tool id、把密钥写入 body、删除 `start`、
 把 length 参数伪造成对象、混淆 provider index 与 content index 都会红；恢复
 target 后本章 11/11、课程全量 52/52。
+
+## Chapter 06 · 基线
+
+学生从第 05 章 target 创建 fresh practice 后，首次 build 同时出现缺少 `tool.ts`
+的 TS2307 和级联 TS7031。他读完正文仍无法选择唯一动作，因为 rebuild 使用
+`packages/pi-course + echo + node:test`，两组 Lab 却使用
+`workshop + add + workshop:test`。隔离目录没有 Git 历史，正文的恢复命令也无法
+执行。学生在写代码前停止，最高需求为 L1：只请教材明确哪条路线有效。
+
+陪练确认 target 实现本身具备 validator、Registry、结果归一化和 context 传播，
+但原来的两项测试没有形成相应证据。下面五个破坏都能保持 `2/2`：
+
+```text
+删除重名保护
+验证失败后仍执行副作用
+丢失 signal / progress / callId
+丢失 details / isError
+把失败结果的 toolName 写错
+```
+
+正文还把 signal 传播写成取消保证，把当前 Promise/result 层的失败说成下一章才有的
+transcript 偏差，并使用了不存在的类型名。
+
+### 第一轮修复
+
+- 全章统一为 `packages/pi-course`、`echo` 和同一组 build/test 命令；
+- 新增只固定公共类型和函数签名的 Chapter 06 starter；
+- 把重建拆成 validator、Registry、executor 三段；
+- target 测试从 2 项增加到 4 项，检查 schema、额外字段清洗、重名、验证先于
+  副作用、完整错误外壳、signal、progress、details 与 `isError`；
+- 明确 signal 只会被传给工具，执行器无法强制忽略 signal 的工具停止；
+- 明确错误结果不含 stack，但不会自动识别异常文本中的路径或密钥；
+- 用自然中文重写整章，删除互相冲突的例子和抽象名词堆叠。
+
+学生在第二个 fresh sandbox 中得到：
+
+```text
+scaffold build  green
+validator first red  Lab 6.1 objectSchema 尚未实现
+Lab 6.1  1/1
+Lab 6.2  1/1
+Lab 6.3  2/2
+full     4/4
+```
+
+他使用了与 target 不同的实现方式，仍能准确解释 validator 的行为与元数据、
+Registry 所有权、额外字段处理、验证顺序、signal 边界和错误安全边界，最高提示 L0。
+
+### 第二轮测试补洞
+
+陪练重做原五个变异后全部得到红灯，但又发现一个新假绿：构造器忽略初始工具时，
+全量仍为 `4/4`。协调者先复现旧测试假绿，再把 Registry 测试改为
+`new ToolRegistry([echo])`。同一变异立即变为 `0/1`，课程恢复 `54/54`。
+
+学生与陪练重新从 fresh practice 完成全章。六个关键变异全部被杀死，中文改写也
+无需回读。陪练随后指出正文声称 `list()` 保持顺序，但单个工具无法提供非平凡证据。
+
+### 第三轮精修与封存
+
+Registry 测试加入第二个初始工具 `upper`。反转 `list()` 的临时变异会明确显示
+`upper/echo` 次序颠倒，并得到 `0/1`；正确实现仍为 `1/1`。正文同时把剩余几处
+中英混排和含混表述改成直接中文。
+
+学生第四次完整重建仍为 L0，确认第二个工具只增加顺序证据，没有隐藏业务要求。
+陪练最终重做七个变异：
+
+```text
+忽略 constructor tools     red
+反转 list 顺序             red
+删除 duplicate guard       red
+validation 后执行          red
+丢失 context               red
+丢失 details / isError     red
+错误 failed toolName       red
+```
+
+幸存变异为 `0/7`。最终 target 为 `f27c7a55`，本章 `4/4`，课程全量 `59/59`。
+Chapter 06 封存。
+
+## Chapter 07 · 基线
+
+学生第一次进入本章时，概念讲解可以读懂，却无法确定要在哪个实现上动手。frontmatter
+与 rebuild 指向 `packages/pi-course`，正文实验和恢复步骤却转向 `workshop`。
+fresh parent 还缺少 `agent-loop.ts`，首次 build 同时出现 TS2307 和四条级联
+TS7006。学生必须从空文件一次猜出公共事件、返回值、options 和整段控制流。
+
+陪练发现 target 还有两类更深的问题。第一，旧 Chapter 07 commit 除 Agent Loop
+外，还隐藏了 273 行序章重构和 Chapter 00 测试变化。第二，原 4 项测试会放过修改
+调用者 context、漏传工具定义、忽略取消、让非法 stop 执行 call、吞掉
+`turn_end` 等错误；注入 executor reject 时，一个失败还会使同批其他结果丢失。
+
+正文也把未测试的行为写成已证明能力，并连续堆叠 observation、canonical history
+等抽象名词。学生能理解单句，却要反复判断动作属于模型、工具还是 loop。
+
+### 第一轮修复与实操
+
+课程先删除隐藏的序章增量，把 steering 与 follow-up 留在真正引入它们的 Chapter
+09。学习脚手架只保留公共类型、主循环骨架和五个 Lab 施工位。正文统一到隔离的
+`packages/pi-course`，并按状态迁移拆成五段：
+
+```text
+7.1 纯文本 stop           1/1
+7.2 单工具往返            1/1
+7.3 非执行终态            2/2
+7.4 并发与单项失败        2/2
+7.5 取消与回合上限        3/3
+```
+
+学生从 fresh practice 开始，首次只看到
+`Lab 7.1 收集模型终态 尚未实现`，随后独立完成 9/9，最高提示 L0。陪练的 11 个
+行为反例全部变红，但复核又发现两处证据不足：测试没有直接锁定
+`tool_start → tool_progress → tool_end` 的相对顺序；失败实验创建两个 length
+calls，正文却写成执行数从 0 变成 1。
+
+### 第二轮修复与实操
+
+测试加入三类工具事件的精确顺序断言。正文把 length 实验改成真实的 `0 → 2`，
+并明确取消测试只证明两个外部行为：预取消时不请求模型；工具后取消时保留配对结果，
+且不再请求模型。它不证明内部检查位置，也不能强制忽略 signal 的依赖停止。
+
+学生再次从空实现得到完整 9/9，仍为 L0。陪练加入事件乱序反例后，12 项反例全部
+变红。不过独立文字审查又找到一个缺口：多轮测试只证明第一轮 assistant 进入第二次
+请求，没有直接证明最后一轮 assistant 恰好写入一次；正文还把“比较消息角色和工具
+定义”扩大成“完整比较第二次请求”。
+
+### 第三轮补强
+
+Lab 7.2 增加两组直接证据：
+
+```text
+最终 roles:
+user → assistant → toolResult → assistant
+
+assistant_message stopReasons:
+toolUse → stop
+```
+
+现在，漏写或重复最后一轮 assistant 都会在最靠近问题的断言处失败。正文也缩窄为
+实际检查的字段，并把“真实时间”等生硬说法改成“实际完成顺序”。
+
+学生第三次完整重建仍为 L0 和 9/9。陪练分别删除 transcript 中最后的 assistant、
+重复写入它、重复发送 `assistant_message`，三项都得到精确红灯；恢复后源码哈希与
+target 一致。
+
+### 第四轮术语对齐与封存
+
+陪练最后指出 Lab 7.2 的目标写 `echo`，真实测试工具名是 `probe`。正文改成
+“测试中的 `probe` 调用”，并把 `toolUse + one call` 改成
+“当 `toolUse` 中只有一个 call 时”。这次只改了文字，学生与陪练仍按同章规则从
+fresh 目录重复完整流程。
+
+学生再次得到：
+
+```text
+scaffold build  green
+first red      Lab 7.1 收集模型终态 尚未实现
+Lab 7.1–7.5   1/1 → 1/1 → 2/2 → 2/2 → 3/3
+full           9/9
+```
+
+陪练重做原 12 项反例与 2 项最终 assistant 定向反例，幸存数为 `0/14`。正文的
+wall-clock、忽略 signal、错误信息与取消边界均准确，学生没有回读句。最终 target
+为 `f33bd46e`，Chapter 07 封存。
+
+## Chapter 08 · 基线
+
+旧正文把 `packages/pi-course`、`workshop` 和无 Git 历史的 practice 目录混在同一
+条练习路线里。旧 target 只有两项测试，Read 还会先计算计划结束行，再硬切格式化
+文本的字节；输出可能停在半行，续读位置却已经跳到下一段。Write、修改队列、Bash
+运行期取消和真实 Agent Loop 都缺少可执行证据。
+
+### 第一轮修复与实操
+
+课程增加只保留公共类型、工具参数表面和六个施工位的学习脚手架。正文统一到隔离的
+`packages/pi-course`，按资源所有权拆成：
+
+```text
+8.1 有界 Read                 2/2
+8.2 workspace 路径规则       1/1
+8.3 Write 与修改队列         2/2
+8.4 批量精确 Edit            2/2
+8.5 Bash 生命周期            4/4
+8.6 真实编码循环              1/1
+```
+
+学生从 fresh practice 开始，baseline build 通过，首次只看到
+`Tool read failed: Lab 8.1 Read 尚未实现`。他独立完成 12/12，并通过故意删除
+Edit 多匹配检查得到 1/2；恢复后重新 12/12。唯一需要回读的句子是“对新目标检查
+最近的已存在祖先”。
+
+陪练的第一轮行为审查做了 29 个本地逻辑变异，其中 7 个仍能全绿：Read 可追加多余
+提示；Write/Edit 可以直接改写目标；提交失败不清理临时文件；两种工具可以使用不同
+队列实例；Bash guardrail、进程组终止或全部终止信号都可以被删除。正文也把源码意图
+写成了测试已经证明的结论。
+
+### 第二轮补强
+
+测试改用确定性环境事实，不用大文件和调度时间猜测行为：
+
+- 精确比较 Read 的完整输出；
+- 用硬链接见证区分“原地改写”和“临时文件后替换”；
+- 让 rename 必然失败，再检查旧目录与临时文件；
+- 同时记录 `MutationQueue.run()` 的 receiver 和绝对路径键；
+- 为绝对路径与 `../` guardrail 使用目录外标记文件；
+- 让直接进程的 `SIGTERM` handler 写标记；
+- 在 POSIX 启动忽略 `SIGTERM` 的同组后代，确认延迟 `SIGKILL` 后不能继续写文件。
+
+实现同时改为等待延迟强杀步骤，再结算 Bash 结果。学生第二次仍以 L0 完成
+`2/1/2/2/4/1` 和 12/12；原 7 个幸存变异全部变红。改写后的 realpath 说明也不再
+需要回读。
+
+### 第三轮证据边界与封存
+
+第二轮文字审查还发现四个作用域需要写准：测试只规定同一个 Registry 内的
+Write/Edit 共用队列；guardrail 的标记只覆盖绝对路径和 `../`；双流测试只证明共同
+输出预算；timer、listener 与等待清理要由源码中的 `await/finally` 确认。正文明确
+区分这些测试证据、源码证据和未证明范围。
+
+学生第三次从空脚手架完整重建，仍然得到：
+
+```text
+scaffold build  green
+first red      Lab 8.1 Read 尚未实现 · 0/2
+Lab 8.1–8.6   2/2 → 1/1 → 2/2 → 2/2 → 4/4 → 1/1
+full           12/12
+fault          1/2 → restore 2/2 → full 12/12
+```
+
+最高提示 L0，无回读、歧义或阻塞。陪练重新执行 7 个错误实现，幸存数仍为 `0/7`；
+严格文字审查也通过。最终 target 为 `6b3b1b77`，截至本章累计测试 `47/47`；当前
+包含 00～14 的课程 HEAD 为 `69/69`。Chapter 08 封存。

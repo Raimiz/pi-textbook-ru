@@ -259,4 +259,200 @@ test("practice helper creates an answer-free chapter sandbox", async (t) => {
     "normalized chunks need an adapter-only content-index oracle",
   );
   assert.match(chapter05Test, /toolcall_end/);
+
+  const chapter06 = path.join(root, "chapter-06");
+  const toolContract = createPractice("06", chapter06);
+  assert.equal(toolContract.status, 0, toolContract.stderr);
+  const chapter06Test = await readFile(
+    path.join(
+      chapter06,
+      "packages/pi-course/test/06-tool-contract.test.ts",
+    ),
+    "utf8",
+  );
+  const chapter06Starter = await readFile(
+    path.join(chapter06, "packages/pi-course/src/tool.ts"),
+    "utf8",
+  );
+  const chapter06Guide = await readFile(
+    path.join(chapter06, "LEARNING.md"),
+    "utf8",
+  );
+  assert.match(chapter06Guide, /学习脚手架/);
+  assert.match(chapter06Starter, /Lab 6\.1 stringValue/);
+  assert.match(chapter06Starter, /Lab 6\.2 ToolRegistry/);
+  assert.match(chapter06Starter, /Lab 6\.3 executeToolCall/);
+  assert.doesNotMatch(
+    chapter06Starter,
+    /new Map|failedResult|Object\.fromEntries/,
+    "the starter may expose signatures but not registry, result, or schema algorithms",
+  );
+  assert.equal(
+    [...chapter06Test.matchAll(/test\(/g)].length,
+    4,
+    "chapter 06 must expose four independently named proofs",
+  );
+  assert.match(chapter06Test, /assert\.throws[\s\S]*Tool 已存在/);
+  assert.match(
+    chapter06Test,
+    /executionCount[\s\S]*invalid[\s\S]*executionCount,\s*1/,
+    "invalid arguments must be proved not to reach execute",
+  );
+  assert.match(
+    chapter06Test,
+    /seenContext[\s\S]*signal[\s\S]*reportProgress[\s\S]*details[\s\S]*isError/s,
+    "the executor oracle must inspect its complete context and output",
+  );
+
+  const chapter07 = path.join(root, "chapter-07");
+  const agentLoop = createPractice("07", chapter07);
+  assert.equal(agentLoop.status, 0, agentLoop.stderr);
+  const chapter07Test = await readFile(
+    path.join(
+      chapter07,
+      "packages/pi-course/test/07-agent-loop.test.ts",
+    ),
+    "utf8",
+  );
+  const chapter07Starter = await readFile(
+    path.join(chapter07, "packages/pi-course/src/agent-loop.ts"),
+    "utf8",
+  );
+  const chapter07Guide = await readFile(
+    path.join(chapter07, "LEARNING.md"),
+    "utf8",
+  );
+  assert.match(chapter07Guide, /学习脚手架/);
+  for (const lab of ["7.1", "7.2", "7.3", "7.4", "7.5"]) {
+    assert.match(chapter07Starter, new RegExp(`Lab ${lab.replace(".", "\\.")}`));
+  }
+  assert.match(chapter07Starter, /throw labError/);
+  assert.doesNotMatch(
+    chapter07Starter,
+    /Promise\.all\(|Tool call was not executed/,
+    "the starter may expose the control surface but not concurrency or skipped-result algorithms",
+  );
+  assert.ok(
+    [...chapter07Test.matchAll(/test\(/g)].length >= 8,
+    "chapter 07 must expose at least eight independently named proofs",
+  );
+  assert.match(
+    chapter07Test,
+    /纯文本 stop[\s\S]*systemPrompt[\s\S]*definitions|纯文本 stop[\s\S]*definitions[\s\S]*systemPrompt/s,
+    "the first stage must observe the complete model request",
+  );
+  assert.match(
+    chapter07Test,
+    /\["tool_start",\s*"tool_progress",\s*"tool_end"\]/,
+    "the single-tool proof must lock the relative lifecycle event order",
+  );
+  assert.match(
+    chapter07Test,
+    /context[\s\S]*deepEqual[\s\S]*turn_end|turn_end[\s\S]*deepEqual[\s\S]*context/s,
+    "the loop must preserve caller ownership and emit one terminal event",
+  );
+  assert.match(
+    chapter07Test,
+    /非执行终态[\s\S]*length[\s\S]*aborted[\s\S]*unexpected-stop/s,
+    "all non-executing terminal branches need paired-result evidence",
+  );
+  assert.match(
+    chapter07Test,
+    /并发工具[\s\S]*(?:deferred|Deferred|release)[\s\S]*(?:reject|rejection)/s,
+    "concurrency tests must use controlled gates and cover injected rejection",
+  );
+  assert.match(
+    chapter07Test,
+    /取消与上限[\s\S]*AbortController[\s\S]*maxSteps/s,
+    "pre-cancel, post-tool cancel, and maxSteps need deterministic evidence",
+  );
+
+  const chapter08 = path.join(root, "chapter-08");
+  const codingTools = createPractice("08", chapter08);
+  assert.equal(codingTools.status, 0, codingTools.stderr);
+  const chapter08Test = await readFile(
+    path.join(
+      chapter08,
+      "packages/pi-course/test/08-coding-tools.test.ts",
+    ),
+    "utf8",
+  );
+  const chapter08Starter = await readFile(
+    path.join(
+      chapter08,
+      "packages/pi-course/src/coding-tools.ts",
+    ),
+    "utf8",
+  );
+  const chapter08Guide = await readFile(
+    path.join(chapter08, "LEARNING.md"),
+    "utf8",
+  );
+  assert.match(chapter08Guide, /学习脚手架/);
+  for (const lab of ["8.1", "8.2", "8.3", "8.4", "8.5", "8.6"]) {
+    assert.match(chapter08Starter, new RegExp(`Lab ${lab.replace(".", "\\.")}`));
+  }
+  assert.match(chapter08Starter, /Lab 8\.1 Read/);
+  assert.match(chapter08Starter, /class MutationQueue/);
+  assert.doesNotMatch(
+    chapter08Starter,
+    /node:(?:fs|child_process)|realpath|rename|spawn\(/,
+    "the starter may expose public shapes and construction sites but not filesystem or process algorithms",
+  );
+  assert.equal(
+    [...chapter08Test.matchAll(/test\(/g)].length,
+    12,
+    "chapter 08 must expose twelve independently named proofs",
+  );
+  assert.match(chapter08Test, /offset=5 超出文件范围/);
+  assert.match(
+    chapter08Test,
+    /offset=2[\s\S]*detailsOf<ReadDetails>\(first\)\.endLine,\s*1[\s\S]*read-second[\s\S]*offset:\s*2/s,
+    "Read must derive continuation from the last complete output line",
+  );
+  assert.match(
+    chapter08Test,
+    /outside-read[\s\S]*outside-write[\s\S]*outside-edit[\s\S]*symlink-read[\s\S]*symlink-write[\s\S]*symlink-edit/s,
+    "all three file tools must share the external-path and symlink boundary",
+  );
+  assert.match(
+    chapter08Test,
+    /recordMutationRuns[\s\S]*queue === mutationRuns\[0\]\?\.queue[\s\S]*firstStarted[\s\S]*releaseFirst/s,
+    "queue identity, wiring, and scheduling must use instrumentation plus a controlled Promise gate",
+  );
+  assert.doesNotMatch(
+    chapter08Test,
+    /16_000_000|setImmediate/,
+    "queue evidence must not depend on a large write or scheduler timing",
+  );
+  assert.match(
+    chapter08Test,
+    /started\.txt[\s\S]*assert\.rejects\(access\(marker\)/s,
+    "pre-cancel must prove the command did not create its environment marker",
+  );
+  assert.match(
+    chapter08Test,
+    /hardLinkWitness[\s\S]*write-rename-failure[\s\S]*\.pi-tmp-/s,
+    "Write must distinguish replacement from direct mutation and observe failure cleanup",
+  );
+  assert.match(
+    chapter08Test,
+    /bash-guard-parent[\s\S]*bash-guard-absolute[\s\S]*outsideMarker/s,
+    "the Bash guardrail must prove blocked commands do not create an outside marker",
+  );
+  assert.match(
+    chapter08Test,
+    /maxBashOutputBytes[\s\S]*stdout\.write[\s\S]*stderr\.write[\s\S]*Buffer\.byteLength\(outputOf\(result\)\)[\s\S]*运行中的取消/s,
+    "Bash must prove the shared captured-output cap and runtime cancellation separately",
+  );
+  assert.match(
+    chapter08Test,
+    /timeout-stopped\.txt[\s\S]*cancel-stopped\.txt[\s\S]*descendant-ready\.txt[\s\S]*descendant-survived\.txt/s,
+    "Bash termination must wait for direct cleanup and stop a same-group descendant on POSIX",
+  );
+  assert.match(
+    chapter08Test,
+    /真 Agent 循环[\s\S]*loop-read[\s\S]*loop-edit[\s\S]*loop-bash[\s\S]*run\.messages/s,
+    "the final stage must observe real environment changes and call/result pairing",
+  );
 });

@@ -59,7 +59,7 @@ export async function validateLearningContract() {
       ],
       [
         "LC_TEACHING_FILE",
-        /\*\*教学文件：\*\*\s*`packages\/pi-course\/[^`]+`/,
+        /\*\*教学文件：\*\*\s*(?:-\s*)?`packages\/pi-course\/[^`]+`/,
       ],
       ["LC_FIRST_ACTION", /\*\*第一步：\*\*\s*\S+/],
       [
@@ -83,7 +83,7 @@ export async function validateLearningContract() {
       [
         "LC_FOCUSED_RUN",
         new RegExp(
-          `\\*\\*聚焦运行：\\*\\*\\s*\`npm run build -w @pi/course\`.*\`node --test packages/pi-course/dist/test/${id}-\\*\\.test\\.js\``,
+          `\\*\\*聚焦运行：\\*\\*\\s*\`npm run build -w @pi/course\`[\\s\\S]*\`node --test packages/pi-course/dist/test/${id}-\\*\\.test\\.js\``,
         ),
       ],
       ["LC_PASS_EVIDENCE", /\*\*通过证据：\*\*\s*\S+/],

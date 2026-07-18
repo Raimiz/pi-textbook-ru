@@ -97,7 +97,7 @@
   },
   {
     "id": "06",
-    "commit": "aec156645d90b2e41e90847d0c937f5a4ac04951",
+    "commit": "f27c7a552b1e6087de4c99daf561fbfc80b7d786",
     "parentCommit": "e6d3058a12632b17dc50000ac0ab89b573f07ab0",
     "subject": "course(06): make tool execution a closed contract",
     "sourceDelta": [
@@ -105,47 +105,64 @@
     ],
     "focusedTest": "packages/pi-course/test/06-tool-contract.test.ts",
     "testTitles": [
-      "成功与三种失败都形成同 call id 的 toolResult",
-      "Registry 把 schema 暴露为 provider tool definition"
+      "validator 收窄 unknown，并生成精确 JSON Schema",
+      "Registry 接收初始工具、拒绝重名，并只暴露 provider definition",
+      "执行器让成功与三种失败形成完整配对结果",
+      "执行器把 callId、signal 与 progress 交给工具，并保留 output"
     ]
   },
   {
     "id": "07",
-    "commit": "8f560735b65ba8b904dbfce40921357afdeb3ea0",
-    "parentCommit": "aec156645d90b2e41e90847d0c937f5a4ac04951",
+    "commit": "f33bd46e65bf07ffc230a914e0aa3b6c1ae56571",
+    "parentCommit": "f27c7a552b1e6087de4c99daf561fbfc80b7d786",
     "subject": "course(07): close the Agent feedback loop",
     "sourceDelta": [
-      "packages/pi-course/src/agent-loop.ts",
-      "packages/pi-course/src/demo/prologue.ts"
+      "packages/pi-course/src/agent-loop.ts"
     ],
     "focusedTest": "packages/pi-course/test/07-agent-loop.test.ts",
     "testTitles": [
-      "schema、未知工具和异常都返回配对 toolResult",
-      "Agent Loop 闭合 model → tool → result → model",
-      "length 中的 tool call 从不执行，但 transcript 保持配对",
-      "完成事件按真实时间，transcript 按 call 顺序"
+      "Lab 7.1 · 纯文本 stop 保留输入并完整传递模型 context",
+      "Lab 7.2 · 单工具往返传递 signal/progress 并完整回填下一请求",
+      "Lab 7.3 · 非执行终态：length、error 与 aborted 的 calls 全部跳过并逐一配对",
+      "Lab 7.3 · 非执行终态：stop 夹带 call 与 toolUse 无 call 都以协议 error 结束",
+      "Lab 7.4 · 并发工具：可控 gate 分离 tool_end 完成顺序与 transcript call 顺序",
+      "Lab 7.4 · 并发工具：injected executor rejection 被归一化且不阻断同批结果",
+      "Lab 7.5 · 取消与上限：预取消不请求模型且只产生一个 aborted 终态",
+      "Lab 7.5 · 取消与上限：工具完成后取消保留配对结果且不再请求模型",
+      "Lab 7.5 · 取消与上限：maxSteps 保留最后一批结果并产生唯一控制器终态"
     ]
   },
   {
     "id": "08",
-    "commit": "ef01c84a017f327195d419c621da97f68ecf0f3d",
-    "parentCommit": "8f560735b65ba8b904dbfce40921357afdeb3ea0",
+    "commit": "6b3b1b77fbdd0790926ceea4bce443c99f6e8cf8",
+    "parentCommit": "f33bd46e65bf07ffc230a914e0aa3b6c1ae56571",
     "subject": "course(08): let tools touch files and processes safely",
     "sourceDelta": [
       "packages/pi-course/src/coding-tools.ts"
     ],
     "focusedTest": "packages/pi-course/test/08-coding-tools.test.ts",
     "testTitles": [
-      "read 续读、批量 edit 与 symlink 诊断都经过工具契约",
-      "批量 edit 回滚，预取消 bash 不启动"
+      "Lab 8.1 · Read 按行窗口返回正文，并让 details 与实际输出一致",
+      "Lab 8.1 · Read 的字节上限不会切断一行，续读也不会跳行",
+      "Lab 8.2 · workspace 路径规则同时约束 Read、Write 与 Edit",
+      "Lab 8.3 · Write 创建父目录、完整覆盖文件，并返回写入证据",
+      "Lab 8.3 · 修改队列串行处理同一路径，同时允许不同路径继续执行",
+      "Lab 8.4 · Edit 按顺序应用相互依赖的替换，并报告前后字节数",
+      "Lab 8.4 · Edit 拒绝空批次、空匹配和多重匹配；中途失败时文件保持原样",
+      "Lab 8.5 · Bash 在指定 cwd 返回成功输出，也保留非零退出码",
+      "Lab 8.5 · 预先取消的 Bash 不会启动子进程",
+      "Lab 8.5 · Bash 的截断提示也计入输出字节上限",
+      "Lab 8.5 · Bash 能区分超时和运行中的取消",
+      "Lab 8.6 · 真 Agent 循环完成 Read→Edit→Bash，并让每个 call 都有配对结果"
     ]
   },
   {
     "id": "09",
-    "commit": "07d9b74b80b51f296fc5afe54e96c0c2a0da3867",
-    "parentCommit": "ef01c84a017f327195d419c621da97f68ecf0f3d",
+    "commit": "d349d551dfc7493a74482bb698b25eb379fcbdb8",
+    "parentCommit": "6b3b1b77fbdd0790926ceea4bce443c99f6e8cf8",
     "subject": "course(09): add the stateful Agent lifecycle",
     "sourceDelta": [
+      "packages/pi-course/src/agent-loop.ts",
       "packages/pi-course/src/agent.ts"
     ],
     "focusedTest": "packages/pi-course/test/09-stateful-agent.test.ts",
@@ -157,8 +174,8 @@
   },
   {
     "id": "10",
-    "commit": "117fa2d153ba4ae7940a381a1789896df33c4660",
-    "parentCommit": "07d9b74b80b51f296fc5afe54e96c0c2a0da3867",
+    "commit": "0bce1891643613bb8c15206c17e83174fd08bf43",
+    "parentCommit": "d349d551dfc7493a74482bb698b25eb379fcbdb8",
     "subject": "course(10): persist history as an append-only tree",
     "sourceDelta": [
       "packages/pi-course/src/session.ts"
@@ -171,8 +188,8 @@
   },
   {
     "id": "11",
-    "commit": "c517e96143c4baeb9f030b9476a7aa5b7d3c2a43",
-    "parentCommit": "117fa2d153ba4ae7940a381a1789896df33c4660",
+    "commit": "6537745ea6ffed198172d66c419452cbd27340e6",
+    "parentCommit": "0bce1891643613bb8c15206c17e83174fd08bf43",
     "subject": "course(11): derive bounded context without rewriting history",
     "sourceDelta": [
       "packages/pi-course/src/context.ts"
@@ -185,8 +202,8 @@
   },
   {
     "id": "12",
-    "commit": "5552815613f001b7db3fe1cce546b61b9c0c2628",
-    "parentCommit": "c517e96143c4baeb9f030b9476a7aa5b7d3c2a43",
+    "commit": "e83c43646ce01b97dbc446d8f1bc8167bf3d4658",
+    "parentCommit": "6537745ea6ffed198172d66c419452cbd27340e6",
     "subject": "course(12): add progressive resources and trusted extensions",
     "sourceDelta": [
       "packages/pi-course/src/resources.ts"
@@ -204,8 +221,8 @@
   },
   {
     "id": "13",
-    "commit": "ec45a881aedd1f45e58099c032ad077c34087b4b",
-    "parentCommit": "5552815613f001b7db3fe1cce546b61b9c0c2628",
+    "commit": "f2ecce371d7c6e4bd470513cd736a5ec773bc8f3",
+    "parentCommit": "e83c43646ce01b97dbc446d8f1bc8167bf3d4658",
     "subject": "course(13): assemble one runtime for every product mode",
     "sourceDelta": [
       "packages/pi-course/src/composition.ts"
@@ -218,8 +235,8 @@
   },
   {
     "id": "14",
-    "commit": "5af106b6d44be9b24ad1310ed83910ed8ecb092f",
-    "parentCommit": "ec45a881aedd1f45e58099c032ad077c34087b4b",
+    "commit": "8c40daeace0b1c423b8c3cc7f462bab707f94030",
+    "parentCommit": "f2ecce371d7c6e4bd470513cd736a5ec773bc8f3",
     "subject": "course(14): prove the whole system with deterministic evals",
     "sourceDelta": [
       "packages/pi-course/src/eval.ts",
