@@ -14,7 +14,8 @@
 | 02 | 是 | 4.5/5 | L0 | PASS · 局部 1/1、全量 2/2 |
 | 03 | 是 | 4.5/5 | L0 | PASS · 局部 1/1、全量 2/2 |
 | 04 | 是 | 4.5/5 | L0 | PASS · 局部 1/1、全量 3/3 |
-| 05–14 | 待测 | — | — | 待测 |
+| 05 | 是 | 4.8/5 | L0 | PASS · 局部 1/3/5/2、全量 11/11 |
+| 06–14 | 待测 | — | — | 待测 |
 
 ## Chapter 00 · 基线
 
@@ -217,3 +218,72 @@ extractor 的映射上最多需要 L3 伪代码提示，不需要完整答案。
 陪练分别破坏 text/tool payload、清空累计 partial，并把 cursor 改成恒取
 `turns[0]`；新测试都会红。正确实现恢复后 3/3，课程全量 52/52。三项 Chapter 04
 回归全部 resolved。
+
+## Chapter 05 · 基线
+
+静态审计先发现本章是第一处明显的代码量陡坡。target 同时修改 `types.ts` 并新增
+约 750 行 `provider-adapter.ts`，原正文却只列出 adapter，还把两段实验指向
+`workshop/`。fresh parent 加 target 测试时，缺模块又引发八条失去上下文类型后的
+TS7006，学生无法判断真正缺口。原 11 项测试也存在假绿：错误的 tool result id、
+请求 body 中的 API key、缺失的 `start`、伪造完成的 length 参数都不会失败。
+
+审计还实际复现了一个实现错误。工具 chunk 先于文本到达时，旧 adapter 的 delta
+先使用 `contentIndex=0`，结束时却把同一个调用放到另一个槽位。原测试没有观察这次
+漂移。
+
+### 第一轮修复与实操
+
+课程先加入只保留公共类型和函数签名的 learning-only scaffold。它不包含转换、
+状态机、SSE 或安全实现。target 测试补上显式回调类型，并把行为拆成四组：
+
+```text
+5.1 出站转换              1/1
+5.2 normalized transport  3/3
+5.3 SSE                    5/5
+5.4 fetch transport        2/2
+```
+
+学生从 fresh sandbox 开始，首次 build 只看到两条预告错误：
+`ToolDefinition` 尚未导出，`AgentContext` 尚无 `tools`。他随后依次通过四组测试，
+最终 11/11，最高提示 L0。SSE 虽是首次接触，但正文按“字节 → SSE data →
+`unknown` → `ProviderChunk`”给出控制流，已经足以支撑实现。
+
+陪练确认所有中间态都能编译，却把正文判为 FAIL：三层图容易让人误以为
+`toProviderMessages()` 直接发 HTTP；“暂存 finishReason 和 usage”没有说明为何
+finish 后还要继续读；API key “只出现于 header”忽略了 transport 配置对它的持有；
+Lab 5.3 与 5.4 都在要求请求和脱敏；测试主张也超过了实际覆盖范围。
+
+### 第二轮修复与实操
+
+正文改为逐个标出三个函数边界，并明确时间顺序：收到 `finish_reason` 先只保存，
+继续读取可能稍后到达的 usage，直到 `[DONE]` 或 EOF 才发出唯一 finish。API key
+改为由 transport 配置持有，对外请求时只允许进入 `Authorization` header。
+Lab 5.3 只闭合最小 fetch、SSE 与外部验证；Lab 5.4 再固定 endpoint、header、
+body 和通用脱敏。未证明列表补上多行 data、CRLF、多字节边界、HTTP 错误、预取消、
+并发、重试和未穷尽的泄密来源。
+
+学生在第二个 fresh sandbox 再次得到 1/3/5/2 和完整 11/11，仍为 L0。他能准确
+复述五处边界。唯一回读句是“课程只处理一个 streamed choice”：这既可能表示
+取第一个，也可能表示拒绝多个。
+
+### 第三轮复测与封存
+
+正文最终写明：普通 payload 只接受一个 choice；超过一个立即拒绝，不挑选或合并；
+尾随 usage payload 才允许空 `choices`。学生第三次从空实现重建，仍得到：
+
+```text
+initial build  2 条预告的类型错误
+Lab 5.1        1/1
+Lab 5.2        3/3
+Lab 5.3        5/5
+Lab 5.4        2/2
+full           11/11
+```
+
+他还用额外离线输入确认 ordinary `choices=0/2` 进入 error，`choices=1` 正常，
+尾随 usage 的空 choices 会与先前 finish 合并。学生和陪练都判定无需回读、最高提示
+L0，Chapter 05 可以封存。
+
+测试依据也经过实际变异验证：错误 tool id、把密钥写入 body、删除 `start`、
+把 length 参数伪造成对象、混淆 provider index 与 content index 都会红；恢复
+target 后本章 11/11、课程全量 52/52。

@@ -217,6 +217,44 @@ test("第四章只重建 ScriptedModel，并用三个场景验证可执行规格
   );
 });
 
+test("第五章披露两个源文件，并把 provider 边界拆成可运行的小阶段", async () => {
+  const chapter = (await chapters()).find(({ id }) => id === "05");
+  assert.ok(chapter);
+  const body = rebuildBlock(chapter.source);
+  assert.ok(body);
+
+  assert.match(
+    body,
+    /\*\*教学文件：\*\*[\s\S]*`packages\/pi-course\/src\/types\.ts`[\s\S]*`packages\/pi-course\/src\/provider-adapter\.ts`/,
+  );
+  assert.match(
+    body,
+    /第一次红灯.*ToolDefinition.*AgentContext.*tools/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 5\.1.*--test-name-pattern="出站转换"/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 5\.2.*--test-name-pattern="normalized transport"/s,
+  );
+  assert.match(
+    chapter.source,
+    /实践 5\.3.*--test-name-pattern="SSE"/s,
+  );
+  assert.match(chapter.source, /实践 5\.4.*11\/11/s);
+  assert.match(
+    chapter.source,
+    /11 项聚焦测试.*出站.*normalized.*SSE.*取消.*脱敏/s,
+  );
+  assert.match(
+    chapter.source,
+    /没有证明.*所有 OpenAI-compatible.*并发.*重试/s,
+  );
+  assert.doesNotMatch(chapter.source, /transport (?:保持)?很薄/);
+});
+
 test("序章的实验、所有权和离线语义与 checkpoint 00 一致", async () => {
   const prologue = (await chapters()).find(({ id }) => id === "00");
   assert.ok(prologue);

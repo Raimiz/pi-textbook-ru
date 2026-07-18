@@ -202,4 +202,61 @@ test("practice helper creates an answer-free chapter sandbox", async (t) => {
     /secondStream[\s\S]*textOf\([\s\S]*"第二轮"/,
     "the scripted cursor must be observed across two successive turns",
   );
+
+  const chapter05 = path.join(root, "chapter-05");
+  const providerAdapter = createPractice("05", chapter05);
+  assert.equal(providerAdapter.status, 0, providerAdapter.stderr);
+  const chapter05Test = await readFile(
+    path.join(
+      chapter05,
+      "packages/pi-course/test/05-provider-adapter.test.ts",
+    ),
+    "utf8",
+  );
+  const chapter05Starter = await readFile(
+    path.join(
+      chapter05,
+      "packages/pi-course/src/provider-adapter.ts",
+    ),
+    "utf8",
+  );
+  const chapter05Guide = await readFile(
+    path.join(chapter05, "LEARNING.md"),
+    "utf8",
+  );
+  assert.match(chapter05Guide, /学习脚手架/);
+  assert.match(chapter05Guide, /不属于 parent，也不是完整 target/);
+  assert.match(chapter05Starter, /Lab 5\.1 toProviderMessages/);
+  assert.match(chapter05Starter, /Lab 5\.2 createOpenAICompatibleModel/);
+  assert.match(chapter05Starter, /Lab 5\.3 createOpenAICompatibleTransport/);
+  assert.doesNotMatch(
+    chapter05Starter,
+    /readSSEData|toolBuffers|fetchImplementation/,
+    "the scaffold must expose the public surface without leaking core implementation",
+  );
+  assert.ok(
+    [...chapter05Test.matchAll(/\{\s*timeout:\s*1_000\s*\}/g)].length >= 10,
+    "every asynchronous provider regression must fail promptly",
+  );
+  assert.match(
+    chapter05Test,
+    /assert\.deepEqual\(\s*messages,\s*\[/,
+    "the outbound oracle must compare complete wire messages",
+  );
+  assert.match(
+    chapter05Test,
+    /call\?\.type === "toolCall" \? call\.arguments[\s\S]*rawArguments/,
+    "length must keep incomplete arguments untrusted",
+  );
+  assert.match(
+    chapter05Test,
+    /doesNotMatch\([\s\S]*JSON\.stringify\(body\)[\s\S]*offline-test-key/,
+    "the fetch body must be checked for API-key leakage",
+  );
+  assert.match(
+    chapter05Test,
+    /normalized transport[\s\S]*contentIndex/s,
+    "normalized chunks need an adapter-only content-index oracle",
+  );
+  assert.match(chapter05Test, /toolcall_end/);
 });

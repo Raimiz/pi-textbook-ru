@@ -819,11 +819,11 @@ export const searchIndex: SearchEntry[] = [
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 用纯转换、离线 chunk fixture 和薄 transport 把 OpenAI-compatible 流归一为统一模型协议。 第一部 · 建立可执行语言 provider adapter, transport, fixture, incremental JSON, finish reason 你将得到什么 先建立全景 出站转换只读取 canonical IR 入站转换必须维护跨 chunk 状态 结束原因和错误必须归一化 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "把真实流式协议挡在边界外 分四步把 canonical 消息翻译成请求，再把 OpenAI-compatible SSE 还原成统一模型事件。 第一部 · 建立可执行语言 provider adapter, transport, normalized chunk, incremental JSON, finish reason 你将得到什么 先建立全景 第一步：先把 canonical 消息翻成请求 为 context 补上工具定义 逐种角色写映射 第二步：把 normalized chunk 还原成模型事件 槽位由首次出现顺序决定 第三步：把 raw SSE 变成受信任的 ProviderChunk SSE 分帧只负责找出完整 data JSON 验证只接受课程用到的最小形状 第四步：收紧 HTTP 与密钥边界 故意把它弄坏 本章验收 可选迁移练习 小结"
   },
   {
     "id": "05-你将得到什么",
@@ -836,11 +836,11 @@ export const searchIndex: SearchEntry[] = [
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 你将得到什么 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 你将得到什么 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
     "id": "05-先建立全景",
@@ -853,62 +853,79 @@ export const searchIndex: SearchEntry[] = [
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 先建立全景 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 先建立全景 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
-    "id": "05-出站转换只读取-canonical-ir",
+    "id": "05-第一步先把-canonical-消息翻成请求",
     "chapterId": "05",
     "chapterSlug": "provider-adapter",
     "chapterTitle": "把真实流式协议挡在边界外",
-    "title": "出站转换只读取 canonical IR",
-    "href": "/learn/provider-adapter#出站转换只读取-canonical-ir",
+    "title": "第一步：先把 canonical 消息翻成请求",
+    "href": "/learn/provider-adapter#第一步先把-canonical-消息翻成请求",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 出站转换只读取 canonical IR provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 第一步：先把 canonical 消息翻成请求 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
-    "id": "05-入站转换必须维护跨-chunk-状态",
+    "id": "05-第二步把-normalized-chunk-还原成模型事件",
     "chapterId": "05",
     "chapterSlug": "provider-adapter",
     "chapterTitle": "把真实流式协议挡在边界外",
-    "title": "入站转换必须维护跨 chunk 状态",
-    "href": "/learn/provider-adapter#入站转换必须维护跨-chunk-状态",
+    "title": "第二步：把 normalized chunk 还原成模型事件",
+    "href": "/learn/provider-adapter#第二步把-normalized-chunk-还原成模型事件",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 入站转换必须维护跨 chunk 状态 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 第二步：把 normalized chunk 还原成模型事件 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
-    "id": "05-结束原因和错误必须归一化",
+    "id": "05-第三步把-raw-sse-变成受信任的-providerchunk",
     "chapterId": "05",
     "chapterSlug": "provider-adapter",
     "chapterTitle": "把真实流式协议挡在边界外",
-    "title": "结束原因和错误必须归一化",
-    "href": "/learn/provider-adapter#结束原因和错误必须归一化",
+    "title": "第三步：把 raw SSE 变成受信任的 ProviderChunk",
+    "href": "/learn/provider-adapter#第三步把-raw-sse-变成受信任的-providerchunk",
     "partTitle": "第一部 · 建立可执行语言",
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 结束原因和错误必须归一化 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 第三步：把 raw SSE 变成受信任的 ProviderChunk provider adapter transport normalized chunk incremental JSON finish reason"
+  },
+  {
+    "id": "05-第四步收紧-http-与密钥边界",
+    "chapterId": "05",
+    "chapterSlug": "provider-adapter",
+    "chapterTitle": "把真实流式协议挡在边界外",
+    "title": "第四步：收紧 HTTP 与密钥边界",
+    "href": "/learn/provider-adapter#第四步收紧-http-与密钥边界",
+    "partTitle": "第一部 · 建立可执行语言",
+    "terms": [
+      "provider adapter",
+      "transport",
+      "normalized chunk",
+      "incremental JSON",
+      "finish reason"
+    ],
+    "searchText": "把真实流式协议挡在边界外 第四步：收紧 HTTP 与密钥边界 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
     "id": "05-故意把它弄坏",
@@ -921,11 +938,11 @@ export const searchIndex: SearchEntry[] = [
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 故意把它弄坏 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 故意把它弄坏 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
     "id": "05-本章验收",
@@ -938,11 +955,11 @@ export const searchIndex: SearchEntry[] = [
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 本章验收 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 本章验收 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
     "id": "05-可选迁移练习",
@@ -955,11 +972,11 @@ export const searchIndex: SearchEntry[] = [
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 可选迁移练习 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 可选迁移练习 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
     "id": "05-小结",
@@ -972,11 +989,11 @@ export const searchIndex: SearchEntry[] = [
     "terms": [
       "provider adapter",
       "transport",
-      "fixture",
+      "normalized chunk",
       "incremental JSON",
       "finish reason"
     ],
-    "searchText": "把真实流式协议挡在边界外 小结 provider adapter transport fixture incremental JSON finish reason"
+    "searchText": "把真实流式协议挡在边界外 小结 provider adapter transport normalized chunk incremental JSON finish reason"
   },
   {
     "id": "06",

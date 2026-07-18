@@ -411,6 +411,109 @@
       }
     },
     {
+      "id": "L05-SOURCE-FIRST-RED",
+      "chapter": "05",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "05 target 同时新增 provider-adapter.ts 并修改 types.ts；原正文只披露 adapter。fresh parent 首红除 TS2307 外还有 8 条失去上下文类型后的 implicit-any 噪声。",
+      "firstPrinciple": "教学文件必须覆盖真实 source delta；首次红灯只应指向当前缺口，不能让测试夹具制造八条无关修复线索。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/05-provider-adapter.test.ts",
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course-history/packages/pi-course/starters/05-provider-adapter.ts",
+        "content/chapters/05-provider-adapter.md",
+        "tests/learning-contract.test.mjs",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "三个 fresh sandbox 的首次 build 都只报告缺少 ToolDefinition 与 AgentContext.tools；正文列出两个真实教学文件。",
+        "coach": "学习脚手架保留公共表面，不含 target 核心算法；首红与正文逐字对齐。",
+        "evidence": "ch05 r1-r3 initial build exit 2 with exactly TS2305 and TS2353; practice contract pass"
+      }
+    },
+    {
+      "id": "L05-STAGING-SCALE",
+      "chapter": "05",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "原第一步要求先写一个函数，但整份测试同时导入四个函数和 transport 类型；两段实验又把约 753 行 adapter、SSE、校验与安全逻辑压成一次实现，并指向不存在的 workshop。",
+      "firstPrinciple": "高技术密度必须被拆成能独立编译和得到局部绿灯的状态转换；一章可以深，但不能只有空白起点和完整终点。",
+      "fix": [
+        "content/chapters/05-provider-adapter.md",
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course-history/packages/pi-course/starters/05-provider-adapter.ts",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "三轮都从空实现依次得到出站 1/1、normalized 3/3、SSE 5/5、fetch 2/2，最终 11/11，最高提示 L0。",
+        "coach": "四个中间态均可编译；Lab 5.3 与 5.4 已分清最小 fetch/SSE 和精确 HTTP/脱敏。",
+        "evidence": "three fresh sandboxes; intermediate builds 0; patterns 1/1, 3/3, 5/5, 2/2; final 11/11"
+      }
+    },
+    {
+      "id": "L05-ORACLE-CLAIMS",
+      "chapter": "05",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "把 tool result id 改错、把 API key 写入请求 body、删除 start、在 length 时伪造完整 arguments，原 11 项测试仍全绿。",
+      "firstPrinciple": "adapter 的核心价值是边界翻译和安全隔离；测试必须观察完整 wire 消息、事件载荷、未信任参数和密钥去向。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/test/05-provider-adapter.test.ts",
+        "content/chapters/05-provider-adapter.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "能准确列出 11 项离线测试没有证明的 SSE、HTTP、并发、重试、真实 provider 与密钥来源边界。",
+        "coach": "正文已把完整与任何等过强主张收窄到本章支持范围和测试覆盖的底层错误。",
+        "evidence": "wrong tool id, API key in body, missing start, and forged length arguments mutations each fail the new focused oracle; restored target 11/11"
+      }
+    },
+    {
+      "id": "L05-CONTENT-INDEX",
+      "chapter": "05",
+      "status": "resolved",
+      "observedBy": ["audit"],
+      "evidence": "tool delta 先于 text 到达时，原实现先发 contentIndex 0，结束时却把同一调用放到 index 1；原测试没有观察这一漂移。",
+      "firstPrinciple": "contentIndex 是事件与 canonical content 的稳定引用；同一 block 在一次流中不能换位置。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/provider-adapter.ts",
+        "../pi-course-history/packages/pi-course/test/05-provider-adapter.test.ts"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "三次独立实现都让 tool index 4、text、tool index 2 占用 canonical 槽位 0、1、2，并保持到 toolcall_end。",
+        "coach": "把 provider index 当 contentIndex 的旧实现实际得到 10/11；正确实现与全部课程测试恢复全绿。",
+        "evidence": "contentIndex mutation red; normalized pattern 3/3 in student and coach retests; course tests 52/52"
+      }
+    },
+    {
+      "id": "L05-BOUNDARY-PROSE",
+      "chapter": "05",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "首轮正文没有说清 finish 后继续读取 usage 的时间顺序、API key 的持有位置、Lab 5.3 与 5.4 的边界和三层函数归属；第二轮的一个 streamed choice 又可能被理解为取第一个。",
+      "firstPrinciple": "边界章节的中文必须明确谁持有状态、动作何时发生、拒绝条件是什么；读者不应靠后文反推当前句子的含义。",
+      "fix": [
+        "content/chapters/05-provider-adapter.md",
+        "../pi-course-history/packages/pi-course/AGENT_GUIDE.md",
+        "docs/usability/chinese-style.md"
+      ],
+      "retest": {
+        "round": 3,
+        "result": "pass",
+        "student": "能直接复述三层函数、finish 与尾随 usage、5.3/5.4、密钥 sink，以及 choices 为 0、1、2 时的精确语义，无需回读。",
+        "coach": "首轮五项和第二轮 choice 歧义全部关闭；第三轮未发现新的阻断性生硬句。",
+        "evidence": "ch05 r3 student L0 and 11/11; coach PASS and patterns 1/3/5/2"
+      }
+    },
+    {
       "id": "LZH-NATURAL-CHINESE",
       "chapter": "00",
       "status": "retest_pending",

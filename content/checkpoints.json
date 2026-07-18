@@ -73,7 +73,7 @@
   },
   {
     "id": "05",
-    "commit": "9615f08340a0528633a46c5263cca13275ee64f7",
+    "commit": "e6d3058a12632b17dc50000ac0ab89b573f07ab0",
     "parentCommit": "f471390720ffae304c407b2de07b75bbbf7a1b97",
     "subject": "course(05): isolate the real provider streaming boundary",
     "sourceDelta": [
@@ -82,23 +82,23 @@
     ],
     "focusedTest": "packages/pi-course/test/05-provider-adapter.test.ts",
     "testTitles": [
-      "模型错误是 error 终态，result resolve canonical message",
-      "adapter 在唯一边界完成 canonical 到 wire role 转换",
-      "adapter 把 transport 异常转成保留 partial 的 error message",
-      "length 截断保留 raw arguments，但不声称 JSON 已完成",
-      "真实 transport 发出 tools、认证 header、stream usage 选项和同一 abort signal",
+      "normalized transport 经 adapter 保留首次出现顺序，并累计完整 partial",
+      "出站转换只在 adapter 边界完成 canonical 到 wire role 映射",
+      "normalized transport 异常保留 partial 并进入 error",
+      "normalized transport 的 length 保留原始 arguments",
+      "fetch transport 发出完整请求且不把 API key 写进 JSON body",
       "SSE transport 按 index 恢复交错 tool arguments，并合并尾随 usage",
       "SSE 缺少 finish reason 时保留 partial 并进入 error 终态",
       "SSE transport 把流中取消转换成 aborted，并保留 partial",
       "SSE transport 拒绝形状无效的外部 chunk",
       "SSE transport 拒绝未知 finish reason，错误中不泄露 API key",
-      "transport 会脱敏底层 fetch 错误中的 API key"
+      "fetch transport 会脱敏底层错误中的 API key"
     ]
   },
   {
     "id": "06",
-    "commit": "9a8009408e086463f67f50c240834dace7362e33",
-    "parentCommit": "9615f08340a0528633a46c5263cca13275ee64f7",
+    "commit": "aec156645d90b2e41e90847d0c937f5a4ac04951",
+    "parentCommit": "e6d3058a12632b17dc50000ac0ab89b573f07ab0",
     "subject": "course(06): make tool execution a closed contract",
     "sourceDelta": [
       "packages/pi-course/src/tool.ts"
@@ -111,8 +111,8 @@
   },
   {
     "id": "07",
-    "commit": "ff876a1fa9537951213d819b62a90430cec73688",
-    "parentCommit": "9a8009408e086463f67f50c240834dace7362e33",
+    "commit": "8f560735b65ba8b904dbfce40921357afdeb3ea0",
+    "parentCommit": "aec156645d90b2e41e90847d0c937f5a4ac04951",
     "subject": "course(07): close the Agent feedback loop",
     "sourceDelta": [
       "packages/pi-course/src/agent-loop.ts",
@@ -128,8 +128,8 @@
   },
   {
     "id": "08",
-    "commit": "ccb666122c1b58b592f72898a6574358709e079d",
-    "parentCommit": "ff876a1fa9537951213d819b62a90430cec73688",
+    "commit": "ef01c84a017f327195d419c621da97f68ecf0f3d",
+    "parentCommit": "8f560735b65ba8b904dbfce40921357afdeb3ea0",
     "subject": "course(08): let tools touch files and processes safely",
     "sourceDelta": [
       "packages/pi-course/src/coding-tools.ts"
@@ -142,8 +142,8 @@
   },
   {
     "id": "09",
-    "commit": "2cc53512238072868ef2e1928657992b419a656f",
-    "parentCommit": "ccb666122c1b58b592f72898a6574358709e079d",
+    "commit": "07d9b74b80b51f296fc5afe54e96c0c2a0da3867",
+    "parentCommit": "ef01c84a017f327195d419c621da97f68ecf0f3d",
     "subject": "course(09): add the stateful Agent lifecycle",
     "sourceDelta": [
       "packages/pi-course/src/agent.ts"
@@ -157,8 +157,8 @@
   },
   {
     "id": "10",
-    "commit": "8f95afe8ce0f5fd13d0040f8957cfbb7519a77cb",
-    "parentCommit": "2cc53512238072868ef2e1928657992b419a656f",
+    "commit": "117fa2d153ba4ae7940a381a1789896df33c4660",
+    "parentCommit": "07d9b74b80b51f296fc5afe54e96c0c2a0da3867",
     "subject": "course(10): persist history as an append-only tree",
     "sourceDelta": [
       "packages/pi-course/src/session.ts"
@@ -171,8 +171,8 @@
   },
   {
     "id": "11",
-    "commit": "22d4ca0319af97e0d6676c5b172e529e5412233c",
-    "parentCommit": "8f95afe8ce0f5fd13d0040f8957cfbb7519a77cb",
+    "commit": "c517e96143c4baeb9f030b9476a7aa5b7d3c2a43",
+    "parentCommit": "117fa2d153ba4ae7940a381a1789896df33c4660",
     "subject": "course(11): derive bounded context without rewriting history",
     "sourceDelta": [
       "packages/pi-course/src/context.ts"
@@ -185,8 +185,8 @@
   },
   {
     "id": "12",
-    "commit": "8c701b3bd31f01b66d4f06a5ab054f374549edc8",
-    "parentCommit": "22d4ca0319af97e0d6676c5b172e529e5412233c",
+    "commit": "5552815613f001b7db3fe1cce546b61b9c0c2628",
+    "parentCommit": "c517e96143c4baeb9f030b9476a7aa5b7d3c2a43",
     "subject": "course(12): add progressive resources and trusted extensions",
     "sourceDelta": [
       "packages/pi-course/src/resources.ts"
@@ -204,8 +204,8 @@
   },
   {
     "id": "13",
-    "commit": "1d6ce0795bf975b89af0db014234f93fcd34458e",
-    "parentCommit": "8c701b3bd31f01b66d4f06a5ab054f374549edc8",
+    "commit": "ec45a881aedd1f45e58099c032ad077c34087b4b",
+    "parentCommit": "5552815613f001b7db3fe1cce546b61b9c0c2628",
     "subject": "course(13): assemble one runtime for every product mode",
     "sourceDelta": [
       "packages/pi-course/src/composition.ts"
@@ -218,8 +218,8 @@
   },
   {
     "id": "14",
-    "commit": "63fde63882ba27f1c850a7543ff6a22801ee9411",
-    "parentCommit": "1d6ce0795bf975b89af0db014234f93fcd34458e",
+    "commit": "5af106b6d44be9b24ad1310ed83910ed8ecb092f",
+    "parentCommit": "ec45a881aedd1f45e58099c032ad077c34087b4b",
     "subject": "course(14): prove the whole system with deterministic evals",
     "sourceDelta": [
       "packages/pi-course/src/eval.ts",
