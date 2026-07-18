@@ -41,7 +41,10 @@ test("每章把讲解桥接到真实 commit 的第一个可执行动作", async 
     const expectedMode = chapter.id === "00" ? "观察" : "重建";
     const required = [
       [`模式`, new RegExp(`\\*\\*模式：\\*\\*\\s*${expectedMode}`)],
-      ["起终点", /\*\*起终点：\*\*\s*parent .*起点.*target .*终点/],
+      [
+        "起终点",
+        /\*\*起终点：\*\*\s*`?parent`?[^\n]*起点[\s\S]*?`?target`?[\s\S]*?终点/,
+      ],
       [
         "教学文件",
         /\*\*教学文件：\*\*\s*(?:-\s*)?`packages\/pi-course\/[^`]+`/,
@@ -401,6 +404,91 @@ test("第八章把环境副作用拆成六段可恢复的资源协议", async ()
     chapter.source,
     /没有证明.*符号链接竞态.*断电持久性.*文件操作的运行中取消.*Windows.*命令审批/s,
   );
+  assert.doesNotMatch(chapter.source, /workshop\//);
+});
+
+test("第九章用两份脚手架分五段建立跨运行所有权", async () => {
+  const chapter = (await chapters()).find(({ id }) => id === "09");
+  assert.ok(chapter);
+  const body = rebuildBlock(chapter.source);
+  assert.ok(body);
+
+  assert.match(
+    body,
+    /\*\*教学文件：\*\*[\s\S]*`packages\/pi-course\/src\/agent\.ts`[\s\S]*`packages\/pi-course\/src\/agent-loop\.ts`/,
+  );
+  assert.match(
+    body,
+    /学习脚手架.*`agent\.ts`.*`agent-loop\.ts`.*(?:没有本章答案|施工位)/s,
+  );
+  assert.match(body, /第一次红灯.*Lab 9\.1 reducer 尚未实现/s);
+  for (const [lab, count] of [
+    ["9.1", "2/2"],
+    ["9.2", "2/2"],
+    ["9.3", "2/2"],
+    ["9.4", "2/2"],
+    ["9.5", "3/3"],
+  ]) {
+    assert.match(
+      chapter.source,
+      new RegExp(
+        `实践 ${lab.replace(".", "\\.")}[\\s\\S]*--test-name-pattern="Lab ${lab.replace(".", "\\.")}"[\\s\\S]*${count.replace("/", "\\/")}`,
+      ),
+    );
+  }
+  assert.match(
+    chapter.source,
+    /工具已经执行[\s\S]*模型\s*请求抛错[\s\S]*保留对应的工具调用和工具结果/s,
+  );
+  assert.match(
+    chapter.source,
+    /`run_start` 要深复制[\s\S]*`event\.message`[\s\S]*`run_end`[\s\S]*深复制 `result\.messages`/s,
+  );
+  assert.match(
+    chapter.source,
+    /`event\.event`[\s\S]*`const loop = event\.event`[\s\S]*不要用 `as any`/s,
+  );
+  assert.match(
+    chapter.source,
+    /已经完成的历史[\s\S]*当前用户消息[\s\S]*`run_start` 事件可能仍在 FIFO 队列/s,
+  );
+  assert.match(
+    chapter.source,
+    /发布 `run_start`[\s\S]*同一份局部副本[\s\S]*不要在发布 `run_start` 后回读[\s\S]*`this\.state\.messages`/s,
+  );
+  assert.match(
+    chapter.source,
+    /回调重入产生的新事件不能插队[\s\S]*start1 → end1 → start2 → end2/s,
+  );
+  assert.match(
+    chapter.source,
+    /不可复制[\s\S]*标准、可复制的错误结果[\s\S]*回到 `idle`/s,
+  );
+  assert.match(
+    chapter.source,
+    /模型忽略 `signal`[\s\S]*`stop` 分支优先以 `aborted`/s,
+  );
+  assert.match(
+    chapter.source,
+    /取消检查一定先于队列消费[\s\S]*`error` 或 `aborted`[\s\S]*不会进入下一次/s,
+  );
+  assert.match(
+    chapter.source,
+    /保留你已有的清理[\s\S]*身份检查[\s\S]*发布\s*`run_end` 之后[\s\S]*不带身份检查的清理[\s\S]*不要把原来的清理整体移到 `run_end` 后面/s,
+  );
+  assert.match(
+    chapter.source,
+    /不要把规则扩大到 `maxSteps`[\s\S]*steering 或 follow-up[\s\S]*不能依赖这一\s*边界行为/s,
+  );
+  assert.match(
+    chapter.source,
+    /两条 steering 何时排队[\s\S]*按 FIFO 写入消息历史[\s\S]*下一次模型请求何时发起/s,
+  );
+  assert.match(
+    chapter.source,
+    /没有证明什么[\s\S]*run_start.*乱序[\s\S]*永不返回.*强制停止/s,
+  );
+  assert.match(chapter.source, /陪练迁移 · waitForIdle/);
   assert.doesNotMatch(chapter.source, /workshop\//);
 });
 

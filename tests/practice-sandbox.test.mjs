@@ -455,4 +455,88 @@ test("practice helper creates an answer-free chapter sandbox", async (t) => {
     /真 Agent 循环[\s\S]*loop-read[\s\S]*loop-edit[\s\S]*loop-bash[\s\S]*run\.messages/s,
     "the final stage must observe real environment changes and call/result pairing",
   );
+
+  const chapter09 = path.join(root, "chapter-09");
+  const statefulAgent = createPractice("09", chapter09);
+  assert.equal(statefulAgent.status, 0, statefulAgent.stderr);
+  const chapter09Test = await readFile(
+    path.join(
+      chapter09,
+      "packages/pi-course/test/09-stateful-agent.test.ts",
+    ),
+    "utf8",
+  );
+  const chapter09AgentStarter = await readFile(
+    path.join(chapter09, "packages/pi-course/src/agent.ts"),
+    "utf8",
+  );
+  const chapter09LoopStarter = await readFile(
+    path.join(chapter09, "packages/pi-course/src/agent-loop.ts"),
+    "utf8",
+  );
+  const chapter09Guide = await readFile(
+    path.join(chapter09, "LEARNING.md"),
+    "utf8",
+  );
+
+  assert.match(chapter09Guide, /packages\/pi-course\/src\/agent\.ts/);
+  assert.match(chapter09Guide, /packages\/pi-course\/src\/agent-loop\.ts/);
+  for (const lab of ["9.1", "9.2", "9.3", "9.4", "9.5"]) {
+    const pattern = new RegExp(`Lab ${lab.replace(".", "\\.")}`);
+    assert.match(chapter09AgentStarter, pattern);
+  }
+  for (const lab of ["9.2", "9.3", "9.4", "9.5"]) {
+    const pattern = new RegExp(`Lab ${lab.replace(".", "\\.")}`);
+    assert.match(chapter09LoopStarter, pattern);
+  }
+  assert.doesNotMatch(
+    chapter09AgentStarter,
+    /structuredClone|new Set|new AbortController|splice\(|pendingEvents|dispatchingEvents/,
+    "the Agent starter may expose public ownership surfaces but not lifecycle algorithms",
+  );
+  assert.doesNotMatch(
+    chapter09LoopStarter,
+    /canonicalToolResult|failedModelTurn|messages\.push\(\.\.\.(?:steering|followUps)\)/,
+    "the loop starter must preserve prior chapters without leaking Chapter 09 answers",
+  );
+  assert.equal(
+    [...chapter09Test.matchAll(/test\(/g)].length,
+    11,
+    "chapter 09 must expose eleven independently named proofs",
+  );
+  assert.match(
+    chapter09Test,
+    /ThrowOnSecondRequestModel[\s\S]*write committed[\s\S]*provider stream failed/s,
+    "model failure after a tool effect must preserve the completed transcript",
+  );
+  assert.match(
+    chapter09Test,
+    /parallel third[\s\S]*Agent is busy[\s\S]*run_start:1[\s\S]*run_end:1[\s\S]*run_start:2[\s\S]*run_end:2/s,
+    "run-end reentry must keep ownership and global event order",
+  );
+  assert.match(
+    chapter09Test,
+    /broken renderer[\s\S]*unsubscribeBroken\(\)[\s\S]*observedStarts,\s*2[\s\S]*unsubscribeObserver\(\)/s,
+    "a broken listener and selective unsubscribe must not block later observers",
+  );
+  assert.match(
+    chapter09Test,
+    /uncloneable-details[\s\S]*not cloneable[\s\S]*structured-cloneable[\s\S]*status,\s*"idle"/s,
+    "non-cloneable tool details must become a canonical result without splitting state",
+  );
+  assert.match(
+    chapter09Test,
+    /ManualModel\(false\)[\s\S]*cancelledText\.reason,\s*"aborted"/s,
+    "the loop must settle cancellation even when the model ignores its signal",
+  );
+  assert.match(
+    chapter09Test,
+    /must not consume before abort[\s\S]*doesNotMatch[\s\S]*must not consume/s,
+    "abort must win over text-stop queue consumption",
+  );
+  assert.match(
+    chapter09Test,
+    /must not consume after tool[\s\S]*doesNotMatch[\s\S]*retry after abort/s,
+    "abort must win after a tool batch and leave the next run clean",
+  );
 });

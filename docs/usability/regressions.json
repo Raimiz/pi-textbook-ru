@@ -818,6 +818,157 @@
       }
     },
     {
+      "id": "L09-ACTION-ROUTE",
+      "chapter": "09",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "旧正文混用 package 与 workshop 路线；修订后的第一版虽统一到 package，却只给 agent.ts 脚手架，未披露 target 同时修改 agent-loop.ts。",
+      "firstPrinciple": "一个章节必须公开完成 target 所需的全部教学文件；学生不应从最后一个失败反推隐藏施工位。",
+      "fix": [
+        "content/chapters/09-stateful-agent.md",
+        "../pi-course-history/packages/pi-course/starters/09-agent-loop.ts",
+        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "tests/learning-contract.test.mjs",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 7,
+        "result": "pass",
+        "student": "从 fresh practice 只修改公开的 agent.ts 与 agent-loop.ts，五段均为 L0，一次完成 2/2、2/2、2/2、2/2、3/3 和全章 11/11。",
+        "coach": "两份 starter 都在生成结果中，初始 build 通过；只运行 Lab 9.1 得到准确的 reducer 0/2 首红。",
+        "evidence": "two-file starter overlay; no workshop action; target d055d832"
+      }
+    },
+    {
+      "id": "L09-FIRST-RED-SCAFFOLD",
+      "chapter": "09",
+      "status": "resolved",
+      "observedBy": ["student", "coach"],
+      "evidence": "旧 fresh parent 没有 agent.ts，首次 build 是缺模块和隐式 any；第一版 Lab 9.2 又提前调用尚未教学的 abort()。",
+      "firstPrinciple": "脚手架应固定公共表面，且每段局部测试只能依赖当前段或之前已经完成的能力。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/starters/09-agent.ts",
+        "../pi-course-history/packages/pi-course/starters/09-agent-loop.ts",
+        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "content/chapters/09-stateful-agent.md",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 7,
+        "result": "pass",
+        "student": "脚手架首次构建无缺模块或 implicit-any；Lab 9.2 直接使用预置的 runAgentLoop 值导入，没有再出现 TS2304。",
+        "coach": "在 fresh starter 的 prompt 中实际引用 runAgentLoop 后，build 与 tsc --noEmit 均通过，生成的 JS 保留值导入。",
+        "evidence": "initial build green; Lab 9.1 exact 0/2; value-import probe PASS"
+      }
+    },
+    {
+      "id": "L09-CLEANUP-OWNERSHIP",
+      "chapter": "09",
+      "status": "resolved",
+      "observedBy": ["coach", "coordinator"],
+      "evidence": "旧 run 的 cleanup 可能在 run_end listener 启动新 run 后清掉新 active 记录；递归 emit 还会让后注册 listener 先看到 start2、再看到 end1。",
+      "firstPrinciple": "资源只能由创建它的运行清理；所有同步订阅者必须观察同一条生命周期全序。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/agent.ts",
+        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "content/chapters/09-stateful-agent.md"
+      ],
+      "retest": {
+        "round": 7,
+        "result": "pass",
+        "student": "按正文在 run_end 后增加无身份检查的清理，Lab 9.2 准确变为 1/2；第三次 prompt 被错误放行。删除故障后恢复 2/2 与 11/11。",
+        "coach": "重入运行的请求包含 user、assistant、第二条 user；生命周期 FIFO 与 ActiveRun 身份检查对应变异全部被杀死。",
+        "evidence": "reentrant run2 context asserted; cleanup and recursive emit mutants killed"
+      }
+    },
+    {
+      "id": "L09-ORACLE-COVERAGE",
+      "chapter": "09",
+      "status": "resolved",
+      "observedBy": ["coach", "coordinator"],
+      "evidence": "旧 3 项测试会放过旧 runId 污染、共享引用、坏 subscriber 阻断后续 listener、错误全量退订、模型异常抹掉已执行工具事实和不可复制 details 导致的 running/activeRun 分裂。",
+      "firstPrinciple": "有状态封装的测试必须同时观察所有权、公开副本、失败隔离和已发生环境事实；只看最终 reason 会隐藏状态分裂。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/agent-loop.ts",
+        "../pi-course-history/packages/pi-course/src/agent.ts",
+        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "content/chapters/09-stateful-agent.md",
+        "tests/learning-contract.test.mjs",
+        "tests/practice-sandbox.test.mjs"
+      ],
+      "retest": {
+        "round": 7,
+        "result": "pass",
+        "student": "能用测试与源码分别说明非空旧历史、公开状态、订阅事件、prompt 结果和 loop 输入的副本边界。",
+        "coach": "15 项 mutation 全部成功构建并被杀死；Chapter 09 为 11/11，截至本章累计 58/58。",
+        "evidence": "15/15 killed; survivors 0; timeouts 0"
+      }
+    },
+    {
+      "id": "L09-CONTROL-QUEUE",
+      "chapter": "09",
+      "status": "resolved",
+      "observedBy": ["coach", "coordinator"],
+      "evidence": "旧 loop 只在工具批次后取 steering，纯文本 stop 会丢消息；测试也未证明 abort 先于队列消费、turn_end 后拒绝输入或 error/abort 队列不泄漏。",
+      "firstPrinciple": "控制消息只能在完整协议边界消费，终止意图优先；一条消息要么进入当前 transcript，要么明确留在队列或被拒绝，不能静默消失。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/agent-loop.ts",
+        "../pi-course-history/packages/pi-course/src/agent.ts",
+        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "content/chapters/09-stateful-agent.md"
+      ],
+      "retest": {
+        "round": 7,
+        "result": "pass",
+        "student": "独立实现工具批次与文本 stop 两条取出路径，Lab 9.5 一次得到 3/3；取消和失败队列没有进入下一次运行。",
+        "coach": "忽略 abort、取消后消费 steering、纯文本丢 steering、turn_end 后继续接收以及失败队列泄漏的变异全部变红。",
+        "evidence": "Lab 9.5 3/3; queue and abort mutations killed"
+      }
+    },
+    {
+      "id": "L09-CLAIM-PROSE",
+      "chapter": "09",
+      "status": "resolved",
+      "observedBy": ["coach", "user"],
+      "evidence": "旧正文中文生硬，混合 facade、canonical history 等抽象说法，并把同步事件顺序、不可复制 details 和强制取消写得超过测试或实现证据。",
+      "firstPrinciple": "先写清哪个对象在何时拥有、追加、清理或拒绝什么；测试证据、源码边界和未证明范围必须分开。",
+      "fix": [
+        "content/chapters/09-stateful-agent.md",
+        "docs/usability/chinese-style.md",
+        "tests/chinese-prose.test.mjs",
+        "tests/learning-contract.test.mjs"
+      ],
+      "retest": {
+        "round": 7,
+        "result": "pass",
+        "student": "无需回读即可完成五段；正文公开 runAgentLoop 值导入和只在当前 run 尚未结束的错误语义，不再依赖测试输出反推。",
+        "coach": "生命周期、stale 范围、深副本、模型异常、控制队列与 maxSteps 未规定边界均和源码及测试一致；中文门禁 2/2。",
+        "evidence": "student L0; prose claim audit PASS; Chinese gate PASS"
+      }
+    },
+    {
+      "id": "L10-SESSION-ROOT-CONTRACT",
+      "chapter": "10",
+      "status": "resolved",
+      "observedBy": ["student", "coach", "coordinator"],
+      "evidence": "旧章没有 starter，2 项 happy-path 测试会吞掉已换行坏尾、延迟读取调用者对象，并允许可能半写后的 writer 继续追加；正文还混用 workshop 路线和未实现的 compaction。",
+      "firstPrinciple": "追加日志必须先规定调用时快照、提交边界和失败后的写入所有权；恢复路径只能使用公开 leaf 与完整消息，不能从物理行顺序猜测。",
+      "fix": [
+        "../pi-course-history/packages/pi-course/src/session.ts",
+        "../pi-course-history/packages/pi-course/test/10-session-tree.test.ts",
+        "../pi-course-history/packages/pi-course/starters/10-session.ts",
+        "content/chapters/10-session-tree.md",
+        "docs/architecture/010-session-log.md"
+      ],
+      "retest": {
+        "round": 1,
+        "result": "pass",
+        "student": "六段均为 L0 且一次通过，得到 2/2、2/2、2/2、3/3、3/3、2/2；故障实验准确让底层 append 次数从预期 1 变为 3。",
+        "coach": "fresh 首红准确；14/14 与累计 72/72 通过，五个公开反例覆盖重复 id、坏 schema、调用时快照、半写 fail-closed 和活动分支工具结构。",
+        "evidence": "target 55516263; student and coach black-box PASS; P0=0"
+      }
+    },
+    {
       "id": "LZH-NATURAL-CHINESE",
       "chapter": "00",
       "status": "retest_pending",

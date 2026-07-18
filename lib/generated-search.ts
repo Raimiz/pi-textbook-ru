@@ -1628,8 +1628,8 @@ export const searchIndex: SearchEntry[] = [
     "id": "09",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
-    "title": "从纯循环到可中断的 Stateful Agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "从单次循环到有状态 Agent",
     "href": "/learn/stateful-agent",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
@@ -1640,13 +1640,13 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 用一个薄的有状态 facade 管理 transcript、生命周期、取消与两种用户消息时序。 第三部 · 让 Harness 可靠 stateful agent, lifecycle, abort, steering, follow-up, reentrancy 你将得到什么 先建立全景 事件是事实，状态是派生快照 Abort、steering 与 follow-up 是三种不同时间语义 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "从单次循环到有状态 Agent 让一个对象持有跨运行状态，并把重入、订阅、取消、steering 与 follow-up 的时序写成可执行契约。 第三部 · 让 Harness 可靠 stateful agent, lifecycle, abort, steering, follow-up, reentrancy 你将得到什么 为什么第 09 章放在这里 先建立全景 开始动手：先进入正确的仓库 第一步：先写纯 reducer 第二步：让每次 prompt() 拥有自己的 ActiveRun 第三步：切断三条可变引用 第四步：取消只属于当前运行 第五步：在完整消息边界取出两个队列 故意把它弄坏 本章没有证明什么 本章验收 可选迁移练习 小结"
   },
   {
     "id": "09-你将得到什么",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
     "title": "你将得到什么",
     "href": "/learn/stateful-agent#你将得到什么",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1658,13 +1658,31 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 你将得到什么 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 你将得到什么 stateful agent lifecycle abort steering follow-up reentrancy"
+  },
+  {
+    "id": "09-为什么第-09-章放在这里",
+    "chapterId": "09",
+    "chapterSlug": "stateful-agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "为什么第 09 章放在这里",
+    "href": "/learn/stateful-agent#为什么第-09-章放在这里",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "stateful agent",
+      "lifecycle",
+      "abort",
+      "steering",
+      "follow-up",
+      "reentrancy"
+    ],
+    "searchText": "从单次循环到有状态 Agent 为什么第 09 章放在这里 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
     "id": "09-先建立全景",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
     "title": "先建立全景",
     "href": "/learn/stateful-agent#先建立全景",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1676,15 +1694,15 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 先建立全景 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 先建立全景 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
-    "id": "09-事件是事实状态是派生快照",
+    "id": "09-开始动手先进入正确的仓库",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
-    "title": "事件是事实，状态是派生快照",
-    "href": "/learn/stateful-agent#事件是事实状态是派生快照",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "开始动手：先进入正确的仓库",
+    "href": "/learn/stateful-agent#开始动手先进入正确的仓库",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "stateful agent",
@@ -1694,15 +1712,15 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 事件是事实，状态是派生快照 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 开始动手：先进入正确的仓库 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
-    "id": "09-abortsteering-与-follow-up-是三种不同时间语义",
+    "id": "09-第一步先写纯-reducer",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
-    "title": "Abort、steering 与 follow-up 是三种不同时间语义",
-    "href": "/learn/stateful-agent#abortsteering-与-follow-up-是三种不同时间语义",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "第一步：先写纯 reducer",
+    "href": "/learn/stateful-agent#第一步先写纯-reducer",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "stateful agent",
@@ -1712,13 +1730,85 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent Abort、steering 与 follow-up 是三种不同时间语义 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 第一步：先写纯 reducer stateful agent lifecycle abort steering follow-up reentrancy"
+  },
+  {
+    "id": "09-第二步让每次-prompt-拥有自己的-activerun",
+    "chapterId": "09",
+    "chapterSlug": "stateful-agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "第二步：让每次 prompt() 拥有自己的 ActiveRun",
+    "href": "/learn/stateful-agent#第二步让每次-prompt-拥有自己的-activerun",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "stateful agent",
+      "lifecycle",
+      "abort",
+      "steering",
+      "follow-up",
+      "reentrancy"
+    ],
+    "searchText": "从单次循环到有状态 Agent 第二步：让每次 prompt() 拥有自己的 ActiveRun stateful agent lifecycle abort steering follow-up reentrancy"
+  },
+  {
+    "id": "09-第三步切断三条可变引用",
+    "chapterId": "09",
+    "chapterSlug": "stateful-agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "第三步：切断三条可变引用",
+    "href": "/learn/stateful-agent#第三步切断三条可变引用",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "stateful agent",
+      "lifecycle",
+      "abort",
+      "steering",
+      "follow-up",
+      "reentrancy"
+    ],
+    "searchText": "从单次循环到有状态 Agent 第三步：切断三条可变引用 stateful agent lifecycle abort steering follow-up reentrancy"
+  },
+  {
+    "id": "09-第四步取消只属于当前运行",
+    "chapterId": "09",
+    "chapterSlug": "stateful-agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "第四步：取消只属于当前运行",
+    "href": "/learn/stateful-agent#第四步取消只属于当前运行",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "stateful agent",
+      "lifecycle",
+      "abort",
+      "steering",
+      "follow-up",
+      "reentrancy"
+    ],
+    "searchText": "从单次循环到有状态 Agent 第四步：取消只属于当前运行 stateful agent lifecycle abort steering follow-up reentrancy"
+  },
+  {
+    "id": "09-第五步在完整消息边界取出两个队列",
+    "chapterId": "09",
+    "chapterSlug": "stateful-agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "第五步：在完整消息边界取出两个队列",
+    "href": "/learn/stateful-agent#第五步在完整消息边界取出两个队列",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "stateful agent",
+      "lifecycle",
+      "abort",
+      "steering",
+      "follow-up",
+      "reentrancy"
+    ],
+    "searchText": "从单次循环到有状态 Agent 第五步：在完整消息边界取出两个队列 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
     "id": "09-故意把它弄坏",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
     "title": "故意把它弄坏",
     "href": "/learn/stateful-agent#故意把它弄坏",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1730,13 +1820,31 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 故意把它弄坏 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 故意把它弄坏 stateful agent lifecycle abort steering follow-up reentrancy"
+  },
+  {
+    "id": "09-本章没有证明什么",
+    "chapterId": "09",
+    "chapterSlug": "stateful-agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
+    "title": "本章没有证明什么",
+    "href": "/learn/stateful-agent#本章没有证明什么",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "stateful agent",
+      "lifecycle",
+      "abort",
+      "steering",
+      "follow-up",
+      "reentrancy"
+    ],
+    "searchText": "从单次循环到有状态 Agent 本章没有证明什么 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
     "id": "09-本章验收",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
     "title": "本章验收",
     "href": "/learn/stateful-agent#本章验收",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1748,13 +1856,13 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 本章验收 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 本章验收 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
     "id": "09-可选迁移练习",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
     "title": "可选迁移练习",
     "href": "/learn/stateful-agent#可选迁移练习",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1766,13 +1874,13 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 可选迁移练习 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 可选迁移练习 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
     "id": "09-小结",
     "chapterId": "09",
     "chapterSlug": "stateful-agent",
-    "chapterTitle": "从纯循环到可中断的 Stateful Agent",
+    "chapterTitle": "从单次循环到有状态 Agent",
     "title": "小结",
     "href": "/learn/stateful-agent#小结",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1784,14 +1892,14 @@ export const searchIndex: SearchEntry[] = [
       "follow-up",
       "reentrancy"
     ],
-    "searchText": "从纯循环到可中断的 Stateful Agent 小结 stateful agent lifecycle abort steering follow-up reentrancy"
+    "searchText": "从单次循环到有状态 Agent 小结 stateful agent lifecycle abort steering follow-up reentrancy"
   },
   {
     "id": "10",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
-    "title": "会话是追加式事件树",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "把完成的历史追加成一棵树",
     "href": "/learn/session-tree",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
@@ -1800,15 +1908,15 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 用 JSONL 中的 parent pointer 保存不可改写的历史，并从任意叶子重建一条活动路径。 第三部 · 让 Harness 可靠 append-only log, JSONL, parent pointer, active path, branch, resume 你将得到什么 先建立全景 用 parent pointer 把线性文件变成树 JSONL 提供追加证据，不替你解决一切 故意把它弄坏 本章验收 可选迁移练习 小结"
+    "searchText": "把完成的历史追加成一棵树 把完整消息写成带 parentId 的 JSONL 记录；从指定叶子恢复分支，并让断尾与写入失败停在可诊断状态。 第三部 · 让 Harness 可靠 append-only log, JSONL, parent pointer, active path, branch, recovery 你将得到什么 为什么第 10 章放在这里 先建立全景 开始动手：先进入正确的仓库 第一步：用 parentId 找回一条分支 第二步：磁盘读出的对象仍然是 unknown 第三步：先在内存中固定数据所有权 第四步：把换行当成提交标记 第五步：一次可能半写的失败会让 writer 失效 第六步：只把选中分支的完整消息交回 Agent 故意把它弄坏 本章没有证明什么 本章验收 可选迁移练习 小结"
   },
   {
     "id": "10-你将得到什么",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
+    "chapterTitle": "把完成的历史追加成一棵树",
     "title": "你将得到什么",
     "href": "/learn/session-tree#你将得到什么",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1818,15 +1926,33 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 你将得到什么 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 你将得到什么 append-only log JSONL parent pointer active path branch recovery"
+  },
+  {
+    "id": "10-为什么第-10-章放在这里",
+    "chapterId": "10",
+    "chapterSlug": "session-tree",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "为什么第 10 章放在这里",
+    "href": "/learn/session-tree#为什么第-10-章放在这里",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "append-only log",
+      "JSONL",
+      "parent pointer",
+      "active path",
+      "branch",
+      "recovery"
+    ],
+    "searchText": "把完成的历史追加成一棵树 为什么第 10 章放在这里 append-only log JSONL parent pointer active path branch recovery"
   },
   {
     "id": "10-先建立全景",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
+    "chapterTitle": "把完成的历史追加成一棵树",
     "title": "先建立全景",
     "href": "/learn/session-tree#先建立全景",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1836,17 +1962,17 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 先建立全景 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 先建立全景 append-only log JSONL parent pointer active path branch recovery"
   },
   {
-    "id": "10-用-parent-pointer-把线性文件变成树",
+    "id": "10-开始动手先进入正确的仓库",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
-    "title": "用 parent pointer 把线性文件变成树",
-    "href": "/learn/session-tree#用-parent-pointer-把线性文件变成树",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "开始动手：先进入正确的仓库",
+    "href": "/learn/session-tree#开始动手先进入正确的仓库",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "append-only log",
@@ -1854,17 +1980,17 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 用 parent pointer 把线性文件变成树 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 开始动手：先进入正确的仓库 append-only log JSONL parent pointer active path branch recovery"
   },
   {
-    "id": "10-jsonl-提供追加证据不替你解决一切",
+    "id": "10-第一步用-parentid-找回一条分支",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
-    "title": "JSONL 提供追加证据，不替你解决一切",
-    "href": "/learn/session-tree#jsonl-提供追加证据不替你解决一切",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "第一步：用 parentId 找回一条分支",
+    "href": "/learn/session-tree#第一步用-parentid-找回一条分支",
     "partTitle": "第三部 · 让 Harness 可靠",
     "terms": [
       "append-only log",
@@ -1872,15 +1998,105 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 JSONL 提供追加证据，不替你解决一切 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 第一步：用 parentId 找回一条分支 append-only log JSONL parent pointer active path branch recovery"
+  },
+  {
+    "id": "10-第二步磁盘读出的对象仍然是-unknown",
+    "chapterId": "10",
+    "chapterSlug": "session-tree",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "第二步：磁盘读出的对象仍然是 unknown",
+    "href": "/learn/session-tree#第二步磁盘读出的对象仍然是-unknown",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "append-only log",
+      "JSONL",
+      "parent pointer",
+      "active path",
+      "branch",
+      "recovery"
+    ],
+    "searchText": "把完成的历史追加成一棵树 第二步：磁盘读出的对象仍然是 unknown append-only log JSONL parent pointer active path branch recovery"
+  },
+  {
+    "id": "10-第三步先在内存中固定数据所有权",
+    "chapterId": "10",
+    "chapterSlug": "session-tree",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "第三步：先在内存中固定数据所有权",
+    "href": "/learn/session-tree#第三步先在内存中固定数据所有权",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "append-only log",
+      "JSONL",
+      "parent pointer",
+      "active path",
+      "branch",
+      "recovery"
+    ],
+    "searchText": "把完成的历史追加成一棵树 第三步：先在内存中固定数据所有权 append-only log JSONL parent pointer active path branch recovery"
+  },
+  {
+    "id": "10-第四步把换行当成提交标记",
+    "chapterId": "10",
+    "chapterSlug": "session-tree",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "第四步：把换行当成提交标记",
+    "href": "/learn/session-tree#第四步把换行当成提交标记",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "append-only log",
+      "JSONL",
+      "parent pointer",
+      "active path",
+      "branch",
+      "recovery"
+    ],
+    "searchText": "把完成的历史追加成一棵树 第四步：把换行当成提交标记 append-only log JSONL parent pointer active path branch recovery"
+  },
+  {
+    "id": "10-第五步一次可能半写的失败会让-writer-失效",
+    "chapterId": "10",
+    "chapterSlug": "session-tree",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "第五步：一次可能半写的失败会让 writer 失效",
+    "href": "/learn/session-tree#第五步一次可能半写的失败会让-writer-失效",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "append-only log",
+      "JSONL",
+      "parent pointer",
+      "active path",
+      "branch",
+      "recovery"
+    ],
+    "searchText": "把完成的历史追加成一棵树 第五步：一次可能半写的失败会让 writer 失效 append-only log JSONL parent pointer active path branch recovery"
+  },
+  {
+    "id": "10-第六步只把选中分支的完整消息交回-agent",
+    "chapterId": "10",
+    "chapterSlug": "session-tree",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "第六步：只把选中分支的完整消息交回 Agent",
+    "href": "/learn/session-tree#第六步只把选中分支的完整消息交回-agent",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "append-only log",
+      "JSONL",
+      "parent pointer",
+      "active path",
+      "branch",
+      "recovery"
+    ],
+    "searchText": "把完成的历史追加成一棵树 第六步：只把选中分支的完整消息交回 Agent append-only log JSONL parent pointer active path branch recovery"
   },
   {
     "id": "10-故意把它弄坏",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
+    "chapterTitle": "把完成的历史追加成一棵树",
     "title": "故意把它弄坏",
     "href": "/learn/session-tree#故意把它弄坏",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1890,15 +2106,33 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 故意把它弄坏 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 故意把它弄坏 append-only log JSONL parent pointer active path branch recovery"
+  },
+  {
+    "id": "10-本章没有证明什么",
+    "chapterId": "10",
+    "chapterSlug": "session-tree",
+    "chapterTitle": "把完成的历史追加成一棵树",
+    "title": "本章没有证明什么",
+    "href": "/learn/session-tree#本章没有证明什么",
+    "partTitle": "第三部 · 让 Harness 可靠",
+    "terms": [
+      "append-only log",
+      "JSONL",
+      "parent pointer",
+      "active path",
+      "branch",
+      "recovery"
+    ],
+    "searchText": "把完成的历史追加成一棵树 本章没有证明什么 append-only log JSONL parent pointer active path branch recovery"
   },
   {
     "id": "10-本章验收",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
+    "chapterTitle": "把完成的历史追加成一棵树",
     "title": "本章验收",
     "href": "/learn/session-tree#本章验收",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1908,15 +2142,15 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 本章验收 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 本章验收 append-only log JSONL parent pointer active path branch recovery"
   },
   {
     "id": "10-可选迁移练习",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
+    "chapterTitle": "把完成的历史追加成一棵树",
     "title": "可选迁移练习",
     "href": "/learn/session-tree#可选迁移练习",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1926,15 +2160,15 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 可选迁移练习 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 可选迁移练习 append-only log JSONL parent pointer active path branch recovery"
   },
   {
     "id": "10-小结",
     "chapterId": "10",
     "chapterSlug": "session-tree",
-    "chapterTitle": "会话是追加式事件树",
+    "chapterTitle": "把完成的历史追加成一棵树",
     "title": "小结",
     "href": "/learn/session-tree#小结",
     "partTitle": "第三部 · 让 Harness 可靠",
@@ -1944,9 +2178,9 @@ export const searchIndex: SearchEntry[] = [
       "parent pointer",
       "active path",
       "branch",
-      "resume"
+      "recovery"
     ],
-    "searchText": "会话是追加式事件树 小结 append-only log JSONL parent pointer active path branch resume"
+    "searchText": "把完成的历史追加成一棵树 小结 append-only log JSONL parent pointer active path branch recovery"
   },
   {
     "id": "11",

@@ -55,7 +55,7 @@ export async function validateLearningContract() {
       ["LC_MODE", new RegExp(`\\*\\*模式：\\*\\*\\s*${expectedMode}`)],
       [
         "LC_START_TARGET",
-        /\*\*起终点：\*\*\s*parent .*起点.*target .*终点/,
+        /\*\*起终点：\*\*\s*`?parent`?[^\n]*起点[\s\S]*?`?target`?[\s\S]*?终点/,
       ],
       [
         "LC_TEACHING_FILE",
