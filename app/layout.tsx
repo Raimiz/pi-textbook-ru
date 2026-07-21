@@ -25,12 +25,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      default: "动手学 Pi",
-      template: "%s · 动手学 Pi",
+      default: "Практический Pi",
+      template: "%s · Практический Pi",
     },
     description:
-      "沿 15 个 checkpoint，从一条离线轨迹开始，用 TypeScript 逐步实现 Pi。",
-    applicationName: "动手学 Pi",
+      "15 этапов: от офлайн-траектории до работающего Pi на TypeScript.",
+    applicationName: "Практический Pi",
     authors: [{ name: "Pi Textbook Project" }],
     keywords: [
       "Agent",
@@ -38,26 +38,26 @@ export async function generateMetadata(): Promise<Metadata> {
       "TypeScript",
       "LLM",
       "Tool Calling",
-      "Agent 教程",
+      "Учебник по агентам",
     ],
     openGraph: {
-      title: "动手学 Pi",
-      description: "15 个 checkpoint，亲手实现一个可运行、可恢复、可扩展的 Pi。",
+      title: "Практический Pi",
+      description: "15 этапов, чтобы своими руками собрать работающий, восстанавливаемый и расширяемый Pi.",
       type: "website",
-      locale: "zh_CN",
+      locale: "ru_RU",
       images: [
         {
           url: socialImage,
           width: 1672,
           height: 941,
-          alt: "动手学 Pi",
+          alt: "Практический Pi",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "动手学 Pi",
-      description: "15 个 checkpoint，亲手实现一个可运行、可恢复、可扩展的 Pi。",
+      title: "Практический Pi",
+      description: "15 этапов, чтобы своими руками собрать работающий Pi.",
       images: [socialImage],
     },
   };
@@ -75,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="ru">
       <body>
         <ProgressProvider>
           <SiteHeader />
@@ -84,27 +84,27 @@ export default function RootLayout({
             <div>
               <span className="brand-mark" aria-hidden="true">π</span>
               <p>
-                开源中文教材。学习方法受 Dive into Deep Learning 启发，
-                内容与代码独立编写。
+                Открытый русскоязычный учебник. Подход вдохновлён Dive into
+                Deep Learning; содержание и код созданы независимо.
               </p>
             </div>
-            <nav aria-label="页脚导航">
-              <Link href="/map">课程路线</Link>
-              <Link href="/about">学习方法</Link>
-              <Link href="/glossary">术语表</Link>
+            <nav aria-label="Навигация в подвале">
+              <Link href="/map">Программа</Link>
+              <Link href="/about">Метод обучения</Link>
+              <Link href="/glossary">Глоссарий</Link>
               <a
                 href={COURSE_REPOSITORY_URL}
                 target="_blank"
                 rel="noreferrer"
               >
-                课程代码
+                Код курса
               </a>
               <a
                 href={UPSTREAM_REPOSITORY_URL}
                 target="_blank"
                 rel="noreferrer"
               >
-                Pi 上游
+                Pi upstream
               </a>
             </nav>
           </footer>
