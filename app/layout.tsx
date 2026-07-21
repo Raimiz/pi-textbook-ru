@@ -25,12 +25,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      default: "造一个 Pi · 可执行工程教材",
-      template: "%s · 造一个 Pi",
+      default: "动手学 Pi · 可执行工程教材",
+      template: "%s · 动手学 Pi",
     },
     description:
       "一套从第一性原理出发、用真实 TypeScript 和故障实验逐步实现 Pi 的中文工程教材。",
-    applicationName: "造一个 Pi",
+    applicationName: "动手学 Pi",
     authors: [{ name: "Pi Textbook Project" }],
     keywords: [
       "Agent",
@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "工程教材",
     ],
     openGraph: {
-      title: "造一个 Pi · 可执行 Agent 工程教材",
+      title: "动手学 Pi · 可执行 Agent 工程教材",
       description: "15 个 checkpoint，亲手实现一个可运行、可恢复、可扩展的 Pi。",
       type: "website",
       locale: "zh_CN",
@@ -50,13 +50,13 @@ export async function generateMetadata(): Promise<Metadata> {
           url: socialImage,
           width: 1672,
           height: 941,
-          alt: "造一个 Pi · 可执行 Agent 工程教材",
+          alt: "动手学 Pi · 可执行 Agent 工程教材",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "造一个 Pi · 可执行 Agent 工程教材",
+      title: "动手学 Pi · 可执行 Agent 工程教材",
       description: "15 个 checkpoint，亲手实现一个可运行、可恢复、可扩展的 Pi。",
       images: [socialImage],
     },

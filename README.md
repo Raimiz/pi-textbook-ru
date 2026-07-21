@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/assets/logo.png" alt="造一个 Pi Logo" width="132" />
+  <img src="docs/assets/logo.png" alt="动手学 Pi Logo" width="132" />
 </p>
 
-<h1 align="center">造一个 Pi</h1>
+<h1 align="center">动手学 Pi</h1>
 
 <p align="center">
   一套可执行的中文 Agent 工程教材：不只读懂 Agent，亲手把它造出来。
@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://build-your-own-pi-cn.enochzhang.chatgpt.site">
-    <img src="docs/assets/homepage.jpg" alt="造一个 Pi 在线教材首页" width="1200" />
+    <img src="docs/assets/homepage.jpg" alt="动手学 Pi 在线教材首页" width="1200" />
   </a>
 </p>
 

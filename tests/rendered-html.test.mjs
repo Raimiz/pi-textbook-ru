@@ -37,7 +37,7 @@ test("首页服务端渲染完整课程入口，而不是 starter", async () => 
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /造一个 Pi/);
+  assert.match(html, /动手学 Pi/);
   assert.match(html, /不只读懂 Agent/);
   assert.match(html, /15 CHECKPOINTS/);
   assert.match(html, /href="\/learn\/prologue"/);

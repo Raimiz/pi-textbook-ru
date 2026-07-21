@@ -12,7 +12,7 @@ import { CourseMap } from "@/components/course-map";
 import { courseNav, courseParts } from "@/lib/course";
 
 export const metadata: Metadata = {
-  title: "造一个 Pi · 可执行 Agent 工程教材",
+  title: "动手学 Pi · 可执行 Agent 工程教材",
   description:
     "从消息协议和事件流开始，亲手实现工具、Agent Loop、会话树、上下文压缩与产品入口。",
 };
@@ -32,7 +32,7 @@ export default function Home() {
     <main>
       <section className="home-hero">
         <div className="hero-copy">
-          <p className="eyebrow">BUILD YOUR OWN PI · 中文工程教材</p>
+          <p className="eyebrow">HANDS-ON PI · 中文工程教材</p>
           <h1>
             不只读懂 Agent，
             <br />

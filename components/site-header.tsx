@@ -18,7 +18,7 @@ export function SiteHeader() {
           π
         </span>
         <span>
-          <strong>造一个 Pi</strong>
+          <strong>动手学 Pi</strong>
           <small>可执行工程教材</small>
         </span>
       </Link>
