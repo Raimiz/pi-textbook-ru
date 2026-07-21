@@ -6,12 +6,9 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 
-const courseRoot = path.resolve(
-  import.meta.dirname,
-  "..",
-  "..",
-  "pi-course",
-);
+const courseRoot = process.env.PI_COURSE_ROOT
+  ? path.resolve(process.env.PI_COURSE_ROOT)
+  : path.resolve(import.meta.dirname, "..", "..", "pi-course");
 
 function createPractice(chapter, output) {
   return spawnSync(

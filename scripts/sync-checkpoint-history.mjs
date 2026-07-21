@@ -4,7 +4,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const historyRoot = path.resolve(root, "..", "pi-course");
+const historyRoot = process.env.PI_COURSE_ROOT
+  ? path.resolve(process.env.PI_COURSE_ROOT)
+  : path.resolve(root, "..", "pi-course");
 const manifestFile = path.join(root, "content", "checkpoints.json");
 const courseBranch = "course/build-your-own-pi";
 const expectedIds = Array.from(

@@ -12,7 +12,9 @@ const generatedSearchFile = path.join(
   "generated-search.ts",
 );
 const checkpointManifestFile = path.join(root, "content", "checkpoints.json");
-const upstreamRoot = path.resolve(root, "..", "pi-course");
+const upstreamRoot = process.env.PI_COURSE_ROOT
+  ? path.resolve(process.env.PI_COURSE_ROOT)
+  : path.resolve(root, "..", "pi-course");
 let upstreamAvailable;
 
 const parts = [

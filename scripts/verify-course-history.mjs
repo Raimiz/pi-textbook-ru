@@ -6,7 +6,9 @@ const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 );
-const courseRepository = path.resolve(root, "..", "pi-course");
+const courseRepository = process.env.PI_COURSE_ROOT
+  ? path.resolve(process.env.PI_COURSE_ROOT)
+  : path.resolve(root, "..", "pi-course");
 const generated = await import(
   new URL(`../lib/generated-course.ts?verify=${Date.now()}`, import.meta.url)
 );
