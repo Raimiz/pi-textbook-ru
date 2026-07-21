@@ -106,9 +106,6 @@ export default function RootLayout({
               >
                 Pi 上游
               </a>
-              <a href="https://linux.do/" target="_blank" rel="noreferrer">
-                LINUX DO
-              </a>
             </nav>
           </footer>
         </ProgressProvider>
