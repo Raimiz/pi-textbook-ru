@@ -12,7 +12,8 @@ const generatedSearchFile = path.join(
   "generated-search.ts",
 );
 const checkpointManifestFile = path.join(root, "content", "checkpoints.json");
-const upstreamRoot = path.resolve(root, "..", "pi");
+const upstreamRoot = path.resolve(root, "..", "pi-course");
+let upstreamAvailable;
 
 const parts = [
   {
@@ -305,6 +306,12 @@ function renderChapter(markdown, directives, file) {
 }
 
 async function validateUpstreamPaths(paths, file) {
+  upstreamAvailable ??= await access(upstreamRoot).then(
+    () => true,
+    () => false,
+  );
+  if (!upstreamAvailable) return;
+
   for (const upstreamPath of paths) {
     if (/^https?:\/\//.test(upstreamPath)) continue;
     const cleanPath = upstreamPath.split("#")[0].trim();

@@ -86,12 +86,12 @@ Agent（跨运行）
 
 ## 开始动手：先进入正确的仓库
 
-练习命令必须在教学历史仓库 `pi-course-history` 中运行，不是在工作区根目录，也
+练习命令必须在教学历史仓库 `pi-course` 中运行，不是在工作区根目录，也
 不是教材站点目录。先进入这个仓库，并确认当前路径的最后一段是
-`pi-course-history`：
+`pi-course`：
 
 ```bash
-cd <你的工作区>/pi-course-history
+cd <你的工作区>/pi-course
 pwd
 npm run practice -w @pi/course -- 09 <新目录>
 cd <新目录>

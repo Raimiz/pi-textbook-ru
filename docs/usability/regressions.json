@@ -12,7 +12,7 @@
         "content/chapters/00-prologue.md",
         "content/chapters/01-typescript-survival.md",
         "scripts/build-content.mjs",
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs"
+        "../pi-course/packages/pi-course/scripts/practice.mjs"
       ],
       "retest": {
         "round": 4,
@@ -65,7 +65,7 @@
       "evidence": "隔离目录没有 Git 历史，npm install 却运行 Husky prepare 并打印 .git can't be found。",
       "firstPrinciple": "练习夹具不应制造与学习目标无关、会被新手误判为失败的噪声。",
       "fix": [
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
         "tests/practice-sandbox.test.mjs"
       ],
       "retest": {
@@ -84,7 +84,7 @@
       "evidence": "01 练习从 parent 导出后，AGENT_GUIDE.md 只有 Checkpoint 00，没有正文要求阅读的当前章提示。",
       "firstPrinciple": "实现应来自 parent，但学习支架必须属于当前任务；二者不能被同一个快照策略误绑。",
       "fix": [
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
         "tests/practice-sandbox.test.mjs"
       ],
       "retest": {
@@ -237,7 +237,7 @@
       "evidence": "第二项测试调用 end(\"A\") 后只检查 iterator.done，没有检查 result() 是否得到 \"A\"；错误实现仍可 2/2。",
       "firstPrinciple": "章节核心不变量要求 end 同时结束迭代与最终结果，测试必须观察两边。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/02-event-stream.test.ts",
+        "../pi-course/packages/pi-course/test/02-event-stream.test.ts",
         "tests/practice-sandbox.test.mjs"
       ],
       "retest": {
@@ -275,7 +275,7 @@
       "evidence": "首次 build 先报预期 TS2307，但测试回调因失去推断又产生两条 TS7006，模糊了教学红灯。",
       "firstPrinciple": "测试夹具应让首个失败只指向当前缺口，级联类型噪声会诱导新手同时修错层。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/02-event-stream.test.ts",
+        "../pi-course/packages/pi-course/test/02-event-stream.test.ts",
         "tests/practice-sandbox.test.mjs"
       ],
       "retest": {
@@ -351,7 +351,7 @@
       "evidence": "第二项测试在 push(error) 后又调用 end(error)，所以不识别 error 终态的 Lab 3.1 临时实现也能 2/2；测试还只比较 stopReason，不能证明 result() 返回输入的最终消息。",
       "firstPrinciple": "终态测试必须只靠被测终态结束，并验证返回值的完整身份；不能用测试自身的 end() 替错误实现补齐行为。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/03-message-ir.test.ts",
+        "../pi-course/packages/pi-course/test/03-message-ir.test.ts",
         "content/chapters/03-message-ir.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -390,7 +390,7 @@
       "evidence": "原测试只检查一次请求数量和两个 stopReason，没有证明请求是调用时快照，也没有覆盖显式错误 turn 的 partial、errorMessage 或事件序列。",
       "firstPrinciple": "可执行规格必须观察它承诺固定的输入快照、过程事件和最终诊断；只看一个枚举值会允许行为丢失后继续绿灯。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/04-scripted-model.test.ts",
+        "../pi-course/packages/pi-course/test/04-scripted-model.test.ts",
         "content/chapters/04-scripted-model.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -410,7 +410,7 @@
       "evidence": "04 成功测试只比较事件 type 数组；错误的 delta、contentIndex、toolCall 内容仍可绿。测试也只调用一次 stream，没有证明 cursor 会按轮消费 turn。",
       "firstPrinciple": "确定性生产者必须固定事件的内容和回合顺序；只固定事件名称无法充当后续 Agent loop 的可执行规格。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/04-scripted-model.test.ts",
+        "../pi-course/packages/pi-course/test/04-scripted-model.test.ts",
         "content/chapters/04-scripted-model.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -430,9 +430,9 @@
       "evidence": "05 target 同时新增 provider-adapter.ts 并修改 types.ts；原正文只披露 adapter。fresh parent 首红除 TS2307 外还有 8 条失去上下文类型后的 implicit-any 噪声。",
       "firstPrinciple": "教学文件必须覆盖真实 source delta；首次红灯只应指向当前缺口，不能让测试夹具制造八条无关修复线索。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/05-provider-adapter.test.ts",
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
-        "../pi-course-history/packages/pi-course/starters/05-provider-adapter.ts",
+        "../pi-course/packages/pi-course/test/05-provider-adapter.test.ts",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/starters/05-provider-adapter.ts",
         "content/chapters/05-provider-adapter.md",
         "tests/learning-contract.test.mjs",
         "tests/practice-sandbox.test.mjs"
@@ -454,8 +454,8 @@
       "firstPrinciple": "高技术密度必须被拆成能独立编译和得到局部绿灯的状态转换；一章可以深，但不能只有空白起点和完整终点。",
       "fix": [
         "content/chapters/05-provider-adapter.md",
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
-        "../pi-course-history/packages/pi-course/starters/05-provider-adapter.ts",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/starters/05-provider-adapter.ts",
         "tests/learning-contract.test.mjs"
       ],
       "retest": {
@@ -474,7 +474,7 @@
       "evidence": "把 tool result id 改错、把 API key 写入请求 body、删除 start、在 length 时伪造完整 arguments，原 11 项测试仍全绿。",
       "firstPrinciple": "adapter 的核心价值是边界翻译和安全隔离；测试必须观察完整 wire 消息、事件载荷、未信任参数和密钥去向。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/05-provider-adapter.test.ts",
+        "../pi-course/packages/pi-course/test/05-provider-adapter.test.ts",
         "content/chapters/05-provider-adapter.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -494,8 +494,8 @@
       "evidence": "tool delta 先于 text 到达时，原实现先发 contentIndex 0，结束时却把同一调用放到 index 1；原测试没有观察这一漂移。",
       "firstPrinciple": "contentIndex 是事件与 canonical content 的稳定引用；同一 block 在一次流中不能换位置。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/provider-adapter.ts",
-        "../pi-course-history/packages/pi-course/test/05-provider-adapter.test.ts"
+        "../pi-course/packages/pi-course/src/provider-adapter.ts",
+        "../pi-course/packages/pi-course/test/05-provider-adapter.test.ts"
       ],
       "retest": {
         "round": 3,
@@ -514,7 +514,7 @@
       "firstPrinciple": "边界章节的中文必须明确谁持有状态、动作何时发生、拒绝条件是什么；读者不应靠后文反推当前句子的含义。",
       "fix": [
         "content/chapters/05-provider-adapter.md",
-        "../pi-course-history/packages/pi-course/AGENT_GUIDE.md",
+        "../pi-course/packages/pi-course/AGENT_GUIDE.md",
         "docs/usability/chinese-style.md"
       ],
       "retest": {
@@ -552,8 +552,8 @@
       "evidence": "fresh parent 首红同时出现缺少 tool.ts 的 TS2307 与失去上下文类型后的 TS7031；从空文件还要一次推导 callable validator metadata、mapped type 和泛型 Registry。",
       "firstPrinciple": "高密度泛型只应服务当前机制，不能成为开始练习前的空白页障碍；公共表面可由不泄露算法的学习脚手架固定。",
       "fix": [
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
-        "../pi-course-history/packages/pi-course/starters/06-tool.ts",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/starters/06-tool.ts",
         "content/chapters/06-tool-contract.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -573,7 +573,7 @@
       "evidence": "删除重名保护、让非法参数仍执行、丢弃 signal/progress、丢弃 details/isError、把失败 toolName 改错，原 2 项测试全部仍为 2/2。",
       "firstPrinciple": "工具契约的价值在运行时信任与结果配对；测试必须观察验证先于副作用、完整执行上下文、输出传播和错误外壳。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test/06-tool-contract.test.ts",
+        "../pi-course/packages/pi-course/test/06-tool-contract.test.ts",
         "content/chapters/06-tool-contract.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -631,8 +631,8 @@
       "evidence": "fresh parent 缺少 agent-loop.ts，首次 build 同时出现 TS2307 和四条级联 TS7006；学生还要从空文件一次猜出公共事件、返回值、options 和约 160 行控制流。",
       "firstPrinciple": "学习 Agent Loop 的对象是状态迁移，不是从编译器级联错误反推公共类型；脚手架应固定公共表面，把分支算法留给学生。",
       "fix": [
-        "../pi-course-history/packages/pi-course/starters/07-agent-loop.ts",
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/starters/07-agent-loop.ts",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
         "content/chapters/07-agent-loop.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -652,8 +652,8 @@
       "evidence": "旧 target 除新增 209 行 agent-loop 外，还重写 prologue 273 行并修改 Chapter 00 测试；正文没有披露这些文件，07 聚焦测试也不验证它们。",
       "firstPrinciple": "一个 checkpoint 的 target 必须等于学生按本章路线能重建并由本章测试验证的增量；隐藏的大型重构会让 commit 失去教学意义。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/demo/prologue.ts",
-        "../pi-course-history/packages/pi-course/test/00-prologue.test.ts",
+        "../pi-course/packages/pi-course/src/demo/prologue.ts",
+        "../pi-course/packages/pi-course/test/00-prologue.test.ts",
         "content/checkpoints.json"
       ],
       "retest": {
@@ -672,8 +672,8 @@
       "evidence": "旧 4 项测试会放过一个联合变异：修改调用者 context、不向模型传工具定义、忽略 abort、允许 stop 携带悬空 call、吞掉 turn_end；注入 executor reject 也会直接炸穿 Promise.all。",
       "firstPrinciple": "循环控制器的测试必须观察所有权、请求配置、每个终态的配对规则、唯一结束事件和并发失败隔离，而不能只看最终文本。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/agent-loop.ts",
-        "../pi-course-history/packages/pi-course/test/07-agent-loop.test.ts",
+        "../pi-course/packages/pi-course/src/agent-loop.ts",
+        "../pi-course/packages/pi-course/test/07-agent-loop.test.ts",
         "content/chapters/07-agent-loop.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -733,8 +733,8 @@
       "evidence": "旧 fresh parent 缺少 coding-tools.ts，首次 build 只给出缺模块错误；学生随后要从空文件一次推导四个工具的公共类型、约 440 行文件与进程实现。",
       "firstPrinciple": "本章的学习对象是资源边界与提交顺序，不是从空白文件反推公共表面；脚手架应让第一条红灯直接落在 Read 行为。",
       "fix": [
-        "../pi-course-history/packages/pi-course/starters/08-coding-tools.ts",
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/starters/08-coding-tools.ts",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
         "content/chapters/08-coding-tools.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -754,8 +754,8 @@
       "evidence": "旧 Read 先按行计算 endLine，再从格式化文本中截取固定字节；它可能切断 UTF-8 行，却仍让 continuation 跳到预选范围之后，永久漏掉未完整显示的内容。",
       "firstPrinciple": "有界观察必须可恢复；details 与续读游标只能来自实际完整显示的内容，不能来自截断前的计划范围。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/coding-tools.ts",
-        "../pi-course-history/packages/pi-course/test/08-coding-tools.test.ts",
+        "../pi-course/packages/pi-course/src/coding-tools.ts",
+        "../pi-course/packages/pi-course/test/08-coding-tools.test.ts",
         "content/chapters/08-coding-tools.md"
       ],
       "retest": {
@@ -774,8 +774,8 @@
       "evidence": "旧 2 项测试只覆盖一个行窗口、一次成功 edit、symlink、批次失败和预取消返回值；write、details、字节续读、默认修改队列、Bash cwd/exit/timeout/runtime abort/output cap 与真实 loop 都没有证据。",
       "firstPrinciple": "副作用工具的测试必须观察开始条件、提交顺序、资源上限和最终环境事实；只看一段结果文本无法证明动作没有发生或没有交错。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/coding-tools.ts",
-        "../pi-course-history/packages/pi-course/test/08-coding-tools.test.ts",
+        "../pi-course/packages/pi-course/src/coding-tools.ts",
+        "../pi-course/packages/pi-course/test/08-coding-tools.test.ts",
         "content/chapters/08-coding-tools.md",
         "tests/learning-contract.test.mjs",
         "tests/practice-sandbox.test.mjs"
@@ -796,8 +796,8 @@
       "evidence": "第一版新测试用 16 MB 内容和 setImmediate 制造 Write 竞态；即使当前机器稳定，它仍把调度速度误当成修改队列的行为证据。",
       "firstPrinciple": "并发测试应控制因果顺序，而不是猜测耗时；Promise gate 必须直接决定哪项操作能够开始。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/coding-tools.ts",
-        "../pi-course-history/packages/pi-course/test/08-coding-tools.test.ts",
+        "../pi-course/packages/pi-course/src/coding-tools.ts",
+        "../pi-course/packages/pi-course/test/08-coding-tools.test.ts",
         "content/chapters/08-coding-tools.md"
       ],
       "retest": {
@@ -838,8 +838,8 @@
       "firstPrinciple": "一个章节必须公开完成 target 所需的全部教学文件；学生不应从最后一个失败反推隐藏施工位。",
       "fix": [
         "content/chapters/09-stateful-agent.md",
-        "../pi-course-history/packages/pi-course/starters/09-agent-loop.ts",
-        "../pi-course-history/packages/pi-course/scripts/practice.mjs",
+        "../pi-course/packages/pi-course/starters/09-agent-loop.ts",
+        "../pi-course/packages/pi-course/scripts/practice.mjs",
         "tests/learning-contract.test.mjs",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -859,9 +859,9 @@
       "evidence": "旧 fresh parent 没有 agent.ts，首次 build 是缺模块和隐式 any；第一版 Lab 9.2 又提前调用尚未教学的 abort()。",
       "firstPrinciple": "脚手架应固定公共表面，且每段局部测试只能依赖当前段或之前已经完成的能力。",
       "fix": [
-        "../pi-course-history/packages/pi-course/starters/09-agent.ts",
-        "../pi-course-history/packages/pi-course/starters/09-agent-loop.ts",
-        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "../pi-course/packages/pi-course/starters/09-agent.ts",
+        "../pi-course/packages/pi-course/starters/09-agent-loop.ts",
+        "../pi-course/packages/pi-course/test/09-stateful-agent.test.ts",
         "content/chapters/09-stateful-agent.md",
         "tests/practice-sandbox.test.mjs"
       ],
@@ -881,8 +881,8 @@
       "evidence": "旧 run 的 cleanup 可能在 run_end listener 启动新 run 后清掉新 active 记录；递归 emit 还会让后注册 listener 先看到 start2、再看到 end1。",
       "firstPrinciple": "资源只能由创建它的运行清理；所有同步订阅者必须观察同一条生命周期全序。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/agent.ts",
-        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "../pi-course/packages/pi-course/src/agent.ts",
+        "../pi-course/packages/pi-course/test/09-stateful-agent.test.ts",
         "content/chapters/09-stateful-agent.md"
       ],
       "retest": {
@@ -901,9 +901,9 @@
       "evidence": "旧 3 项测试会放过旧 runId 污染、共享引用、坏 subscriber 阻断后续 listener、错误全量退订、模型异常抹掉已执行工具事实和不可复制 details 导致的 running/activeRun 分裂。",
       "firstPrinciple": "有状态封装的测试必须同时观察所有权、公开副本、失败隔离和已发生环境事实；只看最终 reason 会隐藏状态分裂。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/agent-loop.ts",
-        "../pi-course-history/packages/pi-course/src/agent.ts",
-        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "../pi-course/packages/pi-course/src/agent-loop.ts",
+        "../pi-course/packages/pi-course/src/agent.ts",
+        "../pi-course/packages/pi-course/test/09-stateful-agent.test.ts",
         "content/chapters/09-stateful-agent.md",
         "tests/learning-contract.test.mjs",
         "tests/practice-sandbox.test.mjs"
@@ -924,9 +924,9 @@
       "evidence": "旧 loop 只在工具批次后取 steering，纯文本 stop 会丢消息；测试也未证明 abort 先于队列消费、turn_end 后拒绝输入或 error/abort 队列不泄漏。",
       "firstPrinciple": "控制消息只能在完整协议边界消费，终止意图优先；一条消息要么进入当前 transcript，要么明确留在队列或被拒绝，不能静默消失。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/agent-loop.ts",
-        "../pi-course-history/packages/pi-course/src/agent.ts",
-        "../pi-course-history/packages/pi-course/test/09-stateful-agent.test.ts",
+        "../pi-course/packages/pi-course/src/agent-loop.ts",
+        "../pi-course/packages/pi-course/src/agent.ts",
+        "../pi-course/packages/pi-course/test/09-stateful-agent.test.ts",
         "content/chapters/09-stateful-agent.md"
       ],
       "retest": {
@@ -966,9 +966,9 @@
       "evidence": "旧章没有 starter，2 项 happy-path 测试会吞掉已换行坏尾、延迟读取调用者对象，并允许可能半写后的 writer 继续追加；正文还混用 workshop 路线和未实现的 compaction。",
       "firstPrinciple": "追加日志必须先规定调用时快照、提交边界和失败后的写入所有权；恢复路径只能使用公开 leaf 与完整消息，不能从物理行顺序猜测。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/session.ts",
-        "../pi-course-history/packages/pi-course/test/10-session-tree.test.ts",
-        "../pi-course-history/packages/pi-course/starters/10-session.ts",
+        "../pi-course/packages/pi-course/src/session.ts",
+        "../pi-course/packages/pi-course/test/10-session-tree.test.ts",
+        "../pi-course/packages/pi-course/starters/10-session.ts",
         "content/chapters/10-session-tree.md",
         "docs/architecture/010-session-log.md"
       ],
@@ -988,11 +988,11 @@
       "evidence": "旧章继承两套 summary 和多组兼容 API，compaction 在 Chapter 10 提前出现却无法由新版 parser 恢复；775 行实现只有 2 项测试，fresh 练习还会先缺 context 模块。",
       "firstPrinciple": "上下文只能从活动历史派生；预算裁剪必须尊重完整交互，compaction 只能追加一条可恢复事实，不能成为第二个历史拥有者。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/session.ts",
-        "../pi-course-history/packages/pi-course/src/context.ts",
-        "../pi-course-history/packages/pi-course/test/11-context-compaction.test.ts",
-        "../pi-course-history/packages/pi-course/starters/11-session.ts",
-        "../pi-course-history/packages/pi-course/starters/11-context.ts",
+        "../pi-course/packages/pi-course/src/session.ts",
+        "../pi-course/packages/pi-course/src/context.ts",
+        "../pi-course/packages/pi-course/test/11-context-compaction.test.ts",
+        "../pi-course/packages/pi-course/starters/11-session.ts",
+        "../pi-course/packages/pi-course/starters/11-context.ts",
         "content/chapters/11-context-compaction.md"
       ],
       "retest": {
@@ -1011,9 +1011,9 @@
       "evidence": "旧章的优先级、练习路线和测试与真实实现不一致；首次重写又直接写 host.stage，却没有说明窄公共接口与私有 staging 通道如何连接。",
       "firstPrinciple": "资源文字与宿主代码必须分开授权；教学脚手架还必须给出跨私有实现边界的最小连接方式，不能让学生在正确架构处自行发明隐藏接口。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/resources.ts",
-        "../pi-course-history/packages/pi-course/test/12-resources-extensions.test.ts",
-        "../pi-course-history/packages/pi-course/starters/12-resources.ts",
+        "../pi-course/packages/pi-course/src/resources.ts",
+        "../pi-course/packages/pi-course/test/12-resources-extensions.test.ts",
+        "../pi-course/packages/pi-course/starters/12-resources.ts",
         "content/chapters/12-resources-extensions.md"
       ],
       "retest": {
@@ -1032,10 +1032,10 @@
       "evidence": "旧章把多种入口、恢复、上下文与落盘责任混在一起；最终实现需要显式 leaf、唯一 Runtime、临时 suffix 投影、串行持久化与 fail-closed 生命周期。",
       "firstPrinciple": "一次请求只能有一个运行时负责人；它使用哪条历史，就沿哪条历史投影上下文，并在承诺完成前写入新增事实。",
       "fix": [
-        "../pi-course-history/packages/pi-course/src/agent.ts",
-        "../pi-course-history/packages/pi-course/src/composition.ts",
-        "../pi-course-history/packages/pi-course/test/13-composition-modes.test.ts",
-        "../pi-course-history/packages/pi-course/starters/13-composition.ts",
+        "../pi-course/packages/pi-course/src/agent.ts",
+        "../pi-course/packages/pi-course/src/composition.ts",
+        "../pi-course/packages/pi-course/test/13-composition-modes.test.ts",
+        "../pi-course/packages/pi-course/starters/13-composition.ts",
         "content/chapters/13-composition-root.md"
       ],
       "retest": {
@@ -1054,10 +1054,10 @@
       "evidence": "旧章把 eval 放进产品 src 并混入多种入口协议；最终章需要站在 Runtime 外面，用 fresh fixture、独立 oracle、协议交叉验证和安全报告判断整机。",
       "firstPrinciple": "演示只能证明一个样本；可信评测必须先证明环境和执行轨迹可靠，再判任务，并把评测设施故障与任务失败分开。",
       "fix": [
-        "../pi-course-history/packages/pi-course/test-support/eval.ts",
-        "../pi-course-history/packages/pi-course/test/14-eval-capstone.test.ts",
-        "../pi-course-history/packages/pi-course/test/capstone-held-out.test.ts",
-        "../pi-course-history/packages/pi-course/starters/14-eval.ts",
+        "../pi-course/packages/pi-course/test-support/eval.ts",
+        "../pi-course/packages/pi-course/test/14-eval-capstone.test.ts",
+        "../pi-course/packages/pi-course/test/capstone-held-out.test.ts",
+        "../pi-course/packages/pi-course/starters/14-eval.ts",
         "content/chapters/14-eval-capstone.md",
         "scripts/sync-checkpoint-history.mjs",
         "tests/checkpoint-manifest.test.mjs"

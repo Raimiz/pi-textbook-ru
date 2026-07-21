@@ -93,11 +93,11 @@ upstream: packages/coding-agent/src/core/session-manager.ts, packages/coding-age
 
 ## 开始动手：先进入正确的仓库
 
-练习命令在教学历史仓库 `pi-course-history` 中运行，不是在教材站点目录，也不是原始
+练习命令在教学历史仓库 `pi-course` 中运行，不是在教材站点目录，也不是原始
 `pi` 仓库：
 
 ```bash
-cd <你的工作区>/pi-course-history
+cd <你的工作区>/pi-course
 pwd
 npm run practice -w @pi/course -- 10 <新目录>
 cd <新目录>

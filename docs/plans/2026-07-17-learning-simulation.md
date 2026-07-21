@@ -51,7 +51,7 @@ Commit: `test: add the textbook learning contract`
 
 **Step 1: 创建学生与陪练**
 
-两者均使用无主线程上下文的 subagent。学生不得读取 `pi-course-history` 的目标 commit；陪练不得给完整代码或跨越提示等级。
+两者均使用无主线程上下文的 subagent。学生不得读取 `pi-course` 的目标 commit；陪练不得给完整代码或跨越提示等级。
 
 **Step 2: 创建第 00 章 parent 快照**
 

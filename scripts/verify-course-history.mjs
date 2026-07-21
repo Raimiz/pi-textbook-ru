@@ -6,13 +6,13 @@ const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 );
-const piRepository = path.resolve(root, "..", "pi");
+const courseRepository = path.resolve(root, "..", "pi-course");
 const generated = await import(
   new URL(`../lib/generated-course.ts?verify=${Date.now()}`, import.meta.url)
 );
 
 function git(...args) {
-  return execFileSync("git", ["-C", piRepository, ...args], {
+  return execFileSync("git", ["-C", courseRepository, ...args], {
     encoding: "utf8",
   }).trim();
 }

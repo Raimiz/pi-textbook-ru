@@ -91,7 +91,7 @@ Extension 又依赖第 06 章的 `ToolRegistry` 与 `ToolExecutor`。它可以�
 在教学历史仓库中生成隔离练习。不要在教材目录或原始 `pi` 仓库里改：
 
 ```bash
-cd <你的工作区>/pi-course-history
+cd <你的工作区>/pi-course
 npm run checkpoint -w @pi/course -- 12
 npm run practice -w @pi/course -- 12 <新目录>
 cd <新目录>

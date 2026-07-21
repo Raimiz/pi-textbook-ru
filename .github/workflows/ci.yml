@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pi-textbook-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out textbook
+        uses: actions/checkout@v7
+        with:
+          path: pi-textbook
+
+      - name: Check out executable course history
+        uses: actions/checkout@v7
+        with:
+          repository: hahhforest/pi
+          ref: course/build-your-own-pi
+          path: pi-course
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: pi-textbook/package-lock.json
+
+      - name: Install dependencies
+        working-directory: pi-textbook
+        run: npm ci
+
+      - name: Audit production dependencies
+        working-directory: pi-textbook
+        run: npm audit --omit=dev --audit-level=moderate
+
+      - name: Verify textbook and workshop
+        working-directory: pi-textbook
+        run: npm test
+
+      - name: Verify types and lint
+        working-directory: pi-textbook
+        run: npm run typecheck && npm run lint
+
+      - name: Verify checkpoint history
+        working-directory: pi-textbook
+        run: npm run history:verify

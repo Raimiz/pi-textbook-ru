@@ -56,6 +56,18 @@ test("章节页暴露真实 commit、parent、测试与陪学协议", async () =
   assert.match(html, /course\/build-your-own-pi/);
   assert.match(html, /f9798b7c/);
   assert.match(html, /8479bd84/);
+  assert.match(
+    html,
+    /https:\/\/github\.com\/hahhforest\/pi\/tree\/course\/build-your-own-pi/,
+  );
+  assert.match(
+    html,
+    /https:\/\/github\.com\/hahhforest\/pi\/commit\/f9798b7ce690abeca3539e3410e5f402bc65862d/,
+  );
+  assert.match(
+    html,
+    /https:\/\/github\.com\/hahhforest\/pi\/compare\/8479bd84743e8889f728acb21a62794102db0529\.\.\.f9798b7ce690abeca3539e3410e5f402bc65862d/,
+  );
   assert.match(html, /00-prologue\.test\.ts/);
   assert.match(html, /npm run checkpoint -w @pi\/course -- 00/);
   assert.match(html, /npm run practice -w @pi\/course -- 00/);

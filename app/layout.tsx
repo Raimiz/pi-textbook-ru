@@ -3,6 +3,10 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { ProgressProvider } from "@/components/progress-provider";
 import { SiteHeader } from "@/components/site-header";
+import {
+  COURSE_REPOSITORY_URL,
+  UPSTREAM_REPOSITORY_URL,
+} from "@/lib/course-links";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -89,7 +93,14 @@ export default function RootLayout({
               <Link href="/about">学习方法</Link>
               <Link href="/glossary">术语表</Link>
               <a
-                href="https://github.com/badlogic/pi-mono"
+                href={COURSE_REPOSITORY_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                课程代码
+              </a>
+              <a
+                href={UPSTREAM_REPOSITORY_URL}
                 target="_blank"
                 rel="noreferrer"
               >

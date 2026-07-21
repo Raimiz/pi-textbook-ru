@@ -10,7 +10,7 @@ const courseRoot = path.resolve(
   import.meta.dirname,
   "..",
   "..",
-  "pi-course-history",
+  "pi-course",
 );
 
 function createPractice(chapter, output) {

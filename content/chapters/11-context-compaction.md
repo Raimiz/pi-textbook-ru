@@ -55,7 +55,7 @@ prompt；这些内容同样占模型窗口。先把预算入口固定下来，�
 仍然在教学历史仓库中生成隔离练习：
 
 ```bash
-cd <你的工作区>/pi-course-history
+cd <你的工作区>/pi-course
 npm run practice -w @pi/course -- 11 <新目录>
 cd <新目录>
 npm install

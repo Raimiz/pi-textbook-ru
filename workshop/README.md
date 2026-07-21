@@ -20,7 +20,7 @@ npm run workshop:test -- eval
 ## 两份代码各自负责什么
 
 - `pi-textbook/workshop`：最终参考实现；保证所有章节正文共用同一套可编译接口。
-- `pi-course-history/packages/pi-course`：00～14 累积 commit；让学习者和陪学
+- `pi-course/packages/pi-course`：00～14 累积 commit；让学习者和陪学
   Agent 精确比较每章 parent 与 target。
 
 不要在学习第 03 章时直接用最终 HEAD 的第 14 章抽象解释问题；先通过

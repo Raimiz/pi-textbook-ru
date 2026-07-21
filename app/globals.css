@@ -1144,6 +1144,25 @@ a {
   font-family: var(--font-mono);
 }
 
+.commit-companion a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.commit-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0 0 14px;
+}
+
+.commit-links a {
+  color: #8fe1dc;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+
 .commit-command {
   display: flex;
   align-items: center;

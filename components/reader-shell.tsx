@@ -17,6 +17,12 @@ import {
   useState,
 } from "react";
 import type { CourseNavChapter } from "@/lib/course";
+import {
+  courseBranchUrl,
+  courseCommitUrl,
+  courseComparisonUrl,
+  courseFileUrl,
+} from "@/lib/course-links";
 import type {
   Chapter,
   CoursePart,
@@ -248,10 +254,27 @@ export function ReaderShell({
           <section className="commit-companion" aria-label="本章真实教学提交">
             <header>
               <div>
-                <small>REAL CHECKPOINT · {chapter.courseBranch}</small>
+                <small>
+                  REAL CHECKPOINT ·{" "}
+                  <a
+                    href={courseBranchUrl(chapter.courseBranch)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {chapter.courseBranch}
+                  </a>
+                </small>
                 <h2>从 parent 到本章，只增加这一层复杂性</h2>
               </div>
-              <code>{chapter.commit.slice(0, 8)}</code>
+              <code>
+                <a
+                  href={courseCommitUrl(chapter.commit)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {chapter.commit.slice(0, 8)}
+                </a>
+              </code>
             </header>
             <p>
               这是 Pi 仓库中的真实可检出提交，不是页面占位符。parent
@@ -274,6 +297,29 @@ export function ReaderShell({
                 <dd><code>{chapter.checkpointTest}</code></dd>
               </div>
             </dl>
+            <nav className="commit-links" aria-label="本章 GitHub 源码链接">
+              <a
+                href={courseComparisonUrl(chapter.parentCommit, chapter.commit)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                查看本章 diff
+              </a>
+              <a
+                href={courseCommitUrl(chapter.commit)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                查看目标 commit
+              </a>
+              <a
+                href={courseFileUrl(chapter.commit, chapter.checkpointTest)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                查看聚焦测试
+              </a>
+            </nav>
             <div className="commit-command-group">
               <small>1 · 定位本章</small>
               <div className="commit-command">

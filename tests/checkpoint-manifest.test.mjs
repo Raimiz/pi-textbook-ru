@@ -5,7 +5,7 @@ import { spawnSync } from "node:child_process";
 import test from "node:test";
 
 const root = path.resolve(import.meta.dirname, "..");
-const historyRoot = path.resolve(root, "..", "pi-course-history");
+const historyRoot = path.resolve(root, "..", "pi-course");
 const manifestFile = path.join(root, "content", "checkpoints.json");
 
 test("checkpoint manifest is synchronized with the live course history", () => {
