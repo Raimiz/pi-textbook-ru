@@ -13,31 +13,31 @@ export function SiteHeader() {
 
   return (
     <header className="site-header">
-      <Link className="brand" href="/" aria-label="回到教材首页">
+      <Link className="brand" href="/" aria-label="На главную страницу учебника">
         <span className="brand-mark" aria-hidden="true">
           π
         </span>
         <span>
-          <strong>动手学 Pi</strong>
-          <small>从零实现 Pi</small>
+          <strong>Практический Pi</strong>
+          <small>Собираем Pi с нуля</small>
         </span>
       </Link>
-      <nav aria-label="全站导航">
+      <nav aria-label="Навигация">
         <Link href="/map">
           <Route aria-hidden="true" size={16} />
-          路线
+          Программа
         </Link>
         <Link href="/about">
           <BookOpen aria-hidden="true" size={16} />
-          方法
+          Метод
         </Link>
-        <Link href="/glossary">术语</Link>
+        <Link href="/glossary">Термины</Link>
       </nav>
       <div className="header-actions">
         <CourseSearch />
         <span
           className="header-progress"
-          title={`已完成 ${completed.size}/${TOTAL_CHAPTERS} 章`}
+          title={`Пройдено ${completed.size}/${TOTAL_CHAPTERS} глав`}
         >
           <span style={{ width: `${progress}%` }} />
         </span>
