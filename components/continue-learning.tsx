@@ -14,12 +14,12 @@ export function ContinueLearning({
   const last = chapters.find((chapter) => chapter.slug === lastVisited);
   const nextIncomplete = chapters.find((chapter) => !completed.has(chapter.id));
   const target = last ?? nextIncomplete ?? chapters[0];
-  const label = last ? "继续上次阅读" : completed.size ? "继续下一章" : "开始序章";
+  const label = last ? "Продолжить чтение" : completed.size ? "Перейти к следующей главе" : "Начать введение";
 
   return (
     <Link className="primary-action" href={`/learn/${target.slug}`}>
       <span>
-        <small>{hydrated ? label : "开始学习"}</small>
+        <small>{hydrated ? label : "Начать обучение"}</small>
         <strong>
           {target.id} · {target.title}
         </strong>
