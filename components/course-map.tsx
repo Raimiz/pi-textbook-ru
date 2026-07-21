@@ -31,7 +31,7 @@ export function CourseMap({
                   <span>{part.thesis}</span>
                 </div>
                 <small>
-                  {done}/{items.length} 完成
+                  Пройдено {done}/{items.length}
                 </small>
               </header>
               <ol>
@@ -52,7 +52,7 @@ export function CourseMap({
                           <strong>{chapter.title}</strong>
                           <small>{chapter.summary}</small>
                         </span>
-                        <time>{chapter.minutes} min</time>
+                        <time>{chapter.minutes} мин</time>
                       </Link>
                     </li>
                   );
