@@ -1,53 +1,53 @@
 <p align="center">
-  <img src="docs/assets/logo.png" alt="动手学 Pi Logo" width="132" />
+  <img src="docs/assets/logo.png" alt="Логотип «Практический Pi»" width="132" />
 </p>
 
-<h1 align="center">动手学 Pi</h1>
+<h1 align="center">Практический Pi</h1>
 
 <p align="center">
-  沿 15 个 checkpoint，从一条离线轨迹开始，亲手实现一个 Pi-style coding agent。
+  Пройдите 15 контрольных точек: начните с одной офлайн-трассировки и шаг за шагом соберите coding-агента в стиле Pi.
 </p>
 
 <p align="center">
-  <a href="https://build-your-own-pi-cn.enochzhang.chatgpt.site">在线阅读</a>
-  · <a href="https://github.com/hahhforest/pi/tree/course/build-your-own-pi/packages/pi-course">课程代码</a>
+  <a href="https://build-your-own-pi-cn.enochzhang.chatgpt.site">Читать онлайн</a>
+  · <a href="https://github.com/hahhforest/pi/tree/course/build-your-own-pi/packages/pi-course">Код курса</a>
 </p>
 
 <p align="center">
   <a href="https://build-your-own-pi-cn.enochzhang.chatgpt.site">
-    <img src="docs/assets/homepage.jpg" alt="动手学 Pi 在线教材首页" width="1200" />
+    <img src="docs/assets/homepage.jpg" alt="Главная страница онлайн-учебника «Практический Pi»" width="1200" />
   </a>
 </p>
 
-## 这是什么
+## Что это
 
-沿 15 个可运行 checkpoint，从一条离线 Agent 轨迹出发，逐步实现：
+Курс состоит из 15 запускаемых контрольных точек. Начиная с одной офлайн-трассировки агента, вы последовательно реализуете:
 
-`TypeScript 协议 → 流式模型 → Provider → 工具 → Agent Loop → 会话树 → Context Compaction → 扩展 → Eval`
+`протоколы TypeScript → потоковую модель → Provider → инструменты → Agent Loop → дерево сессий → сжатие контекста → расширения → Eval`
 
-每章由四部分闭环：**教材正文 + 真实 commit + 聚焦测试 + 故障实验**。课程代码不是伪代码演示，而是一条可以 checkout、运行和验证的 Git 历史。
+Каждая глава образует замкнутый учебный цикл из четырёх частей: **текст учебника + реальный commit + сфокусированный тест + эксперимент с отказом**. Код курса — не демонстрационный псевдокод, а полноценная история Git, которую можно checkout-нуть, запустить и проверить.
 
-## 开始阅读
+## Начало работы
 
-直接打开[在线教材](https://build-your-own-pi-cn.enochzhang.chatgpt.site)，或在本地运行：
+Откройте [онлайн-учебник](https://build-your-own-pi-cn.enochzhang.chatgpt.site) или запустите его локально:
 
 ```bash
-git clone https://github.com/hahhforest/pi-textbook.git
-cd pi-textbook
+git clone https://github.com/Raimiz/pi-textbook-ru.git
+cd pi-textbook-ru
 npm install
 npm run dev
 ```
 
-## 教材与课程代码
+## Учебник и код курса
 
-| 仓库 | 作用 |
+| Репозиторий | Назначение |
 | --- | --- |
-| [`pi-textbook`](https://github.com/hahhforest/pi-textbook) | 你正在看的 HTML 教材与网站 |
-| [`pi` 的课程分支](https://github.com/hahhforest/pi/tree/course/build-your-own-pi) | 15 个 checkpoint 的可运行代码；课程源码位于仓库内的 `packages/pi-course/` |
+| [`pi-textbook-ru`](https://github.com/Raimiz/pi-textbook-ru) | HTML-учебник и сайт, который вы сейчас читаете |
+| [Учебная ветка `pi`](https://github.com/hahhforest/pi/tree/course/build-your-own-pi) | Запускаемый код для 15 контрольных точек; исходники курса находятся в `packages/pi-course/` |
 
-课程分支从固定上游 commit `8479bd84` 出发，以 `course(00)` 到 `course(14)` 组织完整历史；`pi-course-v1` 与 `course-v1/00` 到 `course-v1/14` tags 固定第一版课程。
+Учебная ветка основана на зафиксированном upstream-коммите `8479bd84`. Полная история организована коммитами от `course(00)` до `course(14)`, а теги `pi-course-v1` и `course-v1/00` — `course-v1/14` фиксируют первую версию курса.
 
-## 和 Agent 一起练习
+## Практика вместе с агентом
 
 ```bash
 git clone --branch course/build-your-own-pi https://github.com/hahhforest/pi.git
@@ -57,12 +57,12 @@ npm run checkpoint -w @pi/course -- 05
 npm run practice -w @pi/course -- 05 ../pi-practice-05
 ```
 
-`checkpoint` 定位本章的 parent、target 与聚焦测试；`practice` 创建一个不含答案和 Git 历史的练习目录。把本章网页、命令输出与练习目录中的 `LEARNING.md` 一起交给陪学 Agent 即可。
+Команда `checkpoint` находит parent-, target-снимок и сфокусированный тест для главы. Команда `practice` создаёт учебный каталог без ответов и истории Git. Передайте сопровождающему агенту страницу главы, вывод команд и файл `LEARNING.md` из учебного каталога.
 
-## 项目说明
+## О проекте
 
-这是社区原创的非官方课程，不隶属于或代表 Pi / Earendil Works。应用与原创代码采用 MIT License；教材正文与原创媒体采用 CC BY 4.0；Pi 上游代码沿用其原许可证和作者归属。详见 [`LICENSE`](LICENSE) 与 [`LICENSE-CONTENT`](LICENSE-CONTENT)。
+Это неофициальный курс, созданный сообществом. Он не связан с Pi / Earendil Works и не представляет их интересы. Приложение и оригинальный код распространяются по лицензии MIT; текст учебника и оригинальные медиаматериалы — по CC BY 4.0; upstream-код Pi сохраняет исходную лицензию и указание авторства. Подробности см. в [`LICENSE`](LICENSE) и [`LICENSE-CONTENT`](LICENSE-CONTENT).
 
-构建、测试和跨仓库历史校验见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+Инструкции по сборке, тестированию и проверке истории между репозиториями приведены в [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-感谢 [LINUX DO](https://linux.do/) 提供中文技术交流空间。
+Спасибо сообществу [LINUX DO](https://linux.do/) за пространство для технического общения на китайском языке.
