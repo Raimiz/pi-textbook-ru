@@ -38,7 +38,8 @@ test("首页服务端渲染完整课程入口，而不是 starter", async () => 
 
   const html = await response.text();
   assert.match(html, /动手学 Pi/);
-  assert.match(html, /不只读懂 Agent/);
+  assert.match(html, /从一条运行轨迹开始/);
+  assert.match(html, /一步步实现 Pi/);
   assert.match(html, /15 CHECKPOINTS/);
   assert.match(html, /href="\/learn\/prologue"/);
   assert.match(html, /href="\/about"/);

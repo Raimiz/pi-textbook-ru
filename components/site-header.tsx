@@ -19,7 +19,7 @@ export function SiteHeader() {
         </span>
         <span>
           <strong>动手学 Pi</strong>
-          <small>可执行工程教材</small>
+          <small>从零实现 Pi</small>
         </span>
       </Link>
       <nav aria-label="全站导航">

@@ -25,11 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      default: "动手学 Pi · 可执行工程教材",
+      default: "动手学 Pi",
       template: "%s · 动手学 Pi",
     },
     description:
-      "一套从第一性原理出发、用真实 TypeScript 和故障实验逐步实现 Pi 的中文工程教材。",
+      "沿 15 个 checkpoint，从一条离线轨迹开始，用 TypeScript 逐步实现 Pi。",
     applicationName: "动手学 Pi",
     authors: [{ name: "Pi Textbook Project" }],
     keywords: [
@@ -38,10 +38,10 @@ export async function generateMetadata(): Promise<Metadata> {
       "TypeScript",
       "LLM",
       "Tool Calling",
-      "工程教材",
+      "Agent 教程",
     ],
     openGraph: {
-      title: "动手学 Pi · 可执行 Agent 工程教材",
+      title: "动手学 Pi",
       description: "15 个 checkpoint，亲手实现一个可运行、可恢复、可扩展的 Pi。",
       type: "website",
       locale: "zh_CN",
@@ -50,13 +50,13 @@ export async function generateMetadata(): Promise<Metadata> {
           url: socialImage,
           width: 1672,
           height: 941,
-          alt: "动手学 Pi · 可执行 Agent 工程教材",
+          alt: "动手学 Pi",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "动手学 Pi · 可执行 Agent 工程教材",
+      title: "动手学 Pi",
       description: "15 个 checkpoint，亲手实现一个可运行、可恢复、可扩展的 Pi。",
       images: [socialImage],
     },
@@ -84,7 +84,7 @@ export default function RootLayout({
             <div>
               <span className="brand-mark" aria-hidden="true">π</span>
               <p>
-                原创中文工程教材。学习方法受 Dive into Deep Learning 启发，
+                开源中文教材。学习方法受 Dive into Deep Learning 启发，
                 内容与代码独立编写。
               </p>
             </div>

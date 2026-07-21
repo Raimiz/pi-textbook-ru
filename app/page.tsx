@@ -12,7 +12,6 @@ import { CourseMap } from "@/components/course-map";
 import { courseNav, courseParts } from "@/lib/course";
 
 export const metadata: Metadata = {
-  title: "动手学 Pi · 可执行 Agent 工程教材",
   description:
     "从消息协议和事件流开始，亲手实现工具、Agent Loop、会话树、上下文压缩与产品入口。",
 };
@@ -32,14 +31,14 @@ export default function Home() {
     <main>
       <section className="home-hero">
         <div className="hero-copy">
-          <p className="eyebrow">HANDS-ON PI · 中文工程教材</p>
+          <p className="eyebrow">15 CHECKPOINTS · TYPESCRIPT</p>
           <h1>
-            不只读懂 Agent，
+            从一条运行轨迹开始，
             <br />
-            <em>亲手把它造出来。</em>
+            <em>一步步实现 Pi。</em>
           </h1>
           <p className="hero-intro">
-            从一条完全离线的运行轨迹出发，逐章建立流式模型、工具协议、
+            课程从完全离线的运行轨迹出发，逐章建立流式模型、工具协议、
             Agent Loop、会话树、Context Compaction 与可扩展产品入口。
             每一步都有真实 TypeScript、故障实验和机器验收。
           </p>

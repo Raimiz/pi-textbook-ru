@@ -5,7 +5,7 @@
 <h1 align="center">动手学 Pi</h1>
 
 <p align="center">
-  一套可执行的中文 Agent 工程教材：不只读懂 Agent，亲手把它造出来。
+  沿 15 个 checkpoint，从一条离线轨迹开始，亲手实现一个 Pi-style coding agent。
 </p>
 
 <p align="center">
@@ -38,7 +38,7 @@ npm install
 npm run dev
 ```
 
-## 三个仓库如何配合
+## 教材与课程代码
 
 | 仓库 | 作用 |
 | --- | --- |
