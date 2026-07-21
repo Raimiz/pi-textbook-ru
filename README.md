@@ -64,3 +64,5 @@ npm run practice -w @pi/course -- 05 ../pi-practice-05
 这是社区原创的非官方课程，不隶属于或代表 Pi / Earendil Works。应用与原创代码采用 MIT License；教材正文与原创媒体采用 CC BY 4.0；Pi 上游代码沿用其原许可证和作者归属。详见 [`LICENSE`](LICENSE) 与 [`LICENSE-CONTENT`](LICENSE-CONTENT)。
 
 构建、测试和跨仓库历史校验见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+
+感谢 [LINUX DO](https://linux.do/) 提供中文技术交流空间。
