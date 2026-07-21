@@ -27,6 +27,7 @@ jobs:
           repository: hahhforest/pi
           ref: course/build-your-own-pi
           path: pi-course
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
